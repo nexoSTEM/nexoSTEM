@@ -49,16 +49,16 @@ export default function AuthPage() {
 
   function mapAuthError(message: string): string {
     if (message.includes('Invalid login credentials')) {
-      return isLogin ? 'Correo o contrasena incorrectos.' : message
+      return isLogin ? 'Correo o contraseña incorrectos.' : message
     }
     if (message.includes('already registered') || message.includes('already been registered')) {
-      return 'Ya existe una cuenta con este correo. Inicia sesion.'
+      return 'Ya existe una cuenta con este correo. Inicia sesión.'
     }
     if (message.includes('Password should be at least')) {
-      return 'La contrasena debe tener al menos 6 caracteres.'
+      return 'La contraseña debe tener al menos 6 caracteres.'
     }
     if (message.includes('Unable to validate email address') || message.includes('invalid')) {
-      return 'El correo electronico no es valido.'
+      return 'El correo electrónico no es válido.'
     }
     return message
   }
@@ -70,11 +70,11 @@ export default function AuthPage() {
 
     if (!isLogin) {
       if (password !== confirmPassword) {
-        setError('Las contrasenas no coinciden.')
+        setError('Las contraseñas no coinciden.')
         return
       }
       if (password.length < 6) {
-        setError('La contrasena debe tener al menos 6 caracteres.')
+        setError('La contraseña debe tener al menos 6 caracteres.')
         return
       }
     }
@@ -91,7 +91,7 @@ export default function AuthPage() {
         if (signUpError) {
           setError(mapAuthError(signUpError.message))
         } else {
-          setInfoMessage('Cuenta creada. Revisa tu correo para confirmar tu cuenta antes de iniciar sesion.')
+          setInfoMessage('Cuenta creada. Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.')
         }
       }
     } finally {
