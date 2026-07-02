@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "explore": "Explorar",
+    "routes": "Rutas de aprendizaje",
+    "simulations": "Simulaciones",
+    "pricing": "Precios",
+    "about": "Sobre nosotros",
+    "login": "Iniciar sesion",
+    "register": "Registrate",
+    "dashboard": "Panel",
+    "logout": "Cerrar sesion"
+  },
+  "explorer": {
+    "title": "Explora las ramas del conocimiento",
+    "subtitle": "Elige una rama para ver sus sub-ramas y lecciones disponibles.",
+    "lessons": "lecciones",
+    "explore": "Explorar",
+    "selectSubBranch": "Selecciona una sub-rama",
+    "selectSubBranchDesc": "Haz clic en una sub-rama para ver sus lecciones.",
+    "startLesson": "Empezar leccion",
+    "difficulty": "Dificultad",
+    "duration": "Duracion",
+    "allBranches": "Todas las ramas",
+    "back": "Volver"
+  },
+  "lesson": {
+    "theory": "Teoria",
+    "simulation": "Simulacion",
+    "noWidget": "Simulacion interactiva no disponible para esta leccion.",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "backToExplorer": "Volver al explorador"
+  },
+  "auth": {
+    "loginTitle": "Inicia sesion en NexoSTEM",
+    "registerTitle": "Crea tu cuenta en NexoSTEM",
+    "email": "Correo electronico",
+    "password": "Contrasena",
+    "confirmPassword": "Confirmar contrasena",
+    "name": "Nombre completo",
+    "loginBtn": "Iniciar sesion",
+    "registerBtn": "Crear cuenta",
+    "googleBtn": "Continuar con Google",
+    "or": "o",
+    "noAccount": "No tienes cuenta?",
+    "hasAccount": "Ya tienes cuenta?",
+    "goRegister": "Registrate",
+    "goLogin": "Inicia sesion",
+    "forgotPassword": "Olvidaste tu contrasena?",
+    "terms": "Al registrarte, aceptas nuestros Terminos de servicio y Politica de privacidad."
+  },
+  "dashboard": {
+    "welcome": "Bienvenido de vuelta",
+    "progress": "Tu progreso",
+    "recentLessons": "Lecciones recientes",
+    "subscription": "Suscripcion",
+    "activePlan": "Plan activo",
+    "freeTrial": "Prueba gratuita",
+    "premium": "NexoSTEM Completo",
+    "daysLeft": "dias restantes",
+    "lessonsCompleted": "lecciones completadas",
+    "continueLesson": "Continuar",
+    "noRecent": "Aun no has empezado ninguna leccion.",
+    "startExploring": "Empieza a explorar",
+    "overallProgress": "Progreso general"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "home": "Inicio"
+  }
+}

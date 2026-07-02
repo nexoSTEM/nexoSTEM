@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Simulacion - Gravitacion Universal</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0D1117; color: #F0F6FC; font-family: 'Inter', system-ui, sans-serif; padding: 20px; }
+  .container { max-width: 600px; margin: 0 auto; }
+  h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #58A6FF; }
+  .controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .control-row { display: flex; align-items: center; gap: 12px; }
+  .control-row label { font-size: 12px; color: #8B949E; min-width: 80px; }
+  .control-row input[type="range"] {
+    flex: 1; -webkit-appearance: none; height: 6px; background: #30363D; border-radius: 3px; outline: none;
+  }
+  .control-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #58A6FF; cursor: pointer;
+  }
+  .control-row .value { font-size: 13px; color: #58A6FF; font-family: 'JetBrains Mono', monospace; min-width: 90px; text-align: right; }
+  canvas { display: block; width: 100%; border: 1px solid #30363D; border-radius: 8px; background: #161B22; }
+  .result { margin-top: 16px; padding: 12px; background: #161B22; border: 1px solid #30363D; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+  .result span { color: #58A6FF; }
+  .formula { color: #8B949E; font-size: 12px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Gravitacion Universal - Simulacion</h2>
+  <div class="controls">
+    <div class="control-row">
+      <label>Masa 1 (m1)</label>
+      <input type="range" id="m1" min="1" max="100" value="50" step="1"/>
+      <div class="value" id="m1Val">5.0 x 10^24 kg</div>
+    </div>
+    <div class="control-row">
+      <label>Masa 2 (m2)</label>
+      <input type="range" id="m2" min="1" max="100" value="30" step="1"/>
+      <div class="value" id="m2Val">3.0 x 10^24 kg</div>
+    </div>
+    <div class="control-row">
+      <label>Distancia (r)</label>
+      <input type="range" id="dist" min="10" max="100" value="50" step="1"/>
+      <div class="value" id="distVal">5.0 x 10^8 m</div>
+    </div>
+  </div>
+  <canvas id="canvas" width="560" height="280"></canvas>
+  <div class="result">
+    F = <span id="force">0</span> N
+    <div class="formula">F = G * m1 * m2 / r^2 &nbsp; (G = 6.674 x 10^-11)</div>
+  </div>
+</div>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const G = 6.674e-11;
+
+function getValues() {
+  const m1 = parseFloat(document.getElementById('m1').value) / 10;
+  const m2 = parseFloat(document.getElementById('m2').value) / 10;
+  const dist = parseFloat(document.getElementById('dist').value) / 10;
+  return { m1: m1 * 1e24, m2: m2 * 1e24, dist: dist * 1e8, m1Raw: m1, m2Raw: m2, distRaw: dist };
+}
+
+function updateLabels(v) {
+  document.getElementById('m1Val').textContent = v.m1Raw.toFixed(1) + ' x 10^24 kg';
+  document.getElementById('m2Val').textContent = v.m2Raw.toFixed(1) + ' x 10^24 kg';
+  document.getElementById('distVal').textContent = v.distRaw.toFixed(1) + ' x 10^8 m';
+}
+
+function calcForce(m1, m2, r) {
+  return G * m1 * m2 / (r * r);
+}
+
+function draw() {
+  const v = getValues();
+  updateLabels(v);
+  const force = calcForce(v.m1, v.m2, v.dist);
+  document.getElementById('force').textContent = force.toExponential(3);
+
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const cx = w / 2;
+  const separation = (v.distRaw / 10) * (w * 0.6);
+  const x1 = cx - separation / 2;
+  const x2 = cx + separation / 2;
+  const y = h / 2;
+
+  const r1 = 10 + v.m1Raw * 3;
+  const r2 = 10 + v.m2Raw * 3;
+
+  // Force arrows
+  const arrowLen = Math.min(60, Math.log10(force + 1) * 8 + 20);
+
+  // Arrow from m1 to m2
+  ctx.strokeStyle = '#3FB950';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x1 + r1 + 4, y);
+  ctx.lineTo(x1 + r1 + 4 + arrowLen, y);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x1 + r1 + 4 + arrowLen, y);
+  ctx.lineTo(x1 + r1 + 4 + arrowLen - 6, y - 4);
+  ctx.lineTo(x1 + r1 + 4 + arrowLen - 6, y + 4);
+  ctx.closePath();
+  ctx.fillStyle = '#3FB950';
+  ctx.fill();
+
+  // Arrow from m2 to m1
+  ctx.beginPath();
+  ctx.moveTo(x2 - r2 - 4, y);
+  ctx.lineTo(x2 - r2 - 4 - arrowLen, y);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x2 - r2 - 4 - arrowLen, y);
+  ctx.lineTo(x2 - r2 - 4 - arrowLen + 6, y - 4);
+  ctx.lineTo(x2 - r2 - 4 - arrowLen + 6, y + 4);
+  ctx.closePath();
+  ctx.fill();
+
+  // Bodies
+  const grad1 = ctx.createRadialGradient(x1, y, 0, x1, y, r1);
+  grad1.addColorStop(0, '#58A6FF');
+  grad1.addColorStop(1, '#1a4a7a');
+  ctx.beginPath();
+  ctx.arc(x1, y, r1, 0, Math.PI * 2);
+  ctx.fillStyle = grad1;
+  ctx.fill();
+
+  const grad2 = ctx.createRadialGradient(x2, y, 0, x2, y, r2);
+  grad2.addColorStop(0, '#F78166');
+  grad2.addColorStop(1, '#7a3a2a');
+  ctx.beginPath();
+  ctx.arc(x2, y, r2, 0, Math.PI * 2);
+  ctx.fillStyle = grad2;
+  ctx.fill();
+
+  // Labels
+  ctx.fillStyle = '#8B949E';
+  ctx.font = '11px Inter, system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('m1', x1, y + r1 + 16);
+  ctx.fillText('m2', x2, y + r2 + 16);
+
+  // Distance line
+  ctx.strokeStyle = '#30363D';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(x1, y + r1 + 28);
+  ctx.lineTo(x2, y + r2 + 28);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#8B949E';
+  ctx.fillText('r', cx, y + Math.max(r1, r2) + 42);
+}
+
+['m1', 'm2', 'dist'].forEach(id => {
+  document.getElementById(id).addEventListener('input', draw);
+});
+draw();
+</script>
+</body>
+</html>

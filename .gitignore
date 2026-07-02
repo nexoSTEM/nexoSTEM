@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.vite/
+*.local
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# Verdent workspace files (not part of the project)
+5d5154c3-*
+state/
+memories/
+MEMORY.md
+SOUL.md
+README.md
+verdent-design/
+nexostem-preview.html
+assets/MANIFEST.md

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Simulacion - Derivada</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0D1117; color: #F0F6FC; font-family: 'Inter', system-ui, sans-serif; padding: 20px; }
+  .container { max-width: 600px; margin: 0 auto; }
+  h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #3FB950; }
+  .controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .func-select { display: flex; gap: 8px; flex-wrap: wrap; }
+  .func-select button {
+    padding: 6px 14px; font-size: 12px; font-weight: 500; border: 1px solid #30363D; border-radius: 6px;
+    background: #161B22; color: #8B949E; cursor: pointer; transition: all 0.15s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .func-select button:hover { background: #1C2128; color: #F0F6FC; }
+  .func-select button.active { background: #3FB95020; color: #3FB950; border-color: #3FB95040; }
+  .control-row { display: flex; align-items: center; gap: 12px; }
+  .control-row label { font-size: 12px; color: #8B949E; min-width: 80px; }
+  .control-row input[type="range"] {
+    flex: 1; -webkit-appearance: none; height: 6px; background: #30363D; border-radius: 3px; outline: none;
+  }
+  .control-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #3FB950; cursor: pointer;
+  }
+  .control-row .value { font-size: 13px; color: #3FB950; font-family: 'JetBrains Mono', monospace; min-width: 60px; text-align: right; }
+  canvas { display: block; width: 100%; border: 1px solid #30363D; border-radius: 8px; background: #161B22; }
+  .legend { display: flex; gap: 16px; margin-top: 12px; font-size: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 3px; border-radius: 2px; }
+  .info { margin-top: 12px; padding: 10px; background: #161B22; border: 1px solid #30363D; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .info .label { color: #8B949E; }
+  .info .val { color: #3FB950; }
+  .info .deriv { color: #58A6FF; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Derivada - Visualizacion Interactiva</h2>
+  <div class="controls">
+    <div class="func-select">
+      <button class="active" onclick="setFunc(0)">x^2</button>
+      <button onclick="setFunc(1)">x^3</button>
+      <button onclick="setFunc(2)">sin(x)</button>
+      <button onclick="setFunc(3)">e^x</button>
+    </div>
+    <div class="control-row">
+      <label>Punto x</label>
+      <input type="range" id="xPoint" min="0" max="100" value="50" step="1"/>
+      <div class="value" id="xVal">0.00</div>
+    </div>
+  </div>
+  <canvas id="canvas" width="560" height="320"></canvas>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3FB950"></div><span style="color:#8B949E">f(x)</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#58A6FF"></div><span style="color:#8B949E">f'(x) tangente</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F78166"></div><span style="color:#8B949E">Punto</span></div>
+  </div>
+  <div class="info">
+    <span class="label">f(x) = </span><span class="val" id="fxDisplay">x^2</span>
+    <span class="label"> | f'(x) = </span><span class="deriv" id="dfxDisplay">2x</span>
+    <br/>
+    <span class="label">En x = </span><span class="val" id="xDisp">0</span>
+    <span class="label">: f(x) = </span><span class="val" id="fyDisp">0</span>
+    <span class="label">, f'(x) = </span><span class="deriv" id="dyDisp">0</span>
+  </div>
+</div>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+const funcs = [
+  { f: x => x*x, df: x => 2*x, label: 'x^2', dlabel: '2x', range: [-3, 3] },
+  { f: x => x*x*x, df: x => 3*x*x, label: 'x^3', dlabel: '3x^2', range: [-2, 2] },
+  { f: x => Math.sin(x), df: x => Math.cos(x), label: 'sin(x)', dlabel: 'cos(x)', range: [-6, 6] },
+  { f: x => Math.exp(x), df: x => Math.exp(x), label: 'e^x', dlabel: 'e^x', range: [-3, 2] },
+];
+
+let currentFunc = 0;
+
+function setFunc(i) {
+  currentFunc = i;
+  document.querySelectorAll('.func-select button').forEach((b, j) => {
+    b.className = j === i ? 'active' : '';
+  });
+  document.getElementById('fxDisplay').textContent = funcs[i].label;
+  document.getElementById('dfxDisplay').textContent = funcs[i].dlabel;
+  draw();
+}
+
+function draw() {
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const fn = funcs[currentFunc];
+  const [xMin, xMax] = fn.range;
+  const slider = parseFloat(document.getElementById('xPoint').value) / 100;
+  const xP = xMin + slider * (xMax - xMin);
+
+  document.getElementById('xVal').textContent = xP.toFixed(2);
+
+  // Compute y range
+  let yMin = Infinity, yMax = -Infinity;
+  for (let i = 0; i <= 200; i++) {
+    const x = xMin + (i / 200) * (xMax - xMin);
+    const y = fn.f(x);
+    if (isFinite(y)) {
+      yMin = Math.min(yMin, y);
+      yMax = Math.max(yMax, y);
+    }
+  }
+  const yPad = (yMax - yMin) * 0.15 || 1;
+  yMin -= yPad;
+  yMax += yPad;
+
+  function toCanvas(x, y) {
+    return [
+      ((x - xMin) / (xMax - xMin)) * w,
+      h - ((y - yMin) / (yMax - yMin)) * h
+    ];
+  }
+
+  // Grid
+  ctx.strokeStyle = '#30363D40';
+  ctx.lineWidth = 0.5;
+  // x-axis
+  if (yMin <= 0 && yMax >= 0) {
+    const [, ay] = toCanvas(0, 0);
+    ctx.beginPath(); ctx.moveTo(0, ay); ctx.lineTo(w, ay); ctx.stroke();
+  }
+  // y-axis
+  if (xMin <= 0 && xMax >= 0) {
+    const [ax] = toCanvas(0, 0);
+    ctx.beginPath(); ctx.moveTo(ax, 0); ctx.lineTo(ax, h); ctx.stroke();
+  }
+
+  // Function curve
+  ctx.strokeStyle = '#3FB950';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i <= 400; i++) {
+    const x = xMin + (i / 400) * (xMax - xMin);
+    const y = fn.f(x);
+    const [cx, cy] = toCanvas(x, y);
+    if (i === 0) ctx.moveTo(cx, cy);
+    else ctx.lineTo(cx, cy);
+  }
+  ctx.stroke();
+
+  // Tangent line
+  const yP = fn.f(xP);
+  const slope = fn.df(xP);
+  const tangentLen = (xMax - xMin) * 0.3;
+  const tx1 = xP - tangentLen;
+  const ty1 = yP - slope * tangentLen;
+  const tx2 = xP + tangentLen;
+  const ty2 = yP + slope * tangentLen;
+
+  ctx.strokeStyle = '#58A6FF';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  const [cx1, cy1] = toCanvas(tx1, ty1);
+  const [cx2, cy2] = toCanvas(tx2, ty2);
+  ctx.moveTo(cx1, cy1);
+  ctx.lineTo(cx2, cy2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Point
+  const [px, py] = toCanvas(xP, yP);
+  ctx.beginPath();
+  ctx.arc(px, py, 6, 0, Math.PI * 2);
+  ctx.fillStyle = '#F78166';
+  ctx.fill();
+  ctx.strokeStyle = '#F78166';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Update info
+  document.getElementById('xDisp').textContent = xP.toFixed(2);
+  document.getElementById('fyDisp').textContent = yP.toFixed(3);
+  document.getElementById('dyDisp').textContent = slope.toFixed(3);
+}
+
+document.getElementById('xPoint').addEventListener('input', draw);
+draw();
+</script>
+</body>
+</html>

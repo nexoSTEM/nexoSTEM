@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Simulacion - Campo Electrico</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0D1117; color: #F0F6FC; font-family: 'Inter', system-ui, sans-serif; padding: 20px; }
+  .container { max-width: 600px; margin: 0 auto; }
+  h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #58A6FF; }
+  .instructions { font-size: 12px; color: #8B949E; margin-bottom: 12px; }
+  canvas { display: block; width: 100%; border: 1px solid #30363D; border-radius: 8px; background: #161B22; cursor: crosshair; }
+  .toolbar { display: flex; gap: 8px; margin-bottom: 12px; }
+  .toolbar button {
+    padding: 6px 14px; font-size: 12px; font-weight: 500; border: 1px solid #30363D; border-radius: 6px;
+    background: #161B22; color: #8B949E; cursor: pointer; transition: all 0.15s;
+  }
+  .toolbar button:hover { background: #1C2128; color: #F0F6FC; }
+  .toolbar button.active { background: #58A6FF20; color: #58A6FF; border-color: #58A6FF40; }
+  .toolbar button.negative.active { background: #F7816620; color: #F78166; border-color: #F7816640; }
+  .result { margin-top: 12px; padding: 10px; background: #161B22; border: 1px solid #30363D; border-radius: 8px; font-size: 12px; color: #8B949E; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Campo Electrico - Simulacion Interactiva</h2>
+  <p class="instructions">Haz clic en el lienzo para colocar cargas. Observa las lineas de campo electrico.</p>
+  <div class="toolbar">
+    <button id="btnPos" class="active" onclick="setMode('pos')">+ Carga positiva</button>
+    <button id="btnNeg" class="negative" onclick="setMode('neg')">- Carga negativa</button>
+    <button onclick="clearCharges()">Limpiar</button>
+  </div>
+  <canvas id="canvas" width="560" height="400"></canvas>
+  <div class="result" id="info">Cargas: 0 | Haz clic para agregar cargas</div>
+</div>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let mode = 'pos';
+let charges = [];
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btnPos').className = m === 'pos' ? 'active' : '';
+  document.getElementById('btnNeg').className = m === 'neg' ? 'negative active' : 'negative';
+}
+
+canvas.addEventListener('click', function(e) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
+  charges.push({ x, y, q: mode === 'pos' ? 1 : -1 });
+  draw();
+});
+
+function clearCharges() {
+  charges = [];
+  draw();
+}
+
+function fieldAt(px, py) {
+  let ex = 0, ey = 0;
+  for (const c of charges) {
+    const dx = px - c.x;
+    const dy = py - c.y;
+    const r2 = dx * dx + dy * dy;
+    if (r2 < 100) continue;
+    const r = Math.sqrt(r2);
+    const e = c.q / r2;
+    ex += e * dx / r;
+    ey += e * dy / r;
+  }
+  return { ex, ey };
+}
+
+function draw() {
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  // Draw field lines
+  if (charges.length > 0) {
+    const numLines = 12;
+    for (const c of charges) {
+      if (c.q > 0) {
+        for (let i = 0; i < numLines; i++) {
+          const angle = (2 * Math.PI * i) / numLines;
+          traceLine(c.x + 12 * Math.cos(angle), c.y + 12 * Math.sin(angle), 1);
+        }
+      }
+    }
+    // If only negative charges, trace from edges
+    if (charges.every(c => c.q < 0)) {
+      for (const c of charges) {
+        for (let i = 0; i < numLines; i++) {
+          const angle = (2 * Math.PI * i) / numLines;
+          traceLine(c.x + 12 * Math.cos(angle), c.y + 12 * Math.sin(angle), -1);
+        }
+      }
+    }
+  }
+
+  // Draw charges
+  for (const c of charges) {
+    const color = c.q > 0 ? '#58A6FF' : '#F78166';
+    const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 14);
+    grad.addColorStop(0, color);
+    grad.addColorStop(1, color + '40');
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, 14, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Sign
+    ctx.fillStyle = '#0D1117';
+    ctx.font = 'bold 16px Inter, system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(c.q > 0 ? '+' : '-', c.x, c.y);
+  }
+
+  document.getElementById('info').textContent = 'Cargas: ' + charges.length +
+    ' (+ ' + charges.filter(c => c.q > 0).length +
+    ' / - ' + charges.filter(c => c.q < 0).length + ')';
+}
+
+function traceLine(startX, startY, direction) {
+  const step = 3;
+  const maxSteps = 200;
+  let x = startX, y = startY;
+
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.strokeStyle = '#3FB95040';
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i < maxSteps; i++) {
+    const f = fieldAt(x, y);
+    const mag = Math.sqrt(f.ex * f.ex + f.ey * f.ey);
+    if (mag < 0.00001) break;
+    x += direction * step * f.ex / mag;
+    y += direction * step * f.ey / mag;
+    if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) break;
+
+    // Check if near a charge of opposite sign
+    let nearCharge = false;
+    for (const c of charges) {
+      const dx = x - c.x;
+      const dy = y - c.y;
+      if (dx * dx + dy * dy < 144) { nearCharge = true; break; }
+    }
+    if (nearCharge) { ctx.lineTo(x, y); break; }
+    ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+
+draw();
+</script>
+</body>
+</html>

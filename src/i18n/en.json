@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "explore": "Explore",
+    "routes": "Learning paths",
+    "simulations": "Simulations",
+    "pricing": "Pricing",
+    "about": "About us",
+    "login": "Log in",
+    "register": "Sign up",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
+  },
+  "explorer": {
+    "title": "Explore the branches of knowledge",
+    "subtitle": "Choose a branch to see its sub-branches and available lessons.",
+    "lessons": "lessons",
+    "explore": "Explore",
+    "selectSubBranch": "Select a sub-branch",
+    "selectSubBranchDesc": "Click on a sub-branch to see its lessons.",
+    "startLesson": "Start lesson",
+    "difficulty": "Difficulty",
+    "duration": "Duration",
+    "allBranches": "All branches",
+    "back": "Back"
+  },
+  "lesson": {
+    "theory": "Theory",
+    "simulation": "Simulation",
+    "noWidget": "Interactive simulation not available for this lesson.",
+    "previous": "Previous",
+    "next": "Next",
+    "backToExplorer": "Back to explorer"
+  },
+  "auth": {
+    "loginTitle": "Log in to NexoSTEM",
+    "registerTitle": "Create your NexoSTEM account",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "name": "Full name",
+    "loginBtn": "Log in",
+    "registerBtn": "Create account",
+    "googleBtn": "Continue with Google",
+    "or": "or",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "goRegister": "Sign up",
+    "goLogin": "Log in",
+    "forgotPassword": "Forgot your password?",
+    "terms": "By signing up, you agree to our Terms of Service and Privacy Policy."
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "progress": "Your progress",
+    "recentLessons": "Recent lessons",
+    "subscription": "Subscription",
+    "activePlan": "Active plan",
+    "freeTrial": "Free trial",
+    "premium": "NexoSTEM Complete",
+    "daysLeft": "days left",
+    "lessonsCompleted": "lessons completed",
+    "continueLesson": "Continue",
+    "noRecent": "You haven't started any lessons yet.",
+    "startExploring": "Start exploring",
+    "overallProgress": "Overall progress"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "home": "Home"
+  }
+}
