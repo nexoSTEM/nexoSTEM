@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useI18n, type Locale } from '@/i18n'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function AppNav() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { t, locale, setLocale } = useI18n()
+  const { user, signOut } = useAuth()
   const location = useLocation()
+  const navigate = useNavigate()
+
+  async function handleLogout() {
+    await signOut()
+    navigate('/')
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -80,18 +88,29 @@ export default function AppNav() {
               ))}
             </div>
 
-            <Link
-              to="/login"
-              className="text-[#8B949E] hover:text-[#F0F6FC] text-sm font-medium transition-colors duration-200 px-3 py-2 no-underline"
-            >
-              {t('nav.login')}
-            </Link>
-            <Link
-              to="/registro"
-              className="bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] text-sm font-semibold px-4 py-2 rounded-md transition-all duration-200 hover:shadow-[0_0_16px_rgba(63,185,80,0.4)] no-underline"
-            >
-              {t('nav.register')}
-            </Link>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="text-[#8B949E] hover:text-[#F0F6FC] text-sm font-medium transition-colors duration-200 px-3 py-2"
+              >
+                {t('nav.logout')}
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-[#8B949E] hover:text-[#F0F6FC] text-sm font-medium transition-colors duration-200 px-3 py-2 no-underline"
+                >
+                  {t('nav.login')}
+                </Link>
+                <Link
+                  to="/registro"
+                  className="bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] text-sm font-semibold px-4 py-2 rounded-md transition-all duration-200 hover:shadow-[0_0_16px_rgba(63,185,80,0.4)] no-underline"
+                >
+                  {t('nav.register')}
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -154,15 +173,26 @@ export default function AppNav() {
               </div>
 
               <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-[#30363D]">
-                <Link to="/login" className="text-[#8B949E] text-sm font-medium py-2.5 px-2 text-center no-underline">
-                  {t('nav.login')}
-                </Link>
-                <Link
-                  to="/registro"
-                  className="bg-[#3FB950] text-[#0D1117] text-sm font-semibold py-2.5 px-4 rounded-md text-center no-underline"
-                >
-                  {t('nav.register')}
-                </Link>
+                {user ? (
+                  <button
+                    onClick={handleLogout}
+                    className="text-[#8B949E] text-sm font-medium py-2.5 px-2 text-center"
+                  >
+                    {t('nav.logout')}
+                  </button>
+                ) : (
+                  <>
+                    <Link to="/login" className="text-[#8B949E] text-sm font-medium py-2.5 px-2 text-center no-underline">
+                      {t('nav.login')}
+                    </Link>
+                    <Link
+                      to="/registro"
+                      className="bg-[#3FB950] text-[#0D1117] text-sm font-semibold py-2.5 px-4 rounded-md text-center no-underline"
+                    >
+                      {t('nav.register')}
+                    </Link>
+                  </>
+                )}
               </div>
             </nav>
           </motion.div>

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { branches } from '@/data/branches'
 import { useI18n } from '@/i18n'
+import { useAuth } from '@/contexts/AuthContext'
 import AppNav from '@/components/AppNav'
 
 const mockProgress: Record<string, number> = {
@@ -16,12 +17,66 @@ const mockRecentLessons = [
   { id: 'ce-01', title: 'Ley de Coulomb', branchId: 'fisica', branchColor: '#58A6FF' },
 ]
 
+function getSubscriptionCopy(
+  status: 'trialing' | 'active' | 'expired' | 'none',
+  trialEndsAt: string | null,
+  t: (path: string) => string
+) {
+  if (status === 'trialing' && trialEndsAt) {
+    const daysLeft = Math.max(
+      0,
+      Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+    )
+    return {
+      dotColor: '#3FB950',
+      label: t('dashboard.activePlan'),
+      title: t('dashboard.freeTrial'),
+      detail: `${daysLeft} ${t('dashboard.daysLeft')}`,
+      progressPct: Math.min(100, Math.round(((7 - daysLeft) / 7) * 100)),
+    }
+  }
+  if (status === 'active') {
+    return {
+      dotColor: '#3FB950',
+      label: t('dashboard.activePlan'),
+      title: t('dashboard.premium'),
+      detail: 'NexoSTEM Completo · €7.99/mes',
+      progressPct: 100,
+    }
+  }
+  if (status === 'expired') {
+    return {
+      dotColor: '#F85149',
+      label: 'Suscripcion',
+      title: 'Prueba finalizada',
+      detail: 'Tu periodo de prueba ha terminado.',
+      progressPct: 100,
+    }
+  }
+  return {
+    dotColor: '#8B949E',
+    label: 'Sin suscripcion',
+    title: 'Plan gratuito',
+    detail: 'Empieza tu prueba gratis de 7 dias.',
+    progressPct: 0,
+  }
+}
+
 export default function DashboardPage() {
   const { t } = useI18n()
+  const { user, subscription } = useAuth()
 
   const overallProgress = Math.round(
     Object.values(mockProgress).reduce((a, b) => a + b, 0) / Object.keys(mockProgress).length
   )
+
+  const displayName =
+    (user?.user_metadata?.full_name as string | undefined) ||
+    user?.email?.split('@')[0] ||
+    'Usuario'
+
+  const subCopy = getSubscriptionCopy(subscription.status, subscription.trialEndsAt, t)
+  const showUpgradeCta = subscription.status !== 'active'
 
   return (
     <div className="min-h-screen bg-[#0D1117] text-[#F0F6FC]">
@@ -36,7 +91,7 @@ export default function DashboardPage() {
             className="mb-10"
           >
             <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-              {t('dashboard.welcome')}, <span className="text-[#3FB950]">Hugo</span>
+              {t('dashboard.welcome')}, <span className="text-[#3FB950]">{displayName}</span>
             </h1>
             <p className="text-[#8B949E] text-base">
               {t('dashboard.overallProgress')}: {overallProgress}%
@@ -99,20 +154,25 @@ export default function DashboardPage() {
               <h2 className="text-lg font-semibold mb-4">{t('dashboard.subscription')}</h2>
               <div className="bg-[#161B22] border border-[#30363D] rounded-xl p-5">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 rounded-full bg-[#3FB950]" />
-                  <span className="text-sm font-medium">{t('dashboard.activePlan')}</span>
+                  <div className="w-2 h-2 rounded-full" style={{ background: subCopy.dotColor }} />
+                  <span className="text-sm font-medium">{subCopy.label}</span>
                 </div>
-                <h3 className="text-[#F0F6FC] font-bold text-lg mb-1">{t('dashboard.freeTrial')}</h3>
-                <p className="text-[#8B949E] text-sm mb-4">5 {t('dashboard.daysLeft')}</p>
+                <h3 className="text-[#F0F6FC] font-bold text-lg mb-1">{subCopy.title}</h3>
+                <p className="text-[#8B949E] text-sm mb-4">{subCopy.detail}</p>
                 <div className="w-full h-1.5 bg-[#0D1117] rounded-full overflow-hidden mb-4">
-                  <div className="w-[71%] h-full bg-[#3FB950] rounded-full" />
+                  <div
+                    className="h-full rounded-full"
+                    style={{ width: `${subCopy.progressPct}%`, background: subCopy.dotColor }}
+                  />
                 </div>
-                <Link
-                  to="/#precios"
-                  className="block w-full text-center bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-sm py-2.5 rounded-lg transition-all duration-200 no-underline"
-                >
-                  {t('dashboard.premium')}
-                </Link>
+                {showUpgradeCta && (
+                  <Link
+                    to="/#precios"
+                    className="block w-full text-center bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-sm py-2.5 rounded-lg transition-all duration-200 no-underline"
+                  >
+                    {t('dashboard.premium')}
+                  </Link>
+                )}
               </div>
             </motion.div>
           </div>

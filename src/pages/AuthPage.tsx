@@ -1,22 +1,112 @@
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useI18n } from '@/i18n'
+import { useAuth } from '@/contexts/AuthContext'
+import { buildCheckoutUrl } from '@/lib/checkout'
 import AppNav from '@/components/AppNav'
 
 export default function AuthPage() {
   const location = useLocation()
+  const navigate = useNavigate()
   const isLogin = location.pathname === '/login'
   const { t } = useI18n()
+  const { signIn, signUp, signInWithGoogle, startTrial, user } = useAuth()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  function handleSubmit(e: React.FormEvent) {
+  const [loading, setLoading] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [infoMessage, setInfoMessage] = useState<string | null>(null)
+
+  const wantsCheckout = Boolean((location.state as { checkout?: boolean } | null)?.checkout)
+
+  useEffect(() => {
+    setError(null)
+    setInfoMessage(null)
+  }, [isLogin])
+
+  useEffect(() => {
+    if (user) {
+      if (wantsCheckout) {
+        const checkoutUrl = buildCheckoutUrl(user)
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl
+          return
+        }
+        startTrial().finally(() => navigate('/dashboard', { replace: true }))
+        return
+      }
+      const from = (location.state as { from?: string } | null)?.from
+      navigate(from || '/dashboard', { replace: true })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
+
+  function mapAuthError(message: string): string {
+    if (message.includes('Invalid login credentials')) {
+      return isLogin ? 'Correo o contrasena incorrectos.' : message
+    }
+    if (message.includes('already registered') || message.includes('already been registered')) {
+      return 'Ya existe una cuenta con este correo. Inicia sesion.'
+    }
+    if (message.includes('Password should be at least')) {
+      return 'La contrasena debe tener al menos 6 caracteres.'
+    }
+    if (message.includes('Unable to validate email address') || message.includes('invalid')) {
+      return 'El correo electronico no es valido.'
+    }
+    return message
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    // Placeholder - would connect to auth backend
+    setError(null)
+    setInfoMessage(null)
+
+    if (!isLogin) {
+      if (password !== confirmPassword) {
+        setError('Las contrasenas no coinciden.')
+        return
+      }
+      if (password.length < 6) {
+        setError('La contrasena debe tener al menos 6 caracteres.')
+        return
+      }
+    }
+
+    setLoading(true)
+    try {
+      if (isLogin) {
+        const { error: signInError } = await signIn(email, password)
+        if (signInError) {
+          setError(mapAuthError(signInError.message))
+        }
+      } else {
+        const { error: signUpError } = await signUp(email, password, name)
+        if (signUpError) {
+          setError(mapAuthError(signUpError.message))
+        } else {
+          setInfoMessage('Cuenta creada. Revisa tu correo para confirmar tu cuenta antes de iniciar sesion.')
+        }
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleGoogle() {
+    setError(null)
+    setGoogleLoading(true)
+    const { error: googleError } = await signInWithGoogle()
+    if (googleError) {
+      setError(mapAuthError(googleError.message))
+      setGoogleLoading(false)
+    }
   }
 
   return (
@@ -48,10 +138,23 @@ export default function AuthPage() {
               {isLogin ? t('auth.loginTitle') : t('auth.registerTitle')}
             </h1>
 
-            {/* Google OAuth placeholder */}
+            {error && (
+              <div className="mb-4 rounded-lg border border-[#F85149]/40 bg-[#F85149]/10 px-4 py-3 text-sm text-[#F85149]">
+                {error}
+              </div>
+            )}
+            {infoMessage && (
+              <div className="mb-4 rounded-lg border border-[#3FB950]/40 bg-[#3FB950]/10 px-4 py-3 text-sm text-[#3FB950]">
+                {infoMessage}
+              </div>
+            )}
+
+            {/* Google OAuth */}
             <button
               type="button"
-              className="w-full flex items-center justify-center gap-3 bg-[#0D1117] border border-[#30363D] rounded-lg px-4 py-3 text-sm font-medium text-[#F0F6FC] hover:bg-[#1C2128] hover:border-[#8B949E] transition-all duration-200 mb-6"
+              onClick={handleGoogle}
+              disabled={googleLoading || loading}
+              className="w-full flex items-center justify-center gap-3 bg-[#0D1117] border border-[#30363D] rounded-lg px-4 py-3 text-sm font-medium text-[#F0F6FC] hover:bg-[#1C2128] hover:border-[#8B949E] transition-all duration-200 mb-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
@@ -59,7 +162,7 @@ export default function AuthPage() {
                 <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.997 8.997 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
                 <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
               </svg>
-              {t('auth.googleBtn')}
+              {googleLoading ? t('common.loading') : t('auth.googleBtn')}
             </button>
 
             {/* Divider */}
@@ -117,6 +220,7 @@ export default function AuthPage() {
                   onChange={e => setPassword(e.target.value)}
                   className="w-full bg-[#0D1117] border border-[#30363D] rounded-lg px-4 py-2.5 text-sm text-[#F0F6FC] placeholder-[#484F58] focus:outline-none focus:border-[#3FB950] focus:ring-1 focus:ring-[#3FB950]/30 transition-all duration-200"
                   placeholder="********"
+                  minLength={6}
                   required
                 />
               </div>
@@ -132,6 +236,7 @@ export default function AuthPage() {
                     onChange={e => setConfirmPassword(e.target.value)}
                     className="w-full bg-[#0D1117] border border-[#30363D] rounded-lg px-4 py-2.5 text-sm text-[#F0F6FC] placeholder-[#484F58] focus:outline-none focus:border-[#3FB950] focus:ring-1 focus:ring-[#3FB950]/30 transition-all duration-200"
                     placeholder="********"
+                    minLength={6}
                     required
                   />
                 </div>
@@ -139,9 +244,10 @@ export default function AuthPage() {
 
               <button
                 type="submit"
-                className="w-full bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold py-3 rounded-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(63,185,80,0.4)] active:scale-[0.98] mt-2"
+                disabled={loading || googleLoading}
+                className="w-full bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold py-3 rounded-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(63,185,80,0.4)] active:scale-[0.98] mt-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
               >
-                {isLogin ? t('auth.loginBtn') : t('auth.registerBtn')}
+                {loading ? t('common.loading') : (isLogin ? t('auth.loginBtn') : t('auth.registerBtn'))}
               </button>
             </form>
 

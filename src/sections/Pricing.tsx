@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import CheckoutButton from '@/components/CheckoutButton'
 
 export default function Pricing() {
   const ref = useRef(null)
@@ -85,12 +86,9 @@ export default function Pricing() {
             </ul>
 
             {/* CTA */}
-            <a
-              href="#registro"
-              className="block w-full text-center bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold py-3.5 rounded-xl transition-all duration-200 hover:shadow-[0_0_24px_rgba(63,185,80,0.4)] active:scale-[0.98]"
-            >
+            <CheckoutButton className="block w-full text-center bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold py-3.5 rounded-xl transition-all duration-200 hover:shadow-[0_0_24px_rgba(63,185,80,0.4)] active:scale-[0.98]">
               Empieza gratis 7 días
-            </a>
+            </CheckoutButton>
 
             <p className="text-center text-[#8B949E] text-xs mt-3">
               Cancela en cualquier momento. Sin permanencia.

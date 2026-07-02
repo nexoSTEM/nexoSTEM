@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import CheckoutButton from '@/components/CheckoutButton'
 
 export default function CTA() {
   const ref = useRef(null)
@@ -32,15 +33,12 @@ export default function CTA() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="#registro"
-                className="group inline-flex items-center gap-2 bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-base px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-[0_0_32px_rgba(63,185,80,0.45)] active:scale-[0.98]"
-              >
+              <CheckoutButton className="group inline-flex items-center gap-2 bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-base px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-[0_0_32px_rgba(63,185,80,0.45)] active:scale-[0.98]">
                 Empieza gratis — 7 días
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-200 group-hover:translate-x-0.5">
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </a>
+              </CheckoutButton>
               <span className="text-[#8B949E] text-sm">
                 Luego €7.99/mes · Cancela cuando quieras
               </span>
