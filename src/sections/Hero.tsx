@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion, type Variants } from 'framer-motion'
 
 const fadeUp: Variants = {
@@ -78,15 +79,15 @@ export default function Hero() {
             animate="show"
             className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
           >
-            <a
-              href="#registro"
-              className="group inline-flex items-center gap-2 bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-base px-6 py-3.5 rounded-md transition-all duration-200 hover:shadow-[0_0_24px_rgba(63,185,80,0.45)] active:scale-[0.98]"
+            <Link
+              to="/registro"
+              className="group inline-flex items-center gap-2 bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-base px-6 py-3.5 rounded-md transition-all duration-200 hover:shadow-[0_0_24px_rgba(63,185,80,0.45)] active:scale-[0.98] no-underline"
             >
               Empieza gratis
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-200 group-hover:translate-x-0.5">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </a>
+            </Link>
             <div className="flex items-center gap-2 text-[#8B949E] text-sm">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <rect x="1" y="1" width="12" height="12" rx="2" stroke="#8B949E" strokeWidth="1.5"/>

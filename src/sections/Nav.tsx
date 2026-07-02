@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Nav() {
@@ -54,18 +55,18 @@ export default function Nav() {
 
           {/* Auth buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="#login"
-              className="text-[#8B949E] hover:text-[#F0F6FC] text-sm font-medium transition-colors duration-200 px-3 py-2"
+            <Link
+              to="/login"
+              className="text-[#8B949E] hover:text-[#F0F6FC] text-sm font-medium transition-colors duration-200 px-3 py-2 no-underline"
             >
               Iniciar sesión
-            </a>
-            <a
-              href="#registro"
-              className="bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] text-sm font-semibold px-4 py-2 rounded-md transition-all duration-200 hover:shadow-[0_0_16px_rgba(63,185,80,0.4)]"
+            </Link>
+            <Link
+              to="/registro"
+              className="bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] text-sm font-semibold px-4 py-2 rounded-md transition-all duration-200 hover:shadow-[0_0_16px_rgba(63,185,80,0.4)] no-underline"
             >
               Regístrate
-            </a>
+            </Link>
           </div>
 
           {/* Mobile hamburger */}
@@ -109,15 +110,15 @@ export default function Nav() {
                 </a>
               ))}
               <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-[#30363D]">
-                <a href="#login" className="text-[#8B949E] text-sm font-medium py-2.5 px-2 text-center">
+                <Link to="/login" className="text-[#8B949E] text-sm font-medium py-2.5 px-2 text-center no-underline">
                   Iniciar sesión
-                </a>
-                <a
-                  href="#registro"
-                  className="bg-[#3FB950] text-[#0D1117] text-sm font-semibold py-2.5 px-4 rounded-md text-center"
+                </Link>
+                <Link
+                  to="/registro"
+                  className="bg-[#3FB950] text-[#0D1117] text-sm font-semibold py-2.5 px-4 rounded-md text-center no-underline"
                 >
                   Regístrate gratis
-                </a>
+                </Link>
               </div>
             </nav>
           </motion.div>
