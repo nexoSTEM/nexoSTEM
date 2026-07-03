@@ -4,6 +4,7 @@ import { branches } from '@/data/branches'
 import { useI18n } from '@/i18n'
 import { useAuth } from '@/contexts/AuthContext'
 import AppNav from '@/components/AppNav'
+import CheckoutButton from '@/components/CheckoutButton'
 
 const mockProgress: Record<string, number> = {
   fisica: 35,
@@ -166,12 +167,9 @@ export default function DashboardPage() {
                   />
                 </div>
                 {showUpgradeCta && (
-                  <Link
-                    to="/#precios"
-                    className="block w-full text-center bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-sm py-2.5 rounded-lg transition-all duration-200 no-underline"
-                  >
+                  <CheckoutButton className="block w-full text-center bg-[#3FB950] hover:bg-[#46c95a] text-[#0D1117] font-bold text-sm py-2.5 rounded-lg transition-all duration-200 no-underline">
                     {t('dashboard.premium')}
-                  </Link>
+                  </CheckoutButton>
                 )}
               </div>
             </motion.div>
