@@ -493,7 +493,7 @@ export const lessons: Lesson[] = [
     duration: '20 min',
     difficulty: 'basico',
     theory: '',
-    widgetFile: null,
+    widgetFile: '/lessons/matematicas/eso/conjuntos-numericos.html',
     subLessons: [
       { id: 'mat-eso-01-sub-1', title: 'Conjuntos numéricos: naturales, enteros, racionales y reales', order: 1 },
       { id: 'mat-eso-01-sub-2', title: 'Operaciones con enteros, fracciones y decimales', order: 2 },
