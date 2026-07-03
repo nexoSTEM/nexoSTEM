@@ -34,13 +34,11 @@ export const branches: Branch[] = [
     name: 'Matematicas',
     slug: 'matematicas',
     color: '#3FB950',
-    description: 'Algebra, calculo, estadistica y ecuaciones diferenciales.',
+    description: 'ESO, Bachillerato y Cursos Universitarios.',
     subBranches: [
-      { id: 'algebra-lineal', name: 'Algebra lineal', slug: 'algebra-lineal', lessonCount: 10 },
-      { id: 'calculo-diferencial', name: 'Calculo diferencial', slug: 'calculo-diferencial', lessonCount: 9 },
-      { id: 'calculo-integral', name: 'Calculo integral', slug: 'calculo-integral', lessonCount: 8 },
-      { id: 'estadistica', name: 'Estadistica', slug: 'estadistica', lessonCount: 7 },
-      { id: 'ecuaciones-diferenciales', name: 'Ecuaciones diferenciales', slug: 'ecuaciones-diferenciales', lessonCount: 6 },
+      { id: 'eso', name: 'ESO', slug: 'eso', lessonCount: 8 },
+      { id: 'bachillerato', name: 'Bachillerato', slug: 'bachillerato', lessonCount: 9 },
+      { id: 'cursos-universitarios', name: 'Cursos Universitarios', slug: 'cursos-universitarios', lessonCount: 16 },
     ],
   },
   {

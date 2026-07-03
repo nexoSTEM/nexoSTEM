@@ -147,22 +147,52 @@ export default function LessonPage() {
               <h1 className="text-2xl sm:text-3xl font-bold">{lesson.title}</h1>
             </div>
 
+            {/* SubLessons */}
+            {lesson.subLessons.length > 0 && (
+              <section className="mb-10">
+                <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M3 4h12M3 9h12M3 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                  {t('lesson.contents')}
+                </h2>
+                <div className="bg-[#161B22] border border-[#30363D] rounded-xl divide-y divide-[#30363D]">
+                  {lesson.subLessons
+                    .slice()
+                    .sort((a, b) => a.order - b.order)
+                    .map(sub => (
+                      <div key={sub.id} className="flex items-center gap-3 p-4">
+                        <span
+                          className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold flex-shrink-0"
+                          style={{ background: `${branch.color}18`, color: branch.color }}
+                        >
+                          {sub.order}
+                        </span>
+                        <span className="text-[#C9D1D9] text-sm">{sub.title}</span>
+                      </div>
+                    ))}
+                </div>
+              </section>
+            )}
+
             {/* Theory */}
-            <section className="mb-10">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M3 4h12M3 9h12M3 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-                {t('lesson.theory')}
-              </h2>
-              <div className="bg-[#161B22] border border-[#30363D] rounded-xl p-6">
-                {lesson.theory.split('\n\n').map((paragraph, i) => (
-                  <p key={i} className="text-[#C9D1D9] text-sm leading-relaxed mb-4 last:mb-0 whitespace-pre-wrap font-[family-name:var(--font-body)]">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </section>
+            {lesson.theory && (
+              <section className="mb-10">
+                <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M3 4h12M3 9h12M3 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                  {t('lesson.theory')}
+                </h2>
+                <div className="bg-[#161B22] border border-[#30363D] rounded-xl p-6">
+                  {lesson.theory.split('\n\n').map((paragraph, i) => (
+                    <p key={i} className="text-[#C9D1D9] text-sm leading-relaxed mb-4 last:mb-0 whitespace-pre-wrap font-[family-name:var(--font-body)]">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Interactive widget */}
             <section className="mb-10">

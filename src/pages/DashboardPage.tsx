@@ -14,7 +14,7 @@ const mockProgress: Record<string, number> = {
 
 const mockRecentLessons = [
   { id: 'grav-01', title: 'Ley de gravitacion universal', branchId: 'fisica', branchColor: '#58A6FF' },
-  { id: 'cd-01', title: 'Concepto de derivada', branchId: 'matematicas', branchColor: '#3FB950' },
+  { id: 'mat-eso-01', title: 'Numeros y expresiones algebraicas', branchId: 'matematicas', branchColor: '#3FB950' },
   { id: 'ce-01', title: 'Ley de Coulomb', branchId: 'fisica', branchColor: '#58A6FF' },
 ]
 

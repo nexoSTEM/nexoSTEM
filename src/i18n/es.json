@@ -24,6 +24,7 @@
     "back": "Volver"
   },
   "lesson": {
+    "contents": "Contenidos",
     "theory": "Teoría",
     "simulation": "Simulación",
     "noWidget": "Simulación interactiva no disponible para esta lección.",
