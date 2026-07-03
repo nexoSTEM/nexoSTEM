@@ -204,12 +204,11 @@ export default function LessonPage() {
                 {t('lesson.simulation')}
               </h2>
               {lesson.widgetFile ? (
-                <div className="bg-[#161B22] border border-[#30363D] rounded-xl overflow-hidden">
+                <div className="h-[calc(100vh-200px)]">
                   <iframe
                     src={lesson.widgetFile}
                     title={lesson.title}
-                    className="w-full border-0"
-                    style={{ height: '480px', background: '#0D1117' }}
+                    className="w-full h-full border-0"
                     sandbox="allow-scripts allow-same-origin"
                   />
                 </div>
