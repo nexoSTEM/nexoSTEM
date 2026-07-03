@@ -17,21 +17,19 @@ export interface Branch {
 export const branches: Branch[] = [
   {
     id: 'fisica',
-    name: 'Fisica',
+    name: 'Física',
     slug: 'fisica',
     color: '#58A6FF',
-    description: 'Gravitacion, electromagnetismo, termodinamica y mas.',
+    description: 'Mecánica, electromagnetismo, termodinámica, ondas y óptica.',
     subBranches: [
-      { id: 'gravitacion', name: 'Gravitacion', slug: 'gravitacion', lessonCount: 8 },
-      { id: 'campo-electrico', name: 'Campo electrico', slug: 'campo-electrico', lessonCount: 7 },
-      { id: 'campo-magnetico', name: 'Campo magnetico', slug: 'campo-magnetico', lessonCount: 6 },
-      { id: 'ondas-electromagneticas', name: 'Ondas electromagneticas', slug: 'ondas-electromagneticas', lessonCount: 9 },
-      { id: 'termodinamica', name: 'Termodinamica', slug: 'termodinamica', lessonCount: 8 },
+      { id: 'eso', name: 'ESO', slug: 'eso', lessonCount: 8 },
+      { id: 'bachillerato', name: 'Bachillerato', slug: 'bachillerato', lessonCount: 9 },
+      { id: 'cursos-universitarios', name: 'Cursos Universitarios', slug: 'cursos-universitarios', lessonCount: 10 },
     ],
   },
   {
     id: 'matematicas',
-    name: 'Matematicas',
+    name: 'Matemáticas',
     slug: 'matematicas',
     color: '#3FB950',
     description: 'ESO, Bachillerato y Cursos Universitarios.',
@@ -43,10 +41,10 @@ export const branches: Branch[] = [
   },
   {
     id: 'ingenieria',
-    name: 'Ingenieria',
+    name: 'Ingeniería',
     slug: 'ingenieria',
     color: '#F78166',
-    description: 'Motores, sensores, sistemas de potencia y componentes electronicos.',
+    description: 'Motores, sensores, sistemas de potencia y componentes electrónicos.',
     subBranches: [
       { id: 'motores', name: 'Motores', slug: 'motores', lessonCount: 8 },
       { id: 'sensores', name: 'Sensores', slug: 'sensores', lessonCount: 7 },

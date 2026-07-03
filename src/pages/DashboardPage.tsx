@@ -13,9 +13,9 @@ const mockProgress: Record<string, number> = {
 }
 
 const mockRecentLessons = [
-  { id: 'grav-01', title: 'Ley de gravitacion universal', branchId: 'fisica', branchColor: '#58A6FF' },
-  { id: 'mat-eso-01', title: 'Numeros y expresiones algebraicas', branchId: 'matematicas', branchColor: '#3FB950' },
-  { id: 'ce-01', title: 'Ley de Coulomb', branchId: 'fisica', branchColor: '#58A6FF' },
+  { id: 'fis-eso-01', title: 'El método científico y la medida', branchId: 'fisica', branchColor: '#58A6FF' },
+  { id: 'mat-eso-01', title: 'Números y expresiones algebraicas', branchId: 'matematicas', branchColor: '#3FB950' },
+  { id: 'fis-bach-05', title: 'Campo eléctrico', branchId: 'fisica', branchColor: '#58A6FF' },
 ]
 
 function getSubscriptionCopy(
@@ -48,17 +48,17 @@ function getSubscriptionCopy(
   if (status === 'expired') {
     return {
       dotColor: '#F85149',
-      label: 'Suscripcion',
+      label: 'Suscripción',
       title: 'Prueba finalizada',
-      detail: 'Tu periodo de prueba ha terminado.',
+      detail: 'Tu período de prueba ha terminado.',
       progressPct: 100,
     }
   }
   return {
     dotColor: '#8B949E',
-    label: 'Sin suscripcion',
+    label: 'Sin suscripción',
     title: 'Plan gratuito',
-    detail: 'Empieza tu prueba gratis de 7 dias.',
+    detail: 'Empieza tu prueba gratis de 7 días.',
     progressPct: 0,
   }
 }

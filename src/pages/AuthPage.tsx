@@ -183,7 +183,7 @@ export default function AuthPage() {
                     value={name}
                     onChange={e => setName(e.target.value)}
                     className="w-full bg-[#0D1117] border border-[#30363D] rounded-lg px-4 py-2.5 text-sm text-[#F0F6FC] placeholder-[#484F58] focus:outline-none focus:border-[#3FB950] focus:ring-1 focus:ring-[#3FB950]/30 transition-all duration-200"
-                    placeholder="Juan Perez"
+                    placeholder="Juan Pérez"
                     required
                   />
                 </div>
