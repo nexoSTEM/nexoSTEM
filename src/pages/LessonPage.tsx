@@ -96,8 +96,8 @@ export default function LessonPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
           >
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-xs text-[#8B949E] mb-6 flex-wrap">
               <Link to="/explorar" className="hover:text-[#F0F6FC] transition-colors no-underline text-[#8B949E]">
@@ -194,35 +194,40 @@ export default function LessonPage() {
               </section>
             )}
 
-            {/* Interactive widget */}
-            <section className="mb-10">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                  <path d="M7 6l4 3-4 3V6Z" fill="currentColor"/>
-                </svg>
-                {t('lesson.simulation')}
-              </h2>
-              {lesson.widgetFile ? (
-                <div className="h-[calc(100vh-200px)]">
-                  <iframe
-                    src={lesson.widgetFile}
-                    title={lesson.title}
-                    className="w-full h-full border-0"
-                    sandbox="allow-scripts allow-same-origin"
-                  />
-                </div>
-              ) : (
-                <div className="bg-[#161B22] border border-[#30363D] rounded-xl p-8 text-center">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" className="mx-auto mb-3 text-[#30363D]">
-                    <rect x="4" y="4" width="32" height="32" rx="4" stroke="currentColor" strokeWidth="2"/>
-                    <path d="M15 13l10 7-10 7V13Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-                  </svg>
-                  <p className="text-[#8B949E] text-sm">{t('lesson.noWidget')}</p>
-                </div>
-              )}
-            </section>
+          </div>
 
+            {/* Interactive widget */}
+            {lesson.widgetFile ? (
+              <section className="mb-10">
+                <iframe
+                  src={lesson.widgetFile}
+                  title={lesson.title}
+                  className="w-full h-[70vh] sm:h-[calc(100vh-120px)] border-0"
+                  sandbox="allow-scripts allow-same-origin"
+                />
+              </section>
+            ) : (
+              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <section className="mb-10">
+                  <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M7 6l4 3-4 3V6Z" fill="currentColor"/>
+                    </svg>
+                    {t('lesson.simulation')}
+                  </h2>
+                  <div className="bg-[#161B22] border border-[#30363D] rounded-xl p-8 text-center">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" className="mx-auto mb-3 text-[#30363D]">
+                      <rect x="4" y="4" width="32" height="32" rx="4" stroke="currentColor" strokeWidth="2"/>
+                      <path d="M15 13l10 7-10 7V13Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
+                    </svg>
+                    <p className="text-[#8B949E] text-sm">{t('lesson.noWidget')}</p>
+                  </div>
+                </section>
+              </div>
+            )}
+
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Prev / Next */}
             <div className="flex items-center justify-between pt-6 border-t border-[#30363D]">
               {prevLesson ? (
@@ -278,6 +283,7 @@ export default function LessonPage() {
                 ))}
               </div>
             </div>
+          </div>
           </motion.div>
         </main>
       </div>
