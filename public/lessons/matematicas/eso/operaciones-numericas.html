@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operaciones con Enteros, Fracciones y Decimales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<style>
+  :root{
+    --bg:#0a0d13; --bg-panel:#11151d; --bg-panel-2:#151a24; --line:#232a38;
+    --text:#e9edf5; --text-dim:#8b93a7;
+    --cyan:#5fe3e0; --magenta:#ff5ca8; --purple:#9b7bff; --amber:#ffb454; --green:#5fe0a0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
+  body{
+    min-height:100vh;padding:48px 24px 80px;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(95,227,224,0.06), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(255,92,168,0.05), transparent 40%),
+      var(--bg);
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--purple);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--purple);display:inline-block;}
+  h1{font-family:'STIX Two Text',serif;font-weight:600;font-size:clamp(30px,4.6vw,50px);line-height:1.08;margin:0 0 16px;
+    background:linear-gradient(100deg,#fff 20%, var(--cyan) 60%, var(--magenta) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lede{font-size:16.5px;line-height:1.6;color:var(--text-dim);max-width:660px;margin-bottom:34px;}
+  .lede b{color:var(--text);font-weight:600;}
+
+  /* tabs */
+  .tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+  .tab-btn{
+    font-family:'STIX Two Text',serif;font-style:italic;font-size:15.5px;
+    background:var(--bg-panel);border:1px solid var(--line);color:var(--text-dim);
+    padding:11px 22px;border-radius:10px;cursor:pointer;transition:.15s;
+  }
+  .tab-btn.active{color:var(--bg);background:var(--cyan);border-color:var(--cyan);font-weight:600;}
+  .tab-btn:not(.active):hover{border-color:var(--cyan);color:var(--text);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .stage{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;margin-bottom:22px;}
+  @media(max-width:920px){.stage{grid-template-columns:1fr;}}
+  .panel{background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;padding:24px;}
+  .panel-title{font-family:'STIX Two Text',serif;font-style:italic;font-size:19px;margin:0 0 4px;}
+  .panel-sub{font-size:12.5px;color:var(--text-dim);margin-bottom:14px;}
+
+  svg{width:100%;height:auto;overflow:visible;}
+  .axis-line{stroke:var(--line);stroke-width:1.4;}
+  .grid-line{stroke:var(--line);stroke-width:1;opacity:.55;}
+  .tick-label{font-family:'JetBrains Mono',monospace;font-size:11px;fill:var(--text-dim);}
+
+  /* op buttons */
+  .op-row{display:flex;gap:8px;margin-bottom:18px;}
+  .op-btn{
+    flex:1;background:var(--bg-panel-2);border:1px solid var(--line);color:var(--text-dim);
+    font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;padding:10px 0;border-radius:9px;cursor:pointer;transition:.15s;
+  }
+  .op-btn.active{background:var(--magenta);color:#1a0410;border-color:var(--magenta);}
+  .op-btn:not(.active):hover{border-color:var(--magenta);color:var(--text);}
+
+  .ctrl-row{margin-bottom:16px;}
+  .ctrl-label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--text-dim);margin-bottom:7px;}
+  .ctrl-label b{color:var(--text);font-weight:500;}
+  .ctrl-val{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--cyan);}
+  input[type=range]{-webkit-appearance:none;width:100%;height:3px;border-radius:2px;background:var(--line);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+    background:var(--cyan);cursor:pointer;border:2px solid #0a0d13;box-shadow:0 0 0 1px var(--cyan);}
+  input[type=number]{
+    width:100%;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:9px;color:var(--text);
+    font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;
+  }
+  input[type=number]:focus{border-color:var(--cyan);}
+
+  .result-box{background:var(--bg-panel-2);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:6px;min-height:56px;}
+  .result-box .r-main{font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--amber);margin-bottom:4px;}
+  .result-box .r-note{font-size:12.5px;color:var(--text-dim);line-height:1.5;}
+
+  .formula-box{margin-top:16px;padding:14px 16px;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:10px;}
+  .formula-render{font-size:15px;display:flex;justify-content:center;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line);}
+  .glossary{font-size:12px;}
+  .glossary div{display:flex;gap:8px;padding:5px 0;border-top:1px solid var(--line);}
+  .glossary div:first-child{border-top:none;}
+  .gl-sym{font-family:'JetBrains Mono',monospace;color:var(--text);min-width:40px;font-weight:600;}
+  .gl-desc{color:var(--text-dim);flex:1;line-height:1.4;}
+  .gl-unit{font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:10.5px;white-space:nowrap;align-self:flex-start;opacity:.8;}
+
+  /* fraction bars */
+  .frac-block{margin-bottom:14px;}
+  .frac-block-label{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:6px;}
+  .frac-bar{display:flex;gap:2px;height:34px;}
+  .frac-cell{flex:1;border-radius:3px;background:var(--bg-panel-2);border:1px solid var(--line);}
+  .frac-cell.on{background:var(--fill-color,var(--cyan));border-color:transparent;}
+  .frac-cell.neg{background:repeating-linear-gradient(45deg, var(--fill-color,var(--magenta)) 0 4px, transparent 4px 8px);border-color:transparent;}
+
+  /* section heading + pizza model */
+  .section-heading{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text-dim);margin:0 0 14px;padding-top:6px;border-top:1px solid var(--line);
+  }
+  .tab-panel > .section-heading:first-child{border-top:none;padding-top:0;}
+  .pizza-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .pizza-wrap svg{width:auto;height:auto;}
+  .basic-readout{text-align:center;font-size:14px;color:var(--text-dim);margin-top:10px;line-height:1.5;}
+  .basic-readout b{color:var(--amber);font-family:'JetBrains Mono',monospace;}
+  .pizza-row{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;padding:6px 0;}
+  .hint{font-size:11.5px;color:var(--text-dim);margin:2px 0 0;}
+
+  /* decimal alignment */
+  .dec-row{display:flex;align-items:center;gap:2px;font-family:'JetBrains Mono',monospace;font-size:20px;margin-bottom:8px;}
+  .dec-cell{width:26px;text-align:center;padding:6px 0;border-radius:4px;}
+  .dec-cell.faded{opacity:.35;}
+  .dec-cell.point{width:10px;color:var(--amber);font-weight:700;}
+  .dec-cell.int-part{color:var(--cyan);}
+  .dec-cell.dec-part{color:var(--magenta);}
+  .dec-row.result .dec-cell.int-part, .dec-row.result .dec-cell.dec-part{color:var(--amber);}
+  .dec-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);width:60px;flex-shrink:0;}
+  .dec-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    padding:2px 8px;border-radius:12px;margin-left:6px;}
+
+  /* story */
+  .story{background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;padding:8px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px;}
+  @media(max-width:820px){.story{grid-template-columns:1fr;}}
+  .step{padding:16px;border-radius:10px;background:transparent;border:1px solid transparent;transition:.25s;}
+  .step.active{background:var(--bg-panel-2);border-color:var(--step-color,var(--cyan));}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--step-color,var(--text-dim));margin-bottom:8px;}
+  .step h3{font-family:'STIX Two Text',serif;font-weight:600;font-size:15.5px;margin:0 0 6px;}
+  .step p{font-size:13px;line-height:1.5;color:var(--text-dim);margin:0;}
+
+  footer{margin-top:40px;text-align:center;font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;}
+
+  /* quiz (shared engine) */
+  .quiz-panel{background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin-bottom:22px;}
+  .quiz-intro{text-align:center;padding:20px 10px;}
+  .quiz-intro h2{font-family:'STIX Two Text',serif;font-weight:600;font-size:24px;margin:0 0 10px;}
+  .quiz-intro p{font-size:14px;color:var(--text-dim);max-width:480px;margin:0 auto 22px;line-height:1.6;}
+  #btnStartQuiz{background:var(--cyan);color:#06181a;border:none;border-radius:10px;padding:13px 28px;font-weight:700;font-size:14.5px;cursor:pointer;}
+  #btnStartQuiz:hover{filter:brightness(1.1);}
+  .quiz-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:12px;}
+  .quiz-counter{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);white-space:nowrap;}
+  .diff-badge{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;}
+  .diff-facil{color:var(--green);border:1px solid var(--green);background:rgba(95,224,160,.08);}
+  .diff-medio{color:var(--amber);border:1px solid var(--amber);background:rgba(255,180,84,.08);}
+  .diff-dificil{color:var(--magenta);border:1px solid var(--magenta);background:rgba(255,92,168,.08);}
+  .progress-bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:3px;transition:width .3s;}
+  .quiz-q{font-family:'STIX Two Text',serif;font-size:18.5px;line-height:1.4;margin:0 0 20px;color:var(--text);}
+  .quiz-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+  .quiz-option{text-align:left;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:10px;
+    padding:13px 16px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:14.5px;cursor:pointer;transition:.15s;}
+  .quiz-option:hover:not(:disabled){border-color:var(--cyan);}
+  .quiz-option:disabled{cursor:default;}
+  .quiz-option.correct{border-color:var(--green);background:rgba(95,224,160,.1);color:var(--green);}
+  .quiz-option.wrong{border-color:var(--magenta);background:rgba(255,92,168,.1);color:var(--magenta);}
+  .quiz-explain{font-size:13.5px;line-height:1.55;color:var(--text-dim);background:var(--bg-panel-2);
+    border-left:3px solid var(--cyan);border-radius:6px;padding:12px 15px;margin-bottom:18px;display:none;font-family:'Inter',sans-serif;}
+  .quiz-explain.show{display:block;}
+  #btnNextQ{background:var(--cyan);color:#06181a;border:none;border-radius:9px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;display:none;}
+  #btnNextQ.show{display:inline-block;}
+  .quiz-results{text-align:center;padding:10px;}
+  .score-big{font-family:'STIX Two Text',serif;font-size:52px;font-weight:600;margin:6px 0;
+    background:linear-gradient(100deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .score-msg{font-size:15px;color:var(--text);max-width:460px;margin:0 auto 22px;line-height:1.5;}
+  .breakdown{display:flex;justify-content:center;gap:28px;margin-bottom:26px;flex-wrap:wrap;}
+  .bd-item{text-align:center;}
+  .bd-num{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;}
+  .bd-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  #btnRestartQuiz{background:var(--bg-panel-2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px 26px;font-weight:600;font-size:14px;cursor:pointer;}
+  #btnRestartQuiz:hover{border-color:var(--cyan);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Ciencia visual · Aritmética</div>
+  <h1>Sumar, restar, repartir, medir</h1>
+  <p class="lede">Cada tipo de número se opera de una forma distinta porque significa algo distinto: un entero <b>salta</b> sobre una recta, una fracción <b>reparte</b> un área, un decimal <b>alinea</b> posiciones. Elige un modo y manipula los controles para verlo en acción.</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="enteros">Enteros</button>
+    <button class="tab-btn" data-tab="fracciones">Fracciones</button>
+    <button class="tab-btn" data-tab="decimales">Decimales</button>
+  </div>
+
+  <!-- ENTEROS -->
+  <div class="tab-panel active" id="tab-enteros">
+    <div class="stage">
+      <div class="panel">
+        <p class="panel-title">La recta numérica</p>
+        <p class="panel-sub">Cian: dónde empieza · Magenta: el salto de la operación · Ámbar: el resultado</p>
+        <svg id="intChart" viewBox="0 0 620 200"></svg>
+      </div>
+      <div class="panel">
+        <p class="panel-title">Controles</p>
+        <div class="op-row" id="intOps">
+          <button class="op-btn active" data-op="+">+</button>
+          <button class="op-btn" data-op="-">−</button>
+          <button class="op-btn" data-op="×">×</button>
+          <button class="op-btn" data-op="÷">÷</button>
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>a</b> <span class="ctrl-val" id="vIntA">3</span></div>
+          <input type="range" id="sIntA" min="-8" max="8" step="1" value="3">
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>b</b> <span class="ctrl-val" id="vIntB">4</span></div>
+          <input type="range" id="sIntB" min="-8" max="8" step="1" value="4">
+        </div>
+        <div class="result-box" id="intResultBox"></div>
+        <div class="formula-box">
+          <div class="formula-render" id="intFormula"></div>
+          <div class="glossary" id="intGlossary"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRACCIONES -->
+  <div class="tab-panel" id="tab-fracciones">
+
+    <p class="section-heading">Lo básico · ¿qué es una fracción?</p>
+    <div class="stage">
+      <div class="panel">
+        <p class="panel-title">Una pizza, cortada en trozos iguales</p>
+        <p class="panel-sub">El denominador dice en cuántos quesitos se corta. El numerador dice cuántos te comes.</p>
+        <div id="basicPizzaHolder" style="display:flex;justify-content:center;padding:10px 0 4px;"></div>
+        <p class="basic-readout" id="basicReadout"></p>
+      </div>
+      <div class="panel">
+        <p class="panel-title">Controles</p>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Denominador</b> <span class="ctrl-val" id="vBd">8</span></div>
+          <input type="range" id="sBd" min="1" max="12" step="1" value="8">
+          <p class="hint">¿En cuántos quesitos iguales cortamos la pizza?</p>
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Numerador</b> <span class="ctrl-val" id="vBn">3</span></div>
+          <input type="range" id="sBn" min="0" max="12" step="1" value="3">
+          <p class="hint">¿Cuántos quesitos te comes?</p>
+        </div>
+        <div class="formula-box">
+          <div class="formula-render" id="basicFormula"></div>
+          <div class="glossary" id="basicGlossary"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-heading">Operaciones con fracciones</p>
+    <div class="stage">
+      <div class="panel">
+        <p class="panel-title" id="fracPanelTitle">Pizzas (común denominador)</p>
+        <p class="panel-sub" id="fracPanelSub">Cian: a/b · Magenta: c/d · Ámbar: resultado</p>
+        <div id="fracBarsHolder"></div>
+        <svg id="fracAreaChart" viewBox="0 0 340 320" style="display:none;"></svg>
+      </div>
+      <div class="panel">
+        <p class="panel-title">Controles</p>
+        <div class="op-row" id="fracOps">
+          <button class="op-btn active" data-op="+">+</button>
+          <button class="op-btn" data-op="-">−</button>
+          <button class="op-btn" data-op="×">×</button>
+          <button class="op-btn" data-op="÷">÷</button>
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Numerador a</b> <span class="ctrl-val" id="vFnA">1</span></div>
+          <input type="range" id="sFnA" min="-6" max="6" step="1" value="1">
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Denominador b</b> <span class="ctrl-val" id="vFdA">2</span></div>
+          <input type="range" id="sFdA" min="1" max="8" step="1" value="2">
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Numerador c</b> <span class="ctrl-val" id="vFnB">1</span></div>
+          <input type="range" id="sFnB" min="-6" max="6" step="1" value="1">
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Denominador d</b> <span class="ctrl-val" id="vFdB">3</span></div>
+          <input type="range" id="sFdB" min="1" max="8" step="1" value="3">
+        </div>
+        <div class="result-box" id="fracResultBox"></div>
+        <div class="formula-box">
+          <div id="fracCrossHolder" style="display:none;margin-bottom:14px;text-align:center;"></div>
+          <div class="formula-render" id="fracFormula"></div>
+          <div class="glossary" id="fracGlossary"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECIMALES -->
+  <div class="tab-panel" id="tab-decimales">
+    <div class="stage">
+      <div class="panel">
+        <p class="panel-title" id="decPanelTitle">Alineación decimal</p>
+        <p class="panel-sub" id="decPanelSub">Cian: parte entera · Magenta: parte decimal · Ámbar: resultado</p>
+        <div id="decHolder" style="padding:10px 0;"></div>
+      </div>
+      <div class="panel">
+        <p class="panel-title">Controles</p>
+        <div class="op-row" id="decOps">
+          <button class="op-btn active" data-op="+">+</button>
+          <button class="op-btn" data-op="-">−</button>
+          <button class="op-btn" data-op="×">×</button>
+          <button class="op-btn" data-op="÷">÷</button>
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Número A</b></div>
+          <input type="number" id="iDecA" step="0.01" value="3.25">
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Número B</b></div>
+          <input type="number" id="iDecB" step="0.01" value="1.4">
+        </div>
+        <div class="result-box" id="decResultBox"></div>
+        <div class="formula-box">
+          <div class="formula-render" id="decFormula"></div>
+          <div class="glossary" id="decGlossary"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-panel" id="quizPanel">
+    <div class="quiz-intro" id="quizIntro">
+      <h2>Pon a prueba lo aprendido</h2>
+      <p>20 preguntas, de más fáciles a más difíciles, mezclando enteros, fracciones y decimales.</p>
+      <button id="btnStartQuiz">Comenzar test</button>
+    </div>
+    <div id="quizBody" style="display:none;">
+      <div class="quiz-head">
+        <span class="quiz-counter" id="quizCounter">Pregunta 1 de 20</span>
+        <span class="diff-badge" id="quizDiff">fácil</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="quizProgress" style="width:0%"></div></div>
+      <p class="quiz-q" id="quizQ"></p>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-explain" id="quizExplain"></div>
+      <button id="btnNextQ">Siguiente pregunta →</button>
+    </div>
+    <div id="quizResults" style="display:none;">
+      <div class="quiz-results">
+        <div style="font-size:13px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;">Resultado</div>
+        <div class="score-big" id="scoreBig">0/20</div>
+        <p class="score-msg" id="scoreMsg"></p>
+        <div class="breakdown" id="breakdown"></div>
+        <button id="btnRestartQuiz">Repetir test</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="story" id="story">
+    <div class="step active" data-phase="enteros" style="--step-color:var(--cyan)">
+      <div class="step-num">01 · Enteros</div>
+      <h3>La regla de los signos</h3>
+      <p>Sumar y restar son saltos sobre la recta. Multiplicar y dividir por un negativo invierte la dirección del salto.</p>
+    </div>
+    <div class="step" data-phase="frac-suma" style="--step-color:var(--magenta)">
+      <div class="step-num">02 · Fracciones (suma/resta)</div>
+      <h3>Buscar un denominador común</h3>
+      <p>No puedes sumar trozos de tamaños distintos. Primero hay que cortar ambas fracciones al mismo tamaño de porción.</p>
+    </div>
+    <div class="step" data-phase="frac-mult" style="--step-color:var(--purple)">
+      <div class="step-num">03 · Fracciones (× y ÷)</div>
+      <h3>Multiplicar es solapar áreas</h3>
+      <p>a/b × c/d es literalmente el área donde se cruzan dos franjas. Dividir es multiplicar por la fracción invertida.</p>
+    </div>
+    <div class="step" data-phase="decimales" style="--step-color:var(--amber)">
+      <div class="step-num">04 · Decimales</div>
+      <h3>Alinear la coma</h3>
+      <p>Sumas y restas exigen alinear las comas. Al multiplicar, se cuentan y se suman las cifras decimales de ambos factores.</p>
+    </div>
+  </div>
+
+  <footer>PROTOTIPO · CIENCIA INTERACTIVA</footer>
+</div>
+
+<script>
+(function(){
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs){
+    const e = document.createElementNS(NS, tag);
+    for(const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){[a,b]=[b,a%b];} return a||1; }
+  function fmtFrac(num,den){
+    const g = gcd(num,den)||1;
+    let n = num/g, d = den/g;
+    if(d<0){ n=-n; d=-d; }
+    if(d===1) return String(n);
+    return n+'/'+d;
+  }
+
+  // Formatea números en notación decimal plana, nunca en notación científica (1e-7 -> 0.0000001)
+  function fmtNum(n, maxDp){
+    if(typeof n !== 'number' || !isFinite(n)) return String(n);
+    if(Number.isInteger(n)) return String(n);
+    const dp = maxDp || 12;
+    let s = n.toFixed(dp);
+    s = s.replace(/0+$/,'');
+    if(s.endsWith('.')) s = s.slice(0,-1);
+    return s;
+  }
+
+  // División larga exacta num/den (enteros) devuelta siempre en notación decimal plana.
+  // Si termina, se muestra completa. Si es periódica/infinita, se muestran suficientes
+  // cifras para reconocer el patrón y se añade "..."
+  function exactDivisionString(num, den){
+    const sign = (num<0) !== (den<0) ? '-' : '';
+    num = Math.abs(num); den = Math.abs(den);
+    if(den===0) return {text:'indefinido', periodic:false};
+    let intPart = Math.floor(num/den);
+    let remainder = num % den;
+    if(remainder===0) return {text:sign+intPart, periodic:false};
+    let decimals = '';
+    const MAX_DIGITS = 18;
+    let iterations = 0;
+    while(remainder!==0 && iterations<MAX_DIGITS){
+      remainder *= 10;
+      const digit = Math.floor(remainder/den);
+      decimals += String(digit);
+      remainder = remainder % den;
+      iterations++;
+    }
+    const periodic = remainder !== 0;
+    return {text: sign+intPart+'.'+decimals+(periodic?'...':''), periodic};
+  }
+
+  // ---- pizza / quesitos helper ----
+  function polarPt(cx,cy,r,deg){
+    const rad = (deg-90)*Math.PI/180;
+    return [cx+r*Math.cos(rad), cy+r*Math.sin(rad)];
+  }
+  function wedgePath(cx,cy,r,startDeg,endDeg){
+    const [x1,y1] = polarPt(cx,cy,r,startDeg);
+    const [x2,y2] = polarPt(cx,cy,r,endDeg);
+    const large = (endDeg-startDeg) > 180 ? 1 : 0;
+    return 'M '+cx+' '+cy+' L '+x1+' '+y1+' A '+r+' '+r+' 0 '+large+' 1 '+x2+' '+y2+' Z';
+  }
+  function buildPieSVG(denom, numerAbs, colorVar, size){
+    size = size || 130;
+    const r = size/2 - 5, cx = size/2, cy = size/2;
+    const svg = document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 '+size+' '+size);
+    svg.setAttribute('width', size); svg.setAttribute('height', size);
+    svg.appendChild(el('circle',{cx:cx,cy:cy,r:r, style:'fill:var(--bg-panel-2);stroke:var(--line);stroke-width:1.5'}));
+    if(denom<=0){ return svg; }
+    if(denom<=16){
+      const step = 360/denom;
+      for(let i=0;i<denom;i++){
+        const isOn = i < numerAbs;
+        if(denom===1 && isOn){
+          svg.appendChild(el('circle',{cx:cx,cy:cy,r:r, style:'fill:'+colorVar+';opacity:.82'}));
+        } else if(isOn){
+          const path = wedgePath(cx,cy,r,i*step,(i+1)*step);
+          svg.appendChild(el('path',{d:path, style:'fill:'+colorVar+';opacity:.82;stroke:var(--bg-panel-2);stroke-width:1.5'}));
+        }
+      }
+      // slice divider lines on top for crisp cuts
+      for(let i=0;i<denom;i++){
+        const [x,y] = polarPt(cx,cy,r,i*step);
+        svg.appendChild(el('line',{x1:cx,y1:cy,x2:x,y2:y, style:'stroke:var(--line);stroke-width:1'}));
+      }
+    } else {
+      const frac = Math.min(numerAbs/denom,1);
+      if(frac>0){
+        const path = wedgePath(cx,cy,r,0,frac*360);
+        svg.appendChild(el('path',{d:path, style:'fill:'+colorVar+';opacity:.82'}));
+      }
+    }
+    svg.appendChild(el('circle',{cx:cx,cy:cy,r:r, style:'fill:none;stroke:var(--text-dim);stroke-width:1.6'}));
+    return svg;
+  }
+  function buildPieBlock(container, labelText, denom, numerAbs, colorVar, size){
+    const wrap = document.createElement('div');
+    wrap.className = 'pizza-wrap';
+    wrap.appendChild(buildPieSVG(denom, numerAbs, colorVar, size));
+    const lab = document.createElement('div');
+    lab.className = 'frac-block-label';
+    lab.textContent = labelText;
+    wrap.appendChild(lab);
+    container.appendChild(wrap);
+    return wrap;
+  }
+
+  // =========================================================
+  // TABS
+  // =========================================================
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+      syncStory();
+    });
+  });
+
+  // =========================================================
+  // ENTEROS
+  // =========================================================
+  let iA=3, iB=4, iOp='+';
+
+  function intResult(a,b,op){
+    if(op==='+') return {value:a+b};
+    if(op==='-') return {value:a-b};
+    if(op==='×') return {value:a*b};
+    if(op==='÷'){
+      if(b===0) return {error:true};
+      const q = Math.trunc(a/b), r = a - b*q;
+      return {value:a/b, q, r};
+    }
+  }
+
+  function arcOn(svgEl, toX, yLine, x1v, x2v, color, h, label){
+    const x1=toX(x1v), x2=toX(x2v);
+    const midX=(x1+x2)/2;
+    const d = 'M '+x1+' '+yLine+' Q '+midX+' '+(yLine-h)+' '+x2+' '+yLine;
+    svgEl.appendChild(el('path',{d:d, fill:'none', style:'stroke:'+color, 'stroke-width':2.4, 'stroke-linecap':'round'}));
+    svgEl.appendChild(el('circle',{cx:x2,cy:yLine,r:4,style:'fill:'+color}));
+    if(label){
+      const t = el('text',{x:midX,y:yLine-h-7,'text-anchor':'middle', style:'fill:'+color+';font-family:JetBrains Mono,monospace;font-weight:700;font-size:12px'});
+      t.textContent = label;
+      svgEl.appendChild(t);
+    }
+  }
+
+  function renderIntChart(){
+    const svgI = document.getElementById('intChart');
+    svgI.innerHTML='';
+    const a=iA, b=iB, op=iOp;
+    const res = intResult(a,b,op);
+
+    let extent;
+    if(op==='×') extent = Math.max(Math.abs(a), Math.abs(a*b));
+    else if(op==='÷') extent = Math.max(Math.abs(a), Math.abs(b));
+    else extent = Math.max(Math.abs(a), res.error?Math.abs(a):Math.abs(res.value));
+    extent = Math.max(extent,4)+2;
+
+    const W=620,H=200, marginX=34, yLine=130;
+    const usableW = W-2*marginX;
+    const scale = usableW/(2*extent);
+    const cx0 = W/2;
+    function toX(v){ return cx0 + v*scale; }
+
+    let tickStep=1;
+    if(extent>10) tickStep=2;
+    if(extent>25) tickStep=5;
+    if(extent>60) tickStep=10;
+
+    svgI.appendChild(el('line',{x1:marginX,y1:yLine,x2:W-marginX,y2:yLine,class:'axis-line'}));
+    for(let v=-Math.floor(extent); v<=Math.floor(extent); v+=tickStep){
+      const x = toX(v);
+      if(x<marginX-2 || x>W-marginX+2) continue;
+      svgI.appendChild(el('line',{x1:x,y1:yLine-5,x2:x,y2:yLine+5,class:'grid-line'}));
+      const t = el('text',{x:x,y:yLine+22,class:'tick-label','text-anchor':'middle'}); t.textContent=v; svgI.appendChild(t);
+    }
+
+    if(op==='÷' && res.error){
+      const t = el('text',{x:W/2,y:yLine-20,'text-anchor':'middle',style:'fill:var(--magenta);font-family:Inter,sans-serif;font-size:13px'});
+      t.textContent = 'No se puede dividir entre 0';
+      svgI.appendChild(t);
+      return;
+    }
+
+    arcOn(svgI, toX, yLine, 0, a, 'var(--cyan)', 44, 'a = '+a);
+
+    if(op==='+'){
+      arcOn(svgI, toX, yLine, a, a+b, 'var(--magenta)', 44, '+ ('+b+')');
+    } else if(op==='-'){
+      arcOn(svgI, toX, yLine, a, a-b, 'var(--magenta)', 44, '− ('+b+')');
+    } else if(op==='×'){
+      if(b!==0){
+        const u = b>=0 ? a : -a;
+        const n = Math.abs(b);
+        let cum=0;
+        for(let i=0;i<n;i++){
+          const next = cum+u;
+          arcOn(svgI, toX, yLine, cum, next, 'var(--magenta)', 20, i===0?('× '+n+' veces'):null);
+          cum = next;
+        }
+      }
+    } else if(op==='÷'){
+      const q=res.q, r=res.r;
+      const u = q>=0 ? b : -b;
+      const n = Math.abs(q);
+      let cum=0;
+      for(let i=0;i<n;i++){
+        const next = cum+u;
+        arcOn(svgI, toX, yLine, cum, next, 'var(--magenta)', 20, i===0?('grupos de '+b):null);
+        cum = next;
+      }
+      if(r!==0){
+        arcOn(svgI, toX, yLine, cum, a, 'var(--green)', 30, 'resto '+r);
+      }
+    }
+
+    const finalV = (op==='÷') ? a : res.value;
+    const fx = toX(finalV);
+    svgI.appendChild(el('circle',{cx:fx,cy:yLine,r:7,style:'fill:var(--amber);stroke:#0a0d13;stroke-width:2'}));
+  }
+
+  function renderIntResult(){
+    const a=iA,b=iB,op=iOp;
+    const res = intResult(a,b,op);
+    const box = document.getElementById('intResultBox');
+    if(op==='÷' && res.error){
+      box.innerHTML = '<div class="r-main" style="color:var(--magenta)">Indefinido</div><div class="r-note">No existe la división entre 0.</div>';
+    } else if(op==='÷'){
+      const exact = res.r===0;
+      box.innerHTML = '<div class="r-main">'+a+' ÷ '+b+' = '+ (exact? res.value : res.value.toFixed(3)+'…') +'</div>'+
+        '<div class="r-note">Cociente entero: '+res.q+' · Resto: '+res.r+' · '+a+' = '+b+'×'+res.q+' + '+res.r+(exact?' (división exacta)':'') +'</div>';
+    } else {
+      box.innerHTML = '<div class="r-main">'+a+' '+op+' '+b+' = '+res.value+'</div><div class="r-note">'+signExplain(a,b,op)+'</div>';
+    }
+
+    // formula + glossary
+    const symOp = op==='×'?'\\times':op==='÷'?'\\div':op;
+    katex.render('a '+symOp+' b = '+ (op==='÷'&&!res.error? '\\dfrac{a}{b}' : 'a\\,'+symOp+'\\,b') , document.getElementById('intFormula'), {throwOnError:false});
+    document.getElementById('intGlossary').innerHTML =
+      '<div><span class="gl-sym">a</span><span class="gl-desc">Primer número entero (el punto de partida)</span><span class="gl-unit">Adimensional</span></div>'+
+      '<div><span class="gl-sym">b</span><span class="gl-desc">Segundo número entero (el tamaño del salto)</span><span class="gl-unit">Adimensional</span></div>';
+  }
+
+  function signExplain(a,b,op){
+    if(op==='×'||op==='÷'){
+      const sameSign = (a>=0)===(b>=0);
+      return sameSign ? 'Mismo signo → resultado positivo.' : 'Signos distintos → resultado negativo.';
+    }
+    return op==='+' ? 'Saltar hacia la derecha si b>0, hacia la izquierda si b<0.' : 'Restar es sumar el opuesto de b.';
+  }
+
+  function updateIntegers(){
+    document.getElementById('vIntA').textContent = iA;
+    document.getElementById('vIntB').textContent = iB;
+    renderIntChart();
+    renderIntResult();
+    syncStory();
+  }
+
+  document.getElementById('sIntA').addEventListener('input', e=>{ iA=parseInt(e.target.value,10); updateIntegers(); });
+  document.getElementById('sIntB').addEventListener('input', e=>{ iB=parseInt(e.target.value,10); updateIntegers(); });
+  document.getElementById('intOps').addEventListener('click', e=>{
+    if(e.target.classList.contains('op-btn')){
+      document.querySelectorAll('#intOps .op-btn').forEach(b=>b.classList.remove('active'));
+      e.target.classList.add('active');
+      iOp = e.target.dataset.op;
+      updateIntegers();
+    }
+  });
+
+
+  // =========================================================
+  // FRACCIONES — LO BÁSICO (pizza / quesitos)
+  // =========================================================
+  let bN=3, bD=8;
+
+  function renderBasicPizza(){
+    const holder = document.getElementById('basicPizzaHolder');
+    holder.innerHTML = '';
+    holder.appendChild(buildPieSVG(bD, Math.min(bN,bD), 'var(--cyan)', 200));
+    const readout = document.getElementById('basicReadout');
+    const over = bN > bD;
+    readout.innerHTML = '<b>'+bN+' de '+bD+'</b> quesitos'+(over? ' — ¡más de una pizza entera!':'')+' &nbsp;→&nbsp; <b>'+bN+'/'+bD+'</b>'+(over? ' = '+fmtFrac(bN,bD):'');
+    katex.render('\\dfrac{'+bN+'}{'+bD+'}', document.getElementById('basicFormula'), {throwOnError:false});
+    document.getElementById('basicGlossary').innerHTML =
+      '<div><span class="gl-sym">'+bN+'</span><span class="gl-desc">Numerador: cuántos quesitos te comes</span><span class="gl-unit">Adimensional</span></div>'+
+      '<div><span class="gl-sym">'+bD+'</span><span class="gl-desc">Denominador: en cuántos quesitos iguales se corta la pizza</span><span class="gl-unit">Adimensional</span></div>';
+  }
+  document.getElementById('sBd').addEventListener('input', e=>{
+    bD = parseInt(e.target.value,10);
+    document.getElementById('vBd').textContent = bD;
+    renderBasicPizza();
+  });
+  document.getElementById('sBn').addEventListener('input', e=>{
+    bN = parseInt(e.target.value,10);
+    document.getElementById('vBn').textContent = bN;
+    renderBasicPizza();
+  });
+
+  // =========================================================
+  // FRACCIONES — OPERACIONES
+  // =========================================================
+  let fnA=1, fdA=2, fnB=1, fdB=3, fOp='+';
+
+  function fracCompute(nA,dA,nB,dB,op){
+    if(op==='+') return {num:nA*dB+nB*dA, den:dA*dB};
+    if(op==='-') return {num:nA*dB-nB*dA, den:dA*dB};
+    if(op==='×') return {num:nA*nB, den:dA*dB};
+    if(op==='÷'){ if(nB===0) return {error:true}; return {num:nA*dB, den:dA*nB}; }
+  }
+
+  function renderFracPies(){
+    const holder = document.getElementById('fracBarsHolder');
+    holder.innerHTML = '';
+    const nA=fnA, dA=fdA, nB=fnB, dB=fdB, op=fOp;
+
+    const row1 = document.createElement('div');
+    row1.className = 'pizza-row';
+    buildPieBlock(row1, 'a/b = '+nA+'/'+dA, dA, Math.abs(nA), 'var(--cyan)', 130);
+    buildPieBlock(row1, 'c/d = '+nB+'/'+dB, dB, Math.abs(nB), 'var(--magenta)', 130);
+    holder.appendChild(row1);
+
+    const res = fracCompute(nA,dA,nB,dB,op);
+    if(res.error) return;
+    const commonDen = Math.abs(res.den);
+    const magnitude = Math.abs(res.num);
+    const wholePart = Math.floor(magnitude/commonDen);
+    const remainder = magnitude % commonDen;
+    const sign = res.num<0 ? '−' : '';
+
+    const divider = document.createElement('div');
+    divider.style.cssText='border-top:1px solid var(--line);margin:14px 0 12px;';
+    holder.appendChild(divider);
+    const resLabel = document.createElement('div');
+    resLabel.className='frac-block-label';
+    resLabel.textContent = 'Resultado (común denominador = '+commonDen+')';
+    holder.appendChild(resLabel);
+
+    const row2 = document.createElement('div');
+    row2.className = 'pizza-row';
+    const capped = Math.min(wholePart,4);
+    for(let i=0;i<capped;i++){
+      buildPieBlock(row2, '1 entero', commonDen, commonDen, 'var(--amber)', 100);
+    }
+    buildPieBlock(row2, sign+remainder+'/'+commonDen, commonDen, remainder, 'var(--amber)', 100);
+    holder.appendChild(row2);
+
+    if(wholePart>4){
+      const note = document.createElement('div');
+      note.className='frac-block-label';
+      note.style.marginTop='8px';
+      note.textContent = '(+ '+(wholePart-4)+' pizzas enteras más, no dibujadas)';
+      holder.appendChild(note);
+    }
+  }
+
+  function renderFracArea(){
+    const svgF = document.getElementById('fracAreaChart');
+    svgF.innerHTML='';
+    const nA=fnA, dA=fdA, nB=fnB, dB=fdB, op=fOp;
+    let A = {num:Math.abs(nA), den:dA};
+    let B;
+    if(op==='÷'){
+      if(nB===0){ return; }
+      B = {num:dB, den:Math.abs(nB)};
+    } else {
+      B = {num:Math.abs(nB), den:dB};
+    }
+    const size=260, x0=40, y0=20;
+    const rows=A.den, cols=B.den;
+    const cw=size/cols, rh=size/rows;
+    for(let r=0;r<=rows;r++){ svgF.appendChild(el('line',{x1:x0,y1:y0+r*rh,x2:x0+size,y2:y0+r*rh,class:'grid-line'})); }
+    for(let c=0;c<=cols;c++){ svgF.appendChild(el('line',{x1:x0+c*cw,y1:y0,x2:x0+c*cw,y2:y0+size,class:'grid-line'})); }
+    svgF.appendChild(el('rect',{x:x0,y:y0,width:size,height:Math.min(A.num,rows)*rh, style:'fill:var(--cyan);opacity:.20'}));
+    svgF.appendChild(el('rect',{x:x0,y:y0,width:Math.min(B.num,cols)*cw,height:size, style:'fill:var(--magenta);opacity:.20'}));
+    svgF.appendChild(el('rect',{x:x0,y:y0,width:Math.min(B.num,cols)*cw,height:Math.min(A.num,rows)*rh, style:'fill:var(--amber);opacity:.55'}));
+    svgF.appendChild(el('rect',{x:x0,y:y0,width:size,height:size, style:'fill:none;stroke:var(--text-dim);stroke-width:1.4'}));
+
+    const labA = el('text',{x:x0-8,y:y0+size/2,'text-anchor':'end',style:'fill:var(--cyan);font-family:JetBrains Mono,monospace;font-size:12px'});
+    labA.textContent = A.num+'/'+A.den;
+    svgF.appendChild(labA);
+    const labB = el('text',{x:x0+size/2,y:y0+size+22,'text-anchor':'middle',style:'fill:var(--magenta);font-family:JetBrains Mono,monospace;font-size:12px'});
+    labB.textContent = B.num+'/'+B.den + (op==='÷' ? '  (invertida)':'');
+    svgF.appendChild(labB);
+  }
+
+  // Diagrama con flechas: horizontal para × (a·c arriba, b·d abajo),
+  // en cruz para ÷ (a·d y b·c en diagonal), coloreando qué términos forman
+  // el numerador (ámbar) y el denominador (púrpura) del resultado.
+  function buildCrossDiagram(nA,dA,nB,dB,op){
+    const W=280,H=140;
+    const svg = document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    svg.setAttribute('width', Math.min(W,320));
+    svg.setAttribute('height', H*(Math.min(W,320)/W));
+
+    const defs = el('defs',{});
+    const mkMarker = (id,color)=>{
+      const m = el('marker',{id:id, viewBox:'0 0 10 10', refX:'8', refY:'5', markerWidth:'6', markerHeight:'6', orient:'auto-start-reverse'});
+      m.appendChild(el('path',{d:'M 0 0 L 10 5 L 0 10 z', style:'fill:'+color}));
+      return m;
+    };
+    defs.appendChild(mkMarker('arrAmber','var(--amber)'));
+    defs.appendChild(mkMarker('arrPurple','var(--purple)'));
+    svg.appendChild(defs);
+
+    const xA=70, xB=210, yTop=32, yBot=100, lineHalf=26;
+
+    function fracStack(x,numV,denV){
+      svg.appendChild(el('text',{x:x,y:yTop,'text-anchor':'middle',style:'fill:var(--text);font-family:JetBrains Mono,monospace;font-size:20px;font-weight:600'})).textContent=numV;
+      svg.appendChild(el('line',{x1:x-lineHalf,y1:yTop+14,x2:x+lineHalf,y2:yTop+14,style:'stroke:var(--text-dim);stroke-width:1.6'}));
+      svg.appendChild(el('text',{x:x,y:yBot,'text-anchor':'middle',style:'fill:var(--text);font-family:JetBrains Mono,monospace;font-size:20px;font-weight:600'})).textContent=denV;
+    }
+    fracStack(xA, nA, dA);
+    fracStack(xB, nB, dB);
+
+    // símbolo de operación entre las dos fracciones
+    const opSym = el('text',{x:(xA+xB)/2,y:(yTop+yBot)/2+7,'text-anchor':'middle',style:'fill:var(--text-dim);font-family:JetBrains Mono,monospace;font-size:20px'});
+    opSym.textContent = op==='×' ? '×' : '÷';
+    svg.appendChild(opSym);
+
+    function arrow(x1,y1,x2,y2,color,markerId,curveUp){
+      const midX=(x1+x2)/2, midY=(y1+y2)/2 + (curveUp?-16:16);
+      const d = 'M '+x1+' '+y1+' Q '+midX+' '+midY+' '+x2+' '+y2;
+      svg.appendChild(el('path',{d:d, fill:'none', style:'stroke:'+color+';stroke-width:2.2', 'marker-end':'url(#'+markerId+')'}));
+    }
+
+    if(op==='×'){
+      // numerador × numerador (arriba, ámbar) — línea recta horizontal
+      arrow(xA+18, yTop-6, xB-18, yTop-6, 'var(--amber)', 'arrAmber', true);
+      // denominador × denominador (abajo, púrpura) — línea recta horizontal
+      arrow(xA+18, yBot+8, xB-18, yBot+8, 'var(--purple)', 'arrPurple', false);
+    } else {
+      // a (arriba-izq) × d (abajo-der) → numerador del resultado, ámbar, en diagonal
+      arrow(xA+16, yTop-2, xB-16, yBot+2, 'var(--amber)', 'arrAmber', false);
+      // b (abajo-izq) × c (arriba-der) → denominador del resultado, púrpura, en diagonal (cruzando)
+      arrow(xA+16, yBot+2, xB-16, yTop-2, 'var(--purple)', 'arrPurple', false);
+    }
+
+    const wrap = document.createElement('div');
+    wrap.appendChild(svg);
+    const legend = document.createElement('div');
+    legend.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:11.5px;margin-top:2px;';
+    if(op==='×'){
+      legend.innerHTML = '<span style="color:var(--amber)">■ '+nA+'×'+nB+' → numerador</span> &nbsp; <span style="color:var(--purple)">■ '+dA+'×'+dB+' → denominador</span>';
+    } else {
+      legend.innerHTML = '<span style="color:var(--amber)">■ '+nA+'×'+dB+' → numerador</span> &nbsp; <span style="color:var(--purple)">■ '+dA+'×'+nB+' → denominador</span>';
+    }
+    wrap.appendChild(legend);
+    return wrap;
+  }
+
+  function renderFracResult(){
+    const nA=fnA, dA=fdA, nB=fnB, dB=fdB, op=fOp;
+    const res = fracCompute(nA,dA,nB,dB,op);
+    const box = document.getElementById('fracResultBox');
+    const isAdd = (op==='+'||op==='-');
+
+    document.getElementById('fracBarsHolder').style.display = isAdd ? 'block':'none';
+    document.getElementById('fracAreaChart').style.display = isAdd ? 'none':'block';
+    document.getElementById('fracPanelTitle').textContent = isAdd ? 'Pizzas (común denominador)' : 'Modelo de área (superposición)';
+    document.getElementById('fracPanelSub').textContent = isAdd ? 'Cian: a/b · Magenta: c/d · Ámbar: resultado' : 'Franja cian ∩ franja magenta = área ámbar (el producto)';
+
+    if(isAdd){ renderFracPies(); } else { renderFracArea(); }
+
+    const crossHolder = document.getElementById('fracCrossHolder');
+    if(isAdd){
+      crossHolder.style.display = 'none';
+      crossHolder.innerHTML = '';
+    } else {
+      crossHolder.style.display = 'block';
+      crossHolder.innerHTML = '';
+      crossHolder.appendChild(buildCrossDiagram(nA,dA,nB,dB,op));
+    }
+
+    if(res.error){
+      box.innerHTML = '<div class="r-main" style="color:var(--magenta)">Indefinido</div><div class="r-note">No se puede dividir entre una fracción con numerador 0.</div>';
+    } else {
+      const simplified = fmtFrac(res.num, res.den);
+      box.innerHTML = '<div class="r-main">'+nA+'/'+dA+' '+op+' '+nB+'/'+dB+' = '+res.num+'/'+res.den+' = '+simplified+'</div>'+
+        '<div class="r-note">'+(isAdd? 'Común denominador: '+ (dA*dB) : 'Numerador × numerador, denominador × denominador.')+'</div>';
+    }
+
+    let formula, terms;
+    if(op==='+'){ formula='\\dfrac{a}{b}+\\dfrac{c}{d}=\\dfrac{ad+bc}{bd}'; }
+    else if(op==='-'){ formula='\\dfrac{a}{b}-\\dfrac{c}{d}=\\dfrac{ad-bc}{bd}'; }
+    else if(op==='×'){ formula='\\dfrac{a}{b}\\times\\dfrac{c}{d}=\\dfrac{ac}{bd}'; }
+    else { formula='\\dfrac{a}{b}\\div\\dfrac{c}{d}=\\dfrac{a}{b}\\times\\dfrac{d}{c}=\\dfrac{ad}{bc}'; }
+    katex.render(formula, document.getElementById('fracFormula'), {throwOnError:false});
+    document.getElementById('fracGlossary').innerHTML =
+      '<div><span class="gl-sym">a, c</span><span class="gl-desc">Numeradores: cuántas porciones se toman de cada fracción</span><span class="gl-unit">Adimensional</span></div>'+
+      '<div><span class="gl-sym">b, d</span><span class="gl-desc">Denominadores: en cuántas porciones se divide cada entero</span><span class="gl-unit">Adimensional</span></div>';
+  }
+
+  function updateFractions(){
+    document.getElementById('vFnA').textContent = fnA;
+    document.getElementById('vFdA').textContent = fdA;
+    document.getElementById('vFnB').textContent = fnB;
+    document.getElementById('vFdB').textContent = fdB;
+    renderFracResult();
+    syncStory();
+  }
+
+  document.getElementById('sFnA').addEventListener('input', e=>{ fnA=parseInt(e.target.value,10); updateFractions(); });
+  document.getElementById('sFdA').addEventListener('input', e=>{ fdA=parseInt(e.target.value,10); updateFractions(); });
+  document.getElementById('sFnB').addEventListener('input', e=>{ fnB=parseInt(e.target.value,10); updateFractions(); });
+  document.getElementById('sFdB').addEventListener('input', e=>{ fdB=parseInt(e.target.value,10); updateFractions(); });
+  document.getElementById('fracOps').addEventListener('click', e=>{
+    if(e.target.classList.contains('op-btn')){
+      document.querySelectorAll('#fracOps .op-btn').forEach(b=>b.classList.remove('active'));
+      e.target.classList.add('active');
+      fOp = e.target.dataset.op;
+      updateFractions();
+    }
+  });
+
+  // =========================================================
+  // DECIMALES
+  // =========================================================
+  let dOp = '+';
+
+  function decPlaces(numStr){
+    const s = String(numStr);
+    const i = s.indexOf('.');
+    return i===-1 ? 0 : s.length-i-1;
+  }
+
+  function buildDecRow(container, label, intStr, decStr, decLen, maxIntLen, maxDecLen, cls){
+    const row = document.createElement('div');
+    row.className = 'dec-row' + (cls?(' '+cls):'');
+    const lab = document.createElement('div');
+    lab.className='dec-label'; lab.textContent = label;
+    row.appendChild(lab);
+    const intPadded = intStr.padStart(maxIntLen,' ');
+    for(const ch of intPadded){
+      const c = document.createElement('div');
+      c.className = 'dec-cell int-part' + (ch===' '?' faded':'');
+      c.textContent = ch===' '?'0':ch;
+      if(ch===' ') c.classList.add('faded');
+      row.appendChild(c);
+    }
+    const pt = document.createElement('div');
+    pt.className='dec-cell point'; pt.textContent=',';
+    row.appendChild(pt);
+    const decPadded = decStr.padEnd(maxDecLen,'0');
+    for(let i=0;i<decPadded.length;i++){
+      const c = document.createElement('div');
+      c.className = 'dec-cell dec-part' + (i>=decLen?' faded':'');
+      c.textContent = decPadded[i];
+      row.appendChild(c);
+    }
+    container.appendChild(row);
+  }
+
+  function renderDecimales(){
+    const A = parseFloat(document.getElementById('iDecA').value);
+    const B = parseFloat(document.getElementById('iDecB').value);
+    const holder = document.getElementById('decHolder');
+    holder.innerHTML = '';
+    const box = document.getElementById('decResultBox');
+
+    if(isNaN(A) || isNaN(B)){
+      box.innerHTML = '<div class="r-note">Introduce dos números válidos.</div>';
+      return;
+    }
+
+    const kA = decPlaces(document.getElementById('iDecA').value);
+    const kB = decPlaces(document.getElementById('iDecB').value);
+
+    if(dOp==='+' || dOp==='-'){
+      document.getElementById('decPanelTitle').textContent = 'Alineación decimal';
+      document.getElementById('decPanelSub').textContent = 'Cian: parte entera · Magenta: parte decimal · Los dígitos atenuados son ceros de relleno';
+      const maxDec = Math.max(kA,kB);
+      const scale = Math.pow(10,maxDec);
+      const resVal = dOp==='+' ? (Math.round(A*scale)+Math.round(B*scale))/scale : (Math.round(A*scale)-Math.round(B*scale))/scale;
+      const [aInt,aDecP] = A.toFixed(maxDec).split('.');
+      const [bInt,bDecP] = B.toFixed(Math.max(maxDec,kB)).split('.');
+      const [rInt,rDecPraw] = Math.abs(resVal).toFixed(maxDec).split('.');
+      const maxIntLen = Math.max(aInt.replace('-','').length, bInt.replace('-','').length, rInt.replace('-','').length)+1;
+      buildDecRow(holder,'A = '+fmtNum(A), (A<0?'-':'')+aInt.replace('-',''), aDecP, kA, maxIntLen, maxDec);
+      buildDecRow(holder,(dOp==='+'?'+ ':'− ')+'B = '+fmtNum(B), (B<0?'-':'')+bInt.replace('-',''), bDecP, kB, maxIntLen, maxDec);
+      const divider = document.createElement('div');
+      divider.style.borderTop = '1px solid var(--line)'; divider.style.margin='6px 0 10px';
+      holder.appendChild(divider);
+      buildDecRow(holder,'Resultado', (resVal<0?'-':'')+rInt, rDecPraw, maxDec, maxIntLen, maxDec, 'result');
+      box.innerHTML = '<div class="r-main">'+fmtNum(A)+' '+dOp+' '+fmtNum(B)+' = '+fmtNum(resVal)+'</div><div class="r-note">Se alinean las comas antes de operar, rellenando con ceros si faltan decimales.</div>';
+      katex.render(dOp==='+'? 'A+B' : 'A-B', document.getElementById('decFormula'), {throwOnError:false});
+      document.getElementById('decGlossary').innerHTML =
+        '<div><span class="gl-sym">A, B</span><span class="gl-desc">Números decimales alineados por su coma</span><span class="gl-unit">Depende del contexto</span></div>';
+
+    } else if(dOp==='×'){
+      document.getElementById('decPanelTitle').textContent = 'Contar cifras decimales';
+      document.getElementById('decPanelSub').textContent = 'Se multiplica como si fueran enteros y luego se coloca la coma';
+      const intProd = Math.round(A*Math.pow(10,kA)) * Math.round(B*Math.pow(10,kB));
+      const totalDec = kA+kB;
+      const resVal = intProd / Math.pow(10,totalDec);
+
+      const row1 = document.createElement('div'); row1.style.fontFamily="'JetBrains Mono',monospace"; row1.style.fontSize='16px'; row1.style.marginBottom='10px';
+      row1.innerHTML = 'A = '+fmtNum(A)+' <span class="dec-badge" style="background:rgba(95,227,224,.15);color:var(--cyan)">'+kA+' decimales</span>';
+      holder.appendChild(row1);
+      const row2 = document.createElement('div'); row2.style.fontFamily="'JetBrains Mono',monospace"; row2.style.fontSize='16px'; row2.style.marginBottom='14px';
+      row2.innerHTML = 'B = '+fmtNum(B)+' <span class="dec-badge" style="background:rgba(255,92,168,.15);color:var(--magenta)">'+kB+' decimales</span>';
+      holder.appendChild(row2);
+      const row3 = document.createElement('div'); row3.style.fontFamily="'JetBrains Mono',monospace"; row3.style.fontSize='16px'; row3.style.marginBottom='10px'; row3.style.color='var(--text-dim)';
+      row3.textContent = 'Multiplicación entera: '+Math.round(A*Math.pow(10,kA))+' × '+Math.round(B*Math.pow(10,kB))+' = '+intProd;
+      holder.appendChild(row3);
+      const row4 = document.createElement('div'); row4.style.fontFamily="'JetBrains Mono',monospace"; row4.style.fontSize='18px'; row4.style.color='var(--amber)';
+      row4.innerHTML = 'Resultado = '+fmtNum(resVal)+' <span class="dec-badge" style="background:rgba(255,180,84,.15);color:var(--amber)">'+totalDec+' decimales en total</span>';
+      holder.appendChild(row4);
+
+      box.innerHTML = '<div class="r-main">'+fmtNum(A)+' × '+fmtNum(B)+' = '+fmtNum(resVal)+'</div><div class="r-note">Decimales del resultado = decimales de A ('+kA+') + decimales de B ('+kB+') = '+totalDec+'.</div>';
+      katex.render('n_{res} = n_A + n_B', document.getElementById('decFormula'), {throwOnError:false});
+      document.getElementById('decGlossary').innerHTML =
+        '<div><span class="gl-sym">n_A</span><span class="gl-desc">Cifras decimales del primer factor</span><span class="gl-unit">Adimensional</span></div>'+
+        '<div><span class="gl-sym">n_B</span><span class="gl-desc">Cifras decimales del segundo factor</span><span class="gl-unit">Adimensional</span></div>'+
+        '<div><span class="gl-sym">n_res</span><span class="gl-desc">Cifras decimales del resultado final</span><span class="gl-unit">Adimensional</span></div>';
+
+    } else { // division
+      document.getElementById('decPanelTitle').textContent = 'Desplazar la coma';
+      document.getElementById('decPanelSub').textContent = 'Se multiplican ambos números por la misma potencia de 10 hasta que el divisor sea entero';
+      if(B===0){
+        box.innerHTML = '<div class="r-main" style="color:var(--magenta)">Indefinido</div><div class="r-note">No se puede dividir entre 0.</div>';
+        holder.innerHTML = '';
+      } else {
+        const k = kB;
+        const intA = Math.round(A*Math.pow(10,kA));
+        const intB = Math.round(B*Math.pow(10,kB));
+        const Ashift = A*Math.pow(10,k);
+        const Bshift = Math.round(B*Math.pow(10,k));
+
+        // fracción exacta A/B = (intA * 10^kB) / (intB * 10^kA)
+        let numFrac = intA * Math.pow(10,kB);
+        let denFrac = intB * Math.pow(10,kA);
+        const divRes = exactDivisionString(numFrac, denFrac);
+
+        const row1=document.createElement('div'); row1.style.fontFamily="'JetBrains Mono',monospace"; row1.style.fontSize='16px'; row1.style.marginBottom='8px';
+        row1.innerHTML = 'A = '+fmtNum(A)+'  →  ×10<sup>'+k+'</sup>  →  '+fmtNum(Ashift);
+        holder.appendChild(row1);
+        const row2=document.createElement('div'); row2.style.fontFamily="'JetBrains Mono',monospace"; row2.style.fontSize='16px'; row2.style.marginBottom='14px';
+        row2.innerHTML = 'B = '+fmtNum(B)+'  →  ×10<sup>'+k+'</sup>  →  '+fmtNum(Bshift)+' <span class="dec-badge" style="background:rgba(95,224,160,.15);color:var(--green)">ya es entero</span>';
+        holder.appendChild(row2);
+        const row3=document.createElement('div'); row3.style.fontFamily="'JetBrains Mono',monospace"; row3.style.fontSize='18px'; row3.style.color='var(--amber)';
+        row3.textContent = fmtNum(Ashift)+' ÷ '+fmtNum(Bshift)+' = '+divRes.text;
+        holder.appendChild(row3);
+
+        box.innerHTML = '<div class="r-main">'+fmtNum(A)+' ÷ '+fmtNum(B)+' = '+divRes.text+'</div>'+
+          '<div class="r-note">Se multiplican A y B por 10<sup>'+k+'</sup> para que el divisor sea entero: el cociente no cambia.'+(divRes.periodic?' El resultado es un decimal periódico, mostrado con sus primeras cifras.':'')+'</div>';
+        katex.render('\\dfrac{A}{B} = \\dfrac{A\\times10^{k}}{B\\times10^{k}}', document.getElementById('decFormula'), {throwOnError:false});
+        document.getElementById('decGlossary').innerHTML =
+          '<div><span class="gl-sym">A, B</span><span class="gl-desc">Dividendo y divisor originales</span><span class="gl-unit">Depende del contexto</span></div>'+
+          '<div><span class="gl-sym">k</span><span class="gl-desc">Cifras decimales del divisor B (cuánto se desplaza la coma)</span><span class="gl-unit">Adimensional</span></div>';
+      }
+    }
+  }
+
+  document.getElementById('iDecA').addEventListener('input', ()=>{ renderDecimales(); syncStory(); });
+  document.getElementById('iDecB').addEventListener('input', ()=>{ renderDecimales(); syncStory(); });
+  document.getElementById('decOps').addEventListener('click', e=>{
+    if(e.target.classList.contains('op-btn')){
+      document.querySelectorAll('#decOps .op-btn').forEach(b=>b.classList.remove('active'));
+      e.target.classList.add('active');
+      dOp = e.target.dataset.op;
+      renderDecimales();
+      syncStory();
+    }
+  });
+
+  // =========================================================
+  // STORY SYNC
+  // =========================================================
+  function syncStory(){
+    const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+    let phase;
+    if(activeTab==='enteros') phase='enteros';
+    else if(activeTab==='fracciones') phase = (fOp==='+'||fOp==='-') ? 'frac-suma' : 'frac-mult';
+    else phase='decimales';
+    document.querySelectorAll('.step').forEach(s=> s.classList.toggle('active', s.dataset.phase===phase));
+  }
+
+  // init
+  updateIntegers();
+  renderBasicPizza();
+  updateFractions();
+  renderDecimales();
+  syncStory();
+
+  // =========================================================
+  // QUIZ
+  // =========================================================
+  const QUIZ = [
+    {level:'facil', q:'−3 + 5 = ?', options:['2','−2','8','−8'], correct:0,
+      explain:'Partiendo de −3, saltar 5 posiciones a la derecha te lleva a 2.'},
+    {level:'facil', q:'7 − 10 = ?', options:['−3','3','17','−17'], correct:0,
+      explain:'Restar es saltar hacia la izquierda: de 7 retrocedes 10 y llegas a −3.'},
+    {level:'facil', q:'(−4) × (−2) = ?', options:['−8','8','−6','6'], correct:1,
+      explain:'Signos iguales (negativo por negativo) dan resultado positivo: 8.'},
+    {level:'facil', q:'1/2 + 1/2 = ?', options:['1','1/4','2/4','2'], correct:0,
+      explain:'Ya tienen el mismo denominador: 1/2+1/2 = 2/2 = 1 entero completo.'},
+    {level:'facil', q:'3.5 + 1.2 = ?', options:['4.7','4.6','3.6','5.7'], correct:0,
+      explain:'Alineando las comas: 3.5 + 1.2 = 4.7.'},
+    {level:'facil', q:'6 ÷ 2 = ?', options:['3','4','2','12'], correct:0,
+      explain:'2 cabe exactamente 3 veces dentro de 6.'},
+    {level:'medio', q:'(−6) × 3 = ?', options:['−18','18','−9','9'], correct:0,
+      explain:'Signos distintos → resultado negativo: 6×3=18, con signo −.'},
+    {level:'medio', q:'8 ÷ (−4) = ?', options:['−2','2','−4','4'], correct:0,
+      explain:'Signos distintos → resultado negativo: 8÷4=2, con signo −.'},
+    {level:'medio', q:'1/3 + 1/4 = ?', options:['7/12','2/7','1/12','5/12'], correct:0,
+      explain:'Común denominador 12: 4/12 + 3/12 = 7/12.'},
+    {level:'medio', q:'2/3 − 1/6 = ?', options:['1/2','1/3','1/6','5/6'], correct:0,
+      explain:'Común denominador 6: 4/6 − 1/6 = 3/6, que simplificado es 1/2.'},
+    {level:'medio', q:'2/5 × 3/4 = ?', options:['3/10','5/9','9/20','2/9'], correct:0,
+      explain:'Numerador × numerador (2×3=6) entre denominador × denominador (5×4=20): 6/20 = 3/10.'},
+    {level:'medio', q:'3/4 ÷ 1/2 = ?', options:['3/2','3/8','1/2','4/3'], correct:0,
+      explain:'Dividir es multiplicar por el inverso: 3/4 × 2/1 = 6/4 = 3/2.'},
+    {level:'medio', q:'0.6 × 0.3 = ?', options:['0.18','1.8','0.018','0.8'], correct:0,
+      explain:'6×3=18, y entre los dos factores hay 1+1=2 decimales, así que el resultado es 0.18.'},
+    {level:'medio', q:'4.5 ÷ 0.5 = ?', options:['9','0.9','90','4'], correct:0,
+      explain:'Multiplicando ambos por 10: 45 ÷ 5 = 9.'},
+    {level:'dificil', q:'(−5) + (−3) − (−2) = ?', options:['−6','−10','−4','6'], correct:0,
+      explain:'−5−3 = −8, y restar −2 es sumar 2: −8+2 = −6.'},
+    {level:'dificil', q:'(−2) × (−2) × (−2) = ?', options:['−8','8','−6','6'], correct:0,
+      explain:'Tres factores negativos: el resultado final es negativo (número impar de signos menos). 2×2×2=8, con signo −.'},
+    {level:'dificil', q:'5/6 − 3/4 = ?', options:['1/12','2/12','1/6','2/2'], correct:0,
+      explain:'Común denominador 12: 10/12 − 9/12 = 1/12.'},
+    {level:'dificil', q:'2 entero 1/3 + 1 entero 1/2 = ?', options:['3 entero 5/6','4 entero 1/6','3 entero 1/6','2 entero 5/6'], correct:0,
+      explain:'Como fracciones: 7/3 + 3/2, común denominador 6: 14/6 + 9/6 = 23/6 = 3 entero y 5/6.'},
+    {level:'dificil', q:'0.25 × 0.04 = ?', options:['0.01','0.1','0.001','1'], correct:0,
+      explain:'25×4=100, y hay 2+2=4 decimales entre los factores, así que el resultado es 0.0100 = 0.01.'},
+    {level:'dificil', q:'¿Cuántas cifras decimales tendrá 1.234 × 0.5?', options:['4','3','2','5'], correct:0,
+      explain:'Se suman las cifras decimales de los dos factores: 3 (de 1.234) + 1 (de 0.5) = 4.'},
+  ];
+
+  let qIndex=0, score=0, answered=false;
+  const byLevel = {facil:{c:0,t:0}, medio:{c:0,t:0}, dificil:{c:0,t:0}};
+
+  function startQuiz(){
+    qIndex=0; score=0; answered=false;
+    byLevel.facil={c:0,t:0}; byLevel.medio={c:0,t:0}; byLevel.dificil={c:0,t:0};
+    document.getElementById('quizIntro').style.display='none';
+    document.getElementById('quizResults').style.display='none';
+    document.getElementById('quizBody').style.display='block';
+    showQuestion();
+  }
+  function showQuestion(){
+    answered=false;
+    const item = QUIZ[qIndex];
+    document.getElementById('quizCounter').textContent='Pregunta '+(qIndex+1)+' de '+QUIZ.length;
+    const diffEl = document.getElementById('quizDiff');
+    diffEl.textContent = item.level==='facil'?'fácil':item.level==='medio'?'medio':'difícil';
+    diffEl.className = 'diff-badge diff-'+item.level;
+    document.getElementById('quizProgress').style.width = (qIndex/QUIZ.length*100)+'%';
+    document.getElementById('quizQ').textContent = item.q;
+    const optBox = document.getElementById('quizOptions');
+    optBox.innerHTML='';
+    item.options.forEach((opt,i)=>{
+      const b=document.createElement('button');
+      b.className='quiz-option'; b.textContent=opt;
+      b.addEventListener('click', ()=>selectAnswer(i));
+      optBox.appendChild(b);
+    });
+    document.getElementById('quizExplain').classList.remove('show');
+    document.getElementById('btnNextQ').classList.remove('show');
+  }
+  function selectAnswer(i){
+    if(answered) return;
+    answered=true;
+    const item = QUIZ[qIndex];
+    byLevel[item.level].t++;
+    const correct = i===item.correct;
+    if(correct){ score++; byLevel[item.level].c++; }
+    document.querySelectorAll('#quizOptions .quiz-option').forEach((btn,idx)=>{
+      btn.disabled=true;
+      if(idx===item.correct) btn.classList.add('correct');
+      else if(idx===i) btn.classList.add('wrong');
+    });
+    const ex=document.getElementById('quizExplain');
+    ex.textContent=(correct?'✓ Correcto. ':'✗ No exactamente. ')+item.explain;
+    ex.classList.add('show');
+    document.getElementById('btnNextQ').classList.add('show');
+    document.getElementById('btnNextQ').textContent = (qIndex===QUIZ.length-1)?'Ver resultados →':'Siguiente pregunta →';
+  }
+  function nextQuestion(){
+    qIndex++;
+    if(qIndex>=QUIZ.length){ showResults(); return; }
+    showQuestion();
+  }
+  function showResults(){
+    document.getElementById('quizProgress').style.width='100%';
+    document.getElementById('quizBody').style.display='none';
+    document.getElementById('quizResults').style.display='block';
+    document.getElementById('scoreBig').textContent=score+'/'+QUIZ.length;
+    const pct=score/QUIZ.length;
+    let msg;
+    if(pct>=0.85) msg='Dominas las operaciones con enteros, fracciones y decimales, incluso los casos con truco. ¡Excelente!';
+    else if(pct>=0.6) msg='Vas bien encaminado. Repasa las preguntas difíciles y estarás listo del todo.';
+    else msg='Buen punto de partida. Vuelve a explorar los tres modos interactivos y repite el test cuando quieras.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const bd=document.getElementById('breakdown');
+    const levels=[['facil','Fácil','var(--green)'],['medio','Medio','var(--amber)'],['dificil','Difícil','var(--magenta)']];
+    bd.innerHTML = levels.map(([key,label,color])=>{
+      const d=byLevel[key];
+      return '<div class="bd-item"><div class="bd-num" style="color:'+color+'">'+d.c+'/'+d.t+'</div><div class="bd-label">'+label+'</div></div>';
+    }).join('');
+  }
+  document.getElementById('btnStartQuiz').addEventListener('click', startQuiz);
+  document.getElementById('btnNextQ').addEventListener('click', nextQuestion);
+  document.getElementById('btnRestartQuiz').addEventListener('click', startQuiz);
+
+})();
+</script>
+</body>
+</html>
