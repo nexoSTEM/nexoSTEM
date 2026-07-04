@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raíces y Potencias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<style>
+  :root{
+    --bg:#0a0d13; --bg-panel:#11151d; --bg-panel-2:#151a24; --line:#232a38;
+    --text:#e9edf5; --text-dim:#8b93a7;
+    --cyan:#5fe3e0; --magenta:#ff5ca8; --purple:#9b7bff; --amber:#ffb454; --green:#5fe0a0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
+  body{
+    min-height:100vh;padding:48px 24px 80px;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(95,227,224,0.06), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(255,92,168,0.05), transparent 40%),
+      var(--bg);
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--purple);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--purple);display:inline-block;}
+  h1{font-family:'STIX Two Text',serif;font-weight:600;font-size:clamp(30px,4.6vw,50px);line-height:1.08;margin:0 0 16px;
+    background:linear-gradient(100deg,#fff 20%, var(--cyan) 60%, var(--magenta) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lede{font-size:16.5px;line-height:1.6;color:var(--text-dim);max-width:660px;margin-bottom:34px;}
+  .lede b{color:var(--text);font-weight:600;}
+
+  .tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+  .tab-btn{font-family:'STIX Two Text',serif;font-style:italic;font-size:15.5px;background:var(--bg-panel);
+    border:1px solid var(--line);color:var(--text-dim);padding:11px 22px;border-radius:10px;cursor:pointer;transition:.15s;}
+  .tab-btn.active{color:var(--bg);background:var(--cyan);border-color:var(--cyan);font-weight:600;}
+  .tab-btn:not(.active):hover{border-color:var(--cyan);color:var(--text);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .section-heading{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text-dim);margin:0 0 14px;padding-top:6px;border-top:1px solid var(--line);}
+  .tab-panel > .section-heading:first-child{border-top:none;padding-top:0;}
+
+  .stage{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;margin-bottom:22px;}
+  @media(max-width:920px){.stage{grid-template-columns:1fr;}}
+  .panel{background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;padding:24px;}
+  .panel-title{font-family:'STIX Two Text',serif;font-style:italic;font-size:19px;margin:0 0 4px;}
+  .panel-sub{font-size:12.5px;color:var(--text-dim);margin-bottom:14px;}
+
+  svg{width:100%;height:auto;overflow:visible;}
+  .axis-line{stroke:var(--line);stroke-width:1.4;}
+  .grid-line{stroke:var(--line);stroke-width:1;opacity:.55;}
+  .tick-label{font-family:'JetBrains Mono',monospace;font-size:11px;fill:var(--text-dim);}
+
+  .ctrl-row{margin-bottom:16px;}
+  .ctrl-label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--text-dim);margin-bottom:7px;}
+  .ctrl-label b{color:var(--text);font-weight:500;}
+  .ctrl-val{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--cyan);}
+  input[type=range]{-webkit-appearance:none;width:100%;height:3px;border-radius:2px;background:var(--line);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+    background:var(--cyan);cursor:pointer;border:2px solid #0a0d13;box-shadow:0 0 0 1px var(--cyan);}
+  input[type=number]{width:100%;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:9px;color:var(--text);
+    font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;}
+  input[type=number]:focus{border-color:var(--cyan);}
+  .hint{font-size:11.5px;color:var(--text-dim);margin:2px 0 0;}
+
+  .result-box{background:var(--bg-panel-2);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:6px;min-height:56px;}
+  .result-box .r-main{font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--amber);margin-bottom:4px;}
+  .result-box .r-note{font-size:12.5px;color:var(--text-dim);line-height:1.5;}
+  .result-box .r-note.warn{color:var(--magenta);}
+
+  .formula-box{margin-top:16px;padding:14px 16px;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:10px;}
+  .formula-render{font-size:15px;display:flex;justify-content:center;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line);}
+  .glossary{font-size:12px;}
+  .glossary div{display:flex;gap:8px;padding:5px 0;border-top:1px solid var(--line);}
+  .glossary div:first-child{border-top:none;}
+  .gl-sym{font-family:'JetBrains Mono',monospace;color:var(--text);min-width:40px;font-weight:600;}
+  .gl-desc{color:var(--text-dim);flex:1;line-height:1.4;}
+  .gl-unit{font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:10.5px;white-space:nowrap;align-self:flex-start;opacity:.8;}
+
+  .bonus-box{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);}
+  .bonus-title{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+  .bonus-holder{display:flex;justify-content:center;}
+
+  /* guess & compare bars (raíces) */
+  .compare-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .compare-label{width:118px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);}
+  .compare-track{flex:1;height:30px;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:7px;overflow:hidden;}
+  .compare-fill{height:100%;border-radius:7px 0 0 7px;transition:width .2s ease-out, background .2s;}
+  .compare-value{width:100px;flex-shrink:0;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--text);}
+  .guess-feedback{
+    margin-top:6px;padding:12px 15px;border-radius:10px;font-size:13.5px;line-height:1.5;
+    background:var(--bg-panel-2);border:1px solid var(--line);color:var(--text-dim);transition:.2s;
+  }
+  .guess-feedback.match{border-color:var(--green);color:var(--green);background:rgba(95,224,160,.08);}
+  .guess-feedback.high{border-color:var(--magenta);}
+  .guess-feedback.low{border-color:var(--cyan);}
+
+  /* story */
+  .story{background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;padding:8px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px;}
+  @media(max-width:820px){.story{grid-template-columns:1fr;}}
+  .step{padding:16px;border-radius:10px;background:transparent;border:1px solid transparent;transition:.25s;}
+  .step.active{background:var(--bg-panel-2);border-color:var(--step-color,var(--cyan));}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--step-color,var(--text-dim));margin-bottom:8px;}
+  .step h3{font-family:'STIX Two Text',serif;font-weight:600;font-size:15.5px;margin:0 0 6px;}
+  .step p{font-size:13px;line-height:1.5;color:var(--text-dim);margin:0;}
+
+  footer{margin-top:40px;text-align:center;font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;}
+
+  /* quiz (shared engine) */
+  .quiz-panel{background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin-bottom:22px;}
+  .quiz-intro{text-align:center;padding:20px 10px;}
+  .quiz-intro h2{font-family:'STIX Two Text',serif;font-weight:600;font-size:24px;margin:0 0 10px;}
+  .quiz-intro p{font-size:14px;color:var(--text-dim);max-width:480px;margin:0 auto 22px;line-height:1.6;}
+  #btnStartQuiz{background:var(--cyan);color:#06181a;border:none;border-radius:10px;padding:13px 28px;font-weight:700;font-size:14.5px;cursor:pointer;}
+  #btnStartQuiz:hover{filter:brightness(1.1);}
+  .quiz-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:12px;}
+  .quiz-counter{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);white-space:nowrap;}
+  .diff-badge{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;}
+  .diff-facil{color:var(--green);border:1px solid var(--green);background:rgba(95,224,160,.08);}
+  .diff-medio{color:var(--amber);border:1px solid var(--amber);background:rgba(255,180,84,.08);}
+  .diff-dificil{color:var(--magenta);border:1px solid var(--magenta);background:rgba(255,92,168,.08);}
+  .progress-bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:3px;transition:width .3s;}
+  .quiz-q{font-family:'STIX Two Text',serif;font-size:18.5px;line-height:1.4;margin:0 0 20px;color:var(--text);}
+  .quiz-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+  .quiz-option{text-align:left;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:10px;
+    padding:13px 16px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:14.5px;cursor:pointer;transition:.15s;}
+  .quiz-option:hover:not(:disabled){border-color:var(--cyan);}
+  .quiz-option:disabled{cursor:default;}
+  .quiz-option.correct{border-color:var(--green);background:rgba(95,224,160,.1);color:var(--green);}
+  .quiz-option.wrong{border-color:var(--magenta);background:rgba(255,92,168,.1);color:var(--magenta);}
+  .quiz-explain{font-size:13.5px;line-height:1.55;color:var(--text-dim);background:var(--bg-panel-2);
+    border-left:3px solid var(--cyan);border-radius:6px;padding:12px 15px;margin-bottom:18px;display:none;font-family:'Inter',sans-serif;}
+  .quiz-explain.show{display:block;}
+  #btnNextQ{background:var(--cyan);color:#06181a;border:none;border-radius:9px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;display:none;}
+  #btnNextQ.show{display:inline-block;}
+  .quiz-results{text-align:center;padding:10px;}
+  .score-big{font-family:'STIX Two Text',serif;font-size:52px;font-weight:600;margin:6px 0;
+    background:linear-gradient(100deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .score-msg{font-size:15px;color:var(--text);max-width:460px;margin:0 auto 22px;line-height:1.5;}
+  .breakdown{display:flex;justify-content:center;gap:28px;margin-bottom:26px;flex-wrap:wrap;}
+  .bd-item{text-align:center;}
+  .bd-num{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;}
+  .bd-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  #btnRestartQuiz{background:var(--bg-panel-2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px 26px;font-weight:600;font-size:14px;cursor:pointer;}
+  #btnRestartQuiz:hover{border-color:var(--cyan);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Ciencia visual · Aritmética</div>
+  <h1>Crecer rápido, medir hacia atrás</h1>
+  <p class="lede">Una potencia es <b>multiplicar un número por sí mismo varias veces</b>: crece muy rápido. Una raíz es la pregunta inversa: <b>¿por cuál número tendría que multiplicarme para llegar hasta aquí?</b> Mueve los controles y observa ambos procesos en acción.</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="potencias">Potencias</button>
+    <button class="tab-btn" data-tab="raices">Raíces</button>
+  </div>
+
+  <!-- POTENCIAS -->
+  <div class="tab-panel active" id="tab-potencias">
+    <div class="stage">
+      <div class="panel">
+        <p class="panel-title">La torre de potencias</p>
+        <p class="panel-sub">Cada barra es b elevado a un exponente distinto · la barra ámbar es tu resultado actual</p>
+        <svg id="powerChart" viewBox="0 0 620 260"></svg>
+        <div class="bonus-box" id="powerBonusBox" style="display:none;">
+          <div class="bonus-title" id="powerBonusTitle">Modelo visual</div>
+          <div class="bonus-holder" id="powerBonusHolder"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="panel-title">Controles</p>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Base (b)</b> <span class="ctrl-val" id="vPB">2</span></div>
+          <input type="range" id="sPB" min="-4" max="4" step="1" value="2">
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Exponente (n)</b> <span class="ctrl-val" id="vPN">3</span></div>
+          <input type="range" id="sPN" min="-4" max="6" step="1" value="3">
+        </div>
+        <div class="result-box" id="powerResultBox"></div>
+        <div class="formula-box">
+          <div class="formula-render" id="powerFormula"></div>
+          <div class="glossary" id="powerGlossary"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAÍCES -->
+  <div class="tab-panel" id="tab-raices">
+    <div class="stage">
+      <div class="panel">
+        <p class="panel-title">Prueba y ajusta</p>
+        <p class="panel-sub">Arrastra tu número candidato y compara su potencia con el objetivo</p>
+
+        <div class="ctrl-row" style="margin-bottom:20px;">
+          <div class="ctrl-label"><b>Tu candidato (c)</b> <span class="ctrl-val" id="vRC">1</span></div>
+          <input type="range" id="sRC" min="-10" max="10" step="0.1" value="1">
+        </div>
+
+        <div class="compare-row">
+          <div class="compare-label">c<span id="rcExpLabel" style="vertical-align:super;font-size:9px;"></span> = tu intento</div>
+          <div class="compare-track"><div class="compare-fill" id="fillGuess" style="background:var(--cyan);width:0%"></div></div>
+          <div class="compare-value" id="valGuess">0</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-label">x = objetivo</div>
+          <div class="compare-track"><div class="compare-fill" id="fillTarget" style="background:var(--purple);width:0%"></div></div>
+          <div class="compare-value" id="valTarget">0</div>
+        </div>
+
+        <div class="guess-feedback" id="guessFeedback"></div>
+
+        <div class="bonus-box" id="rootBonusBox" style="display:none;">
+          <div class="bonus-title">Modelo visual · cuadrado más cercano</div>
+          <div class="bonus-holder" id="rootBonusHolder"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="panel-title">Controles</p>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Índice (n)</b> <span class="ctrl-val" id="vRN">2</span></div>
+          <input type="range" id="sRN" min="2" max="6" step="1" value="2">
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-label"><b>Radicando (x)</b></div>
+          <input type="number" id="iRX" step="1" value="16">
+          <p class="hint">Puede ser negativo si el índice es impar</p>
+        </div>
+        <div class="result-box" id="rootResultBox"></div>
+        <div class="formula-box">
+          <div class="formula-render" id="rootFormula"></div>
+          <div class="glossary" id="rootGlossary"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-panel" id="quizPanel">
+    <div class="quiz-intro" id="quizIntro">
+      <h2>Pon a prueba lo aprendido</h2>
+      <p>20 preguntas, de más fáciles a más difíciles, sobre potencias y raíces.</p>
+      <button id="btnStartQuiz">Comenzar test</button>
+    </div>
+    <div id="quizBody" style="display:none;">
+      <div class="quiz-head">
+        <span class="quiz-counter" id="quizCounter">Pregunta 1 de 20</span>
+        <span class="diff-badge" id="quizDiff">fácil</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="quizProgress" style="width:0%"></div></div>
+      <p class="quiz-q" id="quizQ"></p>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-explain" id="quizExplain"></div>
+      <button id="btnNextQ">Siguiente pregunta →</button>
+    </div>
+    <div id="quizResults" style="display:none;">
+      <div class="quiz-results">
+        <div style="font-size:13px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;">Resultado</div>
+        <div class="score-big" id="scoreBig">0/20</div>
+        <p class="score-msg" id="scoreMsg"></p>
+        <div class="breakdown" id="breakdown"></div>
+        <button id="btnRestartQuiz">Repetir test</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="story" id="story">
+    <div class="step active" data-phase="potencias" style="--step-color:var(--cyan)">
+      <div class="step-num">01 · Potencias</div>
+      <h3>Multiplicar por ti mismo</h3>
+      <p>bⁿ significa multiplicar b por sí mismo n veces. Crece (o decrece) mucho más rápido que una suma.</p>
+    </div>
+    <div class="step" data-phase="especiales" style="--step-color:var(--magenta)">
+      <div class="step-num">02 · Casos especiales</div>
+      <h3>Exponente cero y negativo</h3>
+      <p>Todo número (menos el cero) elevado a 0 da 1. Un exponente negativo significa "invertir": b⁻ⁿ = 1/bⁿ.</p>
+    </div>
+    <div class="step" data-phase="raices" style="--step-color:var(--purple)">
+      <div class="step-num">03 · Raíces</div>
+      <h3>La operación inversa</h3>
+      <p>ⁿ√x pregunta: ¿qué número, elevado a n, me da x? Es literalmente deshacer una potencia.</p>
+    </div>
+    <div class="step" data-phase="irracionales" style="--step-color:var(--amber)">
+      <div class="step-num">04 · Raíces no exactas</div>
+      <h3>Cuando no hay número exacto</h3>
+      <p>Si x no es una potencia perfecta (como 17), su raíz es un número irracional: infinitos decimales sin patrón.</p>
+    </div>
+  </div>
+
+  <footer>PROTOTIPO · CIENCIA INTERACTIVA</footer>
+</div>
+
+<script>
+(function(){
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs){
+    const e = document.createElementNS(NS, tag);
+    for(const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function fmtNum(n, maxDp){
+    if(typeof n !== 'number' || !isFinite(n)) return String(n);
+    if(Number.isInteger(n)) return String(n);
+    const dp = maxDp || 8;
+    let s = n.toFixed(dp);
+    s = s.replace(/0+$/,'');
+    if(s.endsWith('.')) s = s.slice(0,-1);
+    return s;
+  }
+  function buildGridSVG(rows, cols, colorVar, cellPx, opacity){
+    cellPx = cellPx || 22;
+    const w = cols*cellPx, h = rows*cellPx;
+    const svg = document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    svg.setAttribute('width', w); svg.setAttribute('height', h);
+    svg.appendChild(el('rect',{x:0,y:0,width:w,height:h, style:'fill:'+colorVar+';opacity:'+(opacity!==undefined?opacity:.75)}));
+    for(let r=0;r<=rows;r++) svg.appendChild(el('line',{x1:0,y1:r*cellPx,x2:w,y2:r*cellPx,style:'stroke:var(--bg-panel);stroke-width:1.4'}));
+    for(let c=0;c<=cols;c++) svg.appendChild(el('line',{x1:c*cellPx,y1:0,x2:c*cellPx,y2:h,style:'stroke:var(--bg-panel);stroke-width:1.4'}));
+    svg.appendChild(el('rect',{x:0,y:0,width:w,height:h, style:'fill:none;stroke:var(--text-dim);stroke-width:1.4'}));
+    return svg;
+  }
+
+  // =========================================================
+  // TABS
+  // =========================================================
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+      syncStory();
+    });
+  });
+
+  // =========================================================
+  // POTENCIAS
+  // =========================================================
+  let pB=2, pN=3;
+
+  function computePower(b,n){
+    if(b===0){
+      if(n>0) return {value:0};
+      if(n===0) return {value:1, zeroZero:true};
+      return {error:true};
+    }
+    return {value:Math.pow(b,n)};
+  }
+
+  function renderPowerChart(){
+    const svg = document.getElementById('powerChart');
+    svg.innerHTML='';
+    const b=pB, n=pN;
+    const W=620,H=260, marginL=44, marginB=40, baseY=H-marginB, topY=26;
+    svg.appendChild(el('line',{x1:marginL,y1:baseY,x2:W-14,y2:baseY,class:'axis-line'}));
+
+    const kStart = Math.min(0,n), kEnd = Math.max(0,n);
+    const ks = [];
+    for(let k=kStart;k<=kEnd;k++){
+      if(b===0 && k<0) continue;
+      ks.push(k);
+    }
+    if(ks.length===0) return;
+
+    const usableW = W-marginL-30;
+    const barSlot = usableW/ks.length;
+    const maxBarH = baseY-topY;
+
+    // compute log-scaled magnitude for each to normalize height
+    const mags = ks.map(k=>{
+      const r = computePower(b,k);
+      if(r.error) return 0;
+      return Math.log10(1+Math.abs(r.value));
+    });
+    const maxMag = Math.max.apply(null, mags.concat([0.3]));
+
+    ks.forEach((k,i)=>{
+      const r = computePower(b,k);
+      const x = marginL + i*barSlot + barSlot*0.2;
+      const barW = barSlot*0.6;
+      const isCurrent = k===n;
+      if(r.error){
+        const t = el('text',{x:x+barW/2,y:baseY-10,'text-anchor':'middle',style:'fill:var(--magenta);font-family:JetBrains Mono,monospace;font-size:11px'});
+        t.textContent='indef.';
+        svg.appendChild(t);
+      } else {
+        const mag = Math.log10(1+Math.abs(r.value));
+        const h = Math.max((mag/maxMag)*maxBarH*0.85, r.value===0?0:4);
+        const color = r.value<0 ? 'var(--magenta)' : (isCurrent ? 'var(--amber)' : 'var(--cyan)');
+        svg.appendChild(el('rect',{x:x,y:baseY-h,width:barW,height:h, rx:3, style:'fill:'+color+';opacity:'+(isCurrent?1:0.55)}));
+        const valLabel = el('text',{x:x+barW/2,y:baseY-h-8,'text-anchor':'middle',style:'fill:'+(isCurrent?'var(--amber)':'var(--text-dim)')+';font-family:JetBrains Mono,monospace;font-size:11px;font-weight:'+(isCurrent?'700':'400')});
+        valLabel.textContent = fmtNum(r.value);
+        svg.appendChild(valLabel);
+      }
+      const kLabel = el('text',{x:x+barW/2,y:baseY+18,'text-anchor':'middle',class:'tick-label'});
+      kLabel.textContent = b+(k>=0?'^'+k:'^('+k+')');
+      svg.appendChild(kLabel);
+    });
+  }
+
+  function renderPowerBonus(){
+    const box = document.getElementById('powerBonusBox');
+    const holder = document.getElementById('powerBonusHolder');
+    const titleEl = document.getElementById('powerBonusTitle');
+    holder.innerHTML='';
+    const b=Math.abs(pB), n=pN;
+    if(pB===0 || n<1 || n>4){ box.style.display='none'; return; }
+    box.style.display='block';
+    if(n===2){
+      titleEl.textContent = 'Modelo de área: '+pB+'² es un cuadrado de lado '+pB;
+      holder.appendChild(buildGridSVG(b,b,'var(--amber)',Math.max(12,140/Math.max(b,1))));
+    } else {
+      titleEl.textContent = 'Modelo de capas: '+pB+'^'+n+' son '+n+' capas de '+pB+'×'+pB;
+      const wrap = document.createElement('div');
+      wrap.style.position='relative';
+      const shown = Math.min(n,4);
+      const cellPx = Math.max(10, 110/Math.max(b,1));
+      for(let i=0;i<shown;i++){
+        const layer = buildGridSVG(b,b,'var(--amber)',cellPx, 0.85-i*0.15);
+        layer.style.position = i===0 ? 'relative' : 'absolute';
+        layer.style.left = (i*10)+'px';
+        layer.style.top = (-i*10)+'px';
+        wrap.appendChild(layer);
+      }
+      wrap.style.marginTop = ((shown-1)*10)+'px';
+      wrap.style.marginRight = ((shown-1)*10)+'px';
+      holder.appendChild(wrap);
+    }
+  }
+
+  function renderPowerResult(){
+    const b=pB, n=pN;
+    const r = computePower(b,n);
+    const box = document.getElementById('powerResultBox');
+    if(r.error){
+      box.innerHTML = '<div class="r-main" style="color:var(--magenta)">Indefinido</div><div class="r-note warn">0 elevado a un exponente negativo no está definido (equivale a dividir entre 0).</div>';
+    } else if(r.zeroZero){
+      box.innerHTML = '<div class="r-main">0⁰ = 1 (por convención)</div><div class="r-note">Es un caso especial: muchos libros lo definen como 1 por conveniencia, aunque en análisis matemático se considera indeterminado.</div>';
+    } else {
+      let note = '';
+      if(n<0) note = 'Exponente negativo: equivale a 1 dividido entre '+b+'^'+Math.abs(n)+'.';
+      else if(b<0 && n%2===0) note = 'Base negativa con exponente par → resultado positivo.';
+      else if(b<0 && n%2!==0) note = 'Base negativa con exponente impar → resultado negativo.';
+      else note = 'Multiplicar '+b+' por sí mismo '+n+' veces.';
+      box.innerHTML = '<div class="r-main">'+b+'^'+n+' = '+fmtNum(r.value)+'</div><div class="r-note">'+note+'</div>';
+    }
+
+    let formula;
+    if(n>0) formula = 'b^{'+n+'} = \\underbrace{b\\times b\\times\\cdots\\times b}_{'+n+'\\text{ veces}}';
+    else if(n===0) formula = 'b^{0} = 1 \\quad (b\\neq 0)';
+    else formula = 'b^{'+n+'} = \\dfrac{1}{b^{'+Math.abs(n)+'}}';
+    katex.render(formula, document.getElementById('powerFormula'), {throwOnError:false});
+    document.getElementById('powerGlossary').innerHTML =
+      '<div><span class="gl-sym">b</span><span class="gl-desc">La base: el número que se repite al multiplicar</span><span class="gl-unit">Adimensional</span></div>'+
+      '<div><span class="gl-sym">n</span><span class="gl-desc">El exponente: cuántas veces se multiplica (o se invierte, si es negativo)</span><span class="gl-unit">Adimensional</span></div>';
+  }
+
+  function updatePower(){
+    document.getElementById('vPB').textContent = pB;
+    document.getElementById('vPN').textContent = pN;
+    renderPowerChart();
+    renderPowerBonus();
+    renderPowerResult();
+    syncStory();
+  }
+  document.getElementById('sPB').addEventListener('input', e=>{ pB=parseInt(e.target.value,10); updatePower(); });
+  document.getElementById('sPN').addEventListener('input', e=>{ pN=parseInt(e.target.value,10); updatePower(); });
+
+  // =========================================================
+  // RAÍCES
+  // =========================================================
+  let rN=2, rC=1;
+
+  function computeRoot(x,n){
+    if(x<0 && n%2===0) return {error:true};
+    let value;
+    if(x<0){ value = -Math.pow(-x,1/n); } else { value = Math.pow(x,1/n); }
+    const rounded = Math.round(value);
+    const check = Math.sign(rounded)*Math.pow(Math.abs(rounded),n);
+    if(Math.abs(check-x) < 1e-6) value = rounded;
+    return {value};
+  }
+
+  function renderRootGuess(){
+    const n = rN;
+    const x = parseFloat(document.getElementById('iRX').value);
+    document.getElementById('rcExpLabel').textContent = n;
+    const feedback = document.getElementById('guessFeedback');
+
+    if(isNaN(x)){
+      feedback.className = 'guess-feedback';
+      feedback.textContent = 'Introduce un radicando válido en los controles.';
+      document.getElementById('fillGuess').style.width='0%';
+      document.getElementById('fillTarget').style.width='0%';
+      return;
+    }
+
+    const c = rC;
+    const guessVal = Math.pow(c,n);
+    const maxRef = Math.max(Math.abs(x), Math.abs(guessVal), 1);
+    const guessPct = Math.min(100, Math.abs(guessVal)/maxRef*100);
+    const targetPct = Math.min(100, Math.abs(x)/maxRef*100);
+
+    document.getElementById('valGuess').textContent = fmtNum(guessVal);
+    document.getElementById('valTarget').textContent = fmtNum(x);
+    const fillGuess = document.getElementById('fillGuess');
+    const fillTarget = document.getElementById('fillTarget');
+    fillGuess.style.width = guessPct+'%';
+    fillTarget.style.width = targetPct+'%';
+
+    const tolerance = Math.max(Math.abs(x)*0.01, 0.05);
+    const diff = guessVal - x;
+
+    if(n%2===0 && x<0){
+      feedback.className = 'guess-feedback high';
+      feedback.textContent = '⚠️ Con índice par no existe ninguna raíz real de un número negativo: prueba cualquier c, nunca vas a alcanzar el objetivo.';
+      fillGuess.style.background = 'var(--cyan)';
+      fillTarget.style.background = 'var(--purple)';
+    } else if(Math.abs(diff) <= tolerance){
+      feedback.className = 'guess-feedback match';
+      feedback.innerHTML = '✅ <b>¡Coincide!</b> c = '+fmtNum(c)+' elevado a '+n+' da (aproximadamente) '+fmtNum(x)+'. Esa es la raíz.';
+      fillGuess.style.background = 'var(--green)';
+      fillTarget.style.background = 'var(--green)';
+    } else if(diff > 0){
+      feedback.className = 'guess-feedback high';
+      feedback.innerHTML = '🔼 Tu resultado (c'+supDigits(n)+' = '+fmtNum(guessVal)+') es <b>mayor</b> que el objetivo. Prueba a bajar c.';
+      fillGuess.style.background = 'var(--magenta)';
+      fillTarget.style.background = 'var(--purple)';
+    } else {
+      feedback.className = 'guess-feedback low';
+      feedback.innerHTML = '🔽 Tu resultado (c'+supDigits(n)+' = '+fmtNum(guessVal)+') es <b>menor</b> que el objetivo. Prueba a subir c.';
+      fillGuess.style.background = 'var(--cyan)';
+      fillTarget.style.background = 'var(--purple)';
+    }
+  }
+
+  function supDigits(n){
+    const map = {0:'⁰',1:'¹',2:'²',3:'³',4:'⁴',5:'⁵',6:'⁶',7:'⁷',8:'⁸',9:'⁹'};
+    return String(n).split('').map(d=>map[d]||d).join('');
+  }
+
+  function configureGuessSlider(){
+    const n = rN;
+    const x = parseFloat(document.getElementById('iRX').value);
+    const res = isNaN(x) ? {value:2} : computeRoot(x,n);
+    const rootMag = (!res.error && isFinite(res.value)) ? Math.abs(res.value) : 3;
+    const rangeMax = Math.max(Math.ceil(rootMag*1.6), 6);
+    const slider = document.getElementById('sRC');
+    slider.min = -rangeMax;
+    slider.max = rangeMax;
+    slider.step = rangeMax>8 ? 0.5 : 0.1;
+    rC = 1;
+    slider.value = rC;
+    document.getElementById('vRC').textContent = fmtNum(rC);
+  }
+
+  function renderRootBonus(){
+    const box = document.getElementById('rootBonusBox');
+    const holder = document.getElementById('rootBonusHolder');
+    holder.innerHTML='';
+    const n = rN;
+    const x = parseFloat(document.getElementById('iRX').value);
+    if(n!==2 || isNaN(x) || x<0){ box.style.display='none'; return; }
+    box.style.display='block';
+    const floorRoot = Math.floor(Math.sqrt(x));
+    const wrap = document.createElement('div');
+    wrap.style.textAlign='center';
+    const cellPx = Math.max(10, 160/Math.max(floorRoot+1,1));
+    if(floorRoot*floorRoot === x){
+      wrap.appendChild(buildGridSVG(floorRoot,floorRoot,'var(--amber)',cellPx));
+      const cap = document.createElement('div');
+      cap.className='frac-block-label'; cap.style.marginTop='8px'; cap.style.fontFamily="'JetBrains Mono',monospace"; cap.style.fontSize='12px'; cap.style.color='var(--text-dim)';
+      cap.textContent = floorRoot+'×'+floorRoot+' = '+x+' exactamente → √'+x+' = '+floorRoot;
+      wrap.appendChild(cap);
+    } else {
+      const nextRoot = floorRoot+1;
+      const gridWrap = document.createElement('div');
+      gridWrap.style.display='inline-block'; gridWrap.style.position='relative';
+      gridWrap.appendChild(buildGridSVG(nextRoot,nextRoot,'var(--bg-panel-2)',cellPx));
+      const overlay = document.createElementNS(NS,'svg');
+      overlay.setAttribute('viewBox','0 0 '+(nextRoot*cellPx)+' '+(nextRoot*cellPx));
+      overlay.setAttribute('width', nextRoot*cellPx); overlay.setAttribute('height', nextRoot*cellPx);
+      overlay.style.position='absolute'; overlay.style.left='0'; overlay.style.top='0';
+      overlay.appendChild(el('rect',{x:0,y:0,width:floorRoot*cellPx,height:floorRoot*cellPx, style:'fill:var(--amber);opacity:.8'}));
+      gridWrap.appendChild(overlay);
+      wrap.appendChild(gridWrap);
+      const cap = document.createElement('div');
+      cap.style.marginTop='8px'; cap.style.fontFamily="'JetBrains Mono',monospace"; cap.style.fontSize='12px'; cap.style.color='var(--text-dim)';
+      cap.innerHTML = floorRoot+'² = '+(floorRoot*floorRoot)+' &nbsp;≤&nbsp; '+x+' &nbsp;&lt;&nbsp; '+(nextRoot*nextRoot)+' = '+nextRoot+'²<br>√'+x+' está entre '+floorRoot+' y '+nextRoot+' (no es exacta)';
+      wrap.appendChild(cap);
+    }
+    holder.appendChild(wrap);
+  }
+
+  function renderRootResult(){
+    const n = rN;
+    const x = parseFloat(document.getElementById('iRX').value);
+    const box = document.getElementById('rootResultBox');
+    if(isNaN(x)){
+      box.innerHTML = '<div class="r-note">Introduce un radicando válido.</div>';
+      return;
+    }
+    const res = computeRoot(x,n);
+    if(res.error){
+      box.innerHTML = '<div class="r-main" style="color:var(--magenta)">No es un número real</div><div class="r-note warn">Ningún número real elevado a un índice par puede dar un resultado negativo.</div>';
+    } else {
+      const isInt = Number.isInteger(res.value);
+      box.innerHTML = '<div class="r-main">'+(n===2?'√':n+'√')+fmtNum(x)+' = '+fmtNum(res.value)+'</div>'+
+        '<div class="r-note">'+(isInt? 'Raíz exacta: '+res.value+'^'+n+' = '+x+'.' : 'No es exacta: su expansión decimal no termina, es un número irracional.')+'</div>';
+    }
+    katex.render('\\sqrt['+n+']{x} = x^{1/'+n+'}', document.getElementById('rootFormula'), {throwOnError:false});
+    document.getElementById('rootGlossary').innerHTML =
+      '<div><span class="gl-sym">x</span><span class="gl-desc">El radicando: el número del que buscas la raíz</span><span class="gl-unit">Adimensional</span></div>'+
+      '<div><span class="gl-sym">n</span><span class="gl-desc">El índice: cuántas veces se multiplica el resultado por sí mismo</span><span class="gl-unit">Adimensional</span></div>';
+  }
+
+  function updateRoot(){
+    document.getElementById('vRN').textContent = rN;
+    configureGuessSlider();
+    renderRootGuess();
+    renderRootBonus();
+    renderRootResult();
+    syncStory();
+  }
+  document.getElementById('sRN').addEventListener('input', e=>{ rN=parseInt(e.target.value,10); updateRoot(); });
+  document.getElementById('iRX').addEventListener('input', updateRoot);
+  document.getElementById('sRC').addEventListener('input', e=>{
+    rC = parseFloat(e.target.value);
+    document.getElementById('vRC').textContent = fmtNum(rC);
+    renderRootGuess();
+  });
+
+  // =========================================================
+  // STORY SYNC
+  // =========================================================
+  function syncStory(){
+    const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+    let phase;
+    if(activeTab==='potencias') phase = pN<=0 ? 'especiales' : 'potencias';
+    else {
+      const x = parseFloat(document.getElementById('iRX').value);
+      const res = computeRoot(isNaN(x)?0:x, rN);
+      phase = (!res.error && !Number.isInteger(res.value)) ? 'irracionales' : 'raices';
+    }
+    document.querySelectorAll('.step').forEach(s=> s.classList.toggle('active', s.dataset.phase===phase));
+  }
+
+  updatePower();
+  updateRoot();
+  syncStory();
+
+  // =========================================================
+  // QUIZ
+  // =========================================================
+  const QUIZ = [
+    {level:'facil', q:'2³ = ?', options:['8','6','9','5'], correct:0,
+      explain:'2×2×2 = 8.'},
+    {level:'facil', q:'5² = ?', options:['25','10','15','20'], correct:0,
+      explain:'5×5 = 25.'},
+    {level:'facil', q:'¿Cuánto vale 4⁰?', options:['1','0','4','Indefinido'], correct:0,
+      explain:'Cualquier número distinto de 0 elevado a 0 da siempre 1.'},
+    {level:'facil', q:'√9 = ?', options:['3','4.5','81','9'], correct:0,
+      explain:'3×3 = 9, así que la raíz cuadrada de 9 es 3.'},
+    {level:'facil', q:'10² = ?', options:['100','20','1000','10'], correct:0,
+      explain:'10×10 = 100.'},
+    {level:'facil', q:'En la expresión 7³, ¿cómo se llama el número 7?', options:['Base','Exponente','Radicando','Índice'], correct:0,
+      explain:'El 7 es la base: el número que se multiplica por sí mismo. El 3 es el exponente.'},
+    {level:'medio', q:'3⁴ = ?', options:['81','12','64','27'], correct:0,
+      explain:'3×3×3×3 = 81.'},
+    {level:'medio', q:'2⁻² = ?', options:['0.25','-4','4','-0.25'], correct:0,
+      explain:'2⁻² = 1/2² = 1/4 = 0.25.'},
+    {level:'medio', q:'√16 = ?', options:['4','8','2','256'], correct:0,
+      explain:'4×4 = 16.'},
+    {level:'medio', q:'∛27 = ?', options:['3','9','1.5','6'], correct:0,
+      explain:'3×3×3 = 27, así que la raíz cúbica de 27 es 3.'},
+    {level:'medio', q:'(−2)² = ?', options:['4','−4','2','−2'], correct:0,
+      explain:'Exponente par sobre base negativa: el resultado es positivo. (−2)×(−2) = 4.'},
+    {level:'medio', q:'(−2)³ = ?', options:['−8','8','−6','6'], correct:0,
+      explain:'Exponente impar sobre base negativa: el resultado sigue siendo negativo. (−2)×(−2)×(−2) = −8.'},
+    {level:'medio', q:'En ⁴√81, ¿cuál es el índice?', options:['4','81','3','9'], correct:0,
+      explain:'El índice es el número pequeño fuera del radical (4). El 81 es el radicando.'},
+    {level:'medio', q:'5⁰ × 3² = ?', options:['9','0','15','45'], correct:0,
+      explain:'5⁰ = 1, y 1×3² = 1×9 = 9.'},
+    {level:'dificil', q:'√20 está entre qué dos números enteros consecutivos?', options:['4 y 5','3 y 4','5 y 6','2 y 3'], correct:0,
+      explain:'4² = 16 y 5² = 25. Como 16 < 20 < 25, la raíz de 20 está entre 4 y 5.'},
+    {level:'dificil', q:'2⁻³ × 2⁵ = ?', options:['4','2','8','0.25'], correct:0,
+      explain:'2⁻³ = 0.125 y 2⁵ = 32. Su producto es 4 (equivalente a 2², sumando los exponentes: −3+5=2).'},
+    {level:'dificil', q:'¿Cuánto vale 0⁰ según la convención más habitual en matemáticas?', options:['Se define como 1 por convención, aunque es un caso especial','0','Indefinido siempre, nunca se usa','Infinito'], correct:0,
+      explain:'Es un caso límite genuinamente ambiguo: en álgebra y combinatoria se suele definir como 1 por conveniencia, aunque en análisis se trata como indeterminado.'},
+    {level:'dificil', q:'¿Cuál de estos números es irracional?', options:['√17','√16','√25','√36'], correct:0,
+      explain:'17 no es un cuadrado perfecto, así que su raíz tiene infinitos decimales sin patrón. Los otros tres son raíces exactas.'},
+    {level:'dificil', q:'(2³)² = ?', options:['64','32','36','16'], correct:0,
+      explain:'2³=8, y 8²=64. (También se puede ver como 2^(3×2)=2⁶=64.)'},
+    {level:'dificil', q:'Si ⁿ√(−8) da un número real, ¿qué tipo de índice n lo permite?', options:['Impar (por ejemplo 3)','Par (por ejemplo 2)','Cualquier n','Ningún n'], correct:0,
+      explain:'Con índice impar, un número negativo sí tiene raíz real: ∛(−8) = −2. Con índice par no existe raíz real de un número negativo.'},
+  ];
+
+  let qIndex=0, score=0, answered=false;
+  const byLevel = {facil:{c:0,t:0}, medio:{c:0,t:0}, dificil:{c:0,t:0}};
+
+  function startQuiz(){
+    qIndex=0; score=0; answered=false;
+    byLevel.facil={c:0,t:0}; byLevel.medio={c:0,t:0}; byLevel.dificil={c:0,t:0};
+    document.getElementById('quizIntro').style.display='none';
+    document.getElementById('quizResults').style.display='none';
+    document.getElementById('quizBody').style.display='block';
+    showQuestion();
+  }
+  function showQuestion(){
+    answered=false;
+    const item = QUIZ[qIndex];
+    document.getElementById('quizCounter').textContent='Pregunta '+(qIndex+1)+' de '+QUIZ.length;
+    const diffEl = document.getElementById('quizDiff');
+    diffEl.textContent = item.level==='facil'?'fácil':item.level==='medio'?'medio':'difícil';
+    diffEl.className = 'diff-badge diff-'+item.level;
+    document.getElementById('quizProgress').style.width = (qIndex/QUIZ.length*100)+'%';
+    document.getElementById('quizQ').textContent = item.q;
+    const optBox = document.getElementById('quizOptions');
+    optBox.innerHTML='';
+    item.options.forEach((opt,i)=>{
+      const b=document.createElement('button');
+      b.className='quiz-option'; b.textContent=opt;
+      b.addEventListener('click', ()=>selectAnswer(i));
+      optBox.appendChild(b);
+    });
+    document.getElementById('quizExplain').classList.remove('show');
+    document.getElementById('btnNextQ').classList.remove('show');
+  }
+  function selectAnswer(i){
+    if(answered) return;
+    answered=true;
+    const item = QUIZ[qIndex];
+    byLevel[item.level].t++;
+    const correct = i===item.correct;
+    if(correct){ score++; byLevel[item.level].c++; }
+    document.querySelectorAll('#quizOptions .quiz-option').forEach((btn,idx)=>{
+      btn.disabled=true;
+      if(idx===item.correct) btn.classList.add('correct');
+      else if(idx===i) btn.classList.add('wrong');
+    });
+    const ex=document.getElementById('quizExplain');
+    ex.textContent=(correct?'✓ Correcto. ':'✗ No exactamente. ')+item.explain;
+    ex.classList.add('show');
+    document.getElementById('btnNextQ').classList.add('show');
+    document.getElementById('btnNextQ').textContent = (qIndex===QUIZ.length-1)?'Ver resultados →':'Siguiente pregunta →';
+  }
+  function nextQuestion(){
+    qIndex++;
+    if(qIndex>=QUIZ.length){ showResults(); return; }
+    showQuestion();
+  }
+  function showResults(){
+    document.getElementById('quizProgress').style.width='100%';
+    document.getElementById('quizBody').style.display='none';
+    document.getElementById('quizResults').style.display='block';
+    document.getElementById('scoreBig').textContent=score+'/'+QUIZ.length;
+    const pct=score/QUIZ.length;
+    let msg;
+    if(pct>=0.85) msg='Dominas potencias y raíces, incluidos los casos con truco. ¡Excelente!';
+    else if(pct>=0.6) msg='Vas bien encaminado. Repasa las preguntas difíciles y estarás listo del todo.';
+    else msg='Buen punto de partida. Vuelve a explorar los dos modos interactivos y repite el test cuando quieras.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const bd=document.getElementById('breakdown');
+    const levels=[['facil','Fácil','var(--green)'],['medio','Medio','var(--amber)'],['dificil','Difícil','var(--magenta)']];
+    bd.innerHTML = levels.map(([key,label,color])=>{
+      const d=byLevel[key];
+      return '<div class="bd-item"><div class="bd-num" style="color:'+color+'">'+d.c+'/'+d.t+'</div><div class="bd-label">'+label+'</div></div>';
+    }).join('');
+  }
+  document.getElementById('btnStartQuiz').addEventListener('click', startQuiz);
+  document.getElementById('btnNextQ').addEventListener('click', nextQuestion);
+  document.getElementById('btnRestartQuiz').addEventListener('click', startQuiz);
+
+})();
+</script>
+</body>
+</html>

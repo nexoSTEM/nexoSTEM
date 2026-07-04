@@ -498,7 +498,7 @@ export const lessons: Lesson[] = [
     subLessons: [
       { id: 'mat-eso-01-sub-1', title: 'Conjuntos numéricos: naturales, enteros, racionales y reales', order: 1, widgetFile: '/lessons/matematicas/eso/conjuntos-numericos.html' },
       { id: 'mat-eso-01-sub-2', title: 'Operaciones con enteros, fracciones y decimales', order: 2, widgetFile: '/lessons/matematicas/eso/operaciones-numericas.html' },
-      { id: 'mat-eso-01-sub-3', title: 'Potencias y raíces', order: 3, widgetFile: null },
+      { id: 'mat-eso-01-sub-3', title: 'Potencias y raíces', order: 3, widgetFile: '/lessons/matematicas/eso/raices-potencias.html' },
       { id: 'mat-eso-01-sub-4', title: 'Introducción a expresiones algebraicas: monomios, polinomios, valor numérico', order: 4, widgetFile: null },
     ],
   },
