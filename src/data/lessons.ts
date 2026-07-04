@@ -2,6 +2,7 @@ export interface SubLesson {
   id: string
   title: string
   order: number
+  widgetFile?: string | null
 }
 
 export interface Lesson {
@@ -30,10 +31,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-01-sub-1', title: 'Magnitudes fundamentales y derivadas y Sistema Internacional', order: 1 },
-      { id: 'fis-eso-01-sub-2', title: 'Notación científica, cifras significativas y errores de medida', order: 2 },
-      { id: 'fis-eso-01-sub-3', title: 'Instrumentos de medida y precisión', order: 3 },
-      { id: 'fis-eso-01-sub-4', title: 'Gráficas: variables dependiente e independiente', order: 4 },
+      { id: 'fis-eso-01-sub-1', title: 'Magnitudes fundamentales y derivadas y Sistema Internacional', order: 1, widgetFile: null },
+      { id: 'fis-eso-01-sub-2', title: 'Notación científica, cifras significativas y errores de medida', order: 2, widgetFile: null },
+      { id: 'fis-eso-01-sub-3', title: 'Instrumentos de medida y precisión', order: 3, widgetFile: null },
+      { id: 'fis-eso-01-sub-4', title: 'Gráficas: variables dependiente e independiente', order: 4, widgetFile: null },
     ],
   },
   {
@@ -47,10 +48,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-02-sub-1', title: 'Modelo cinético-molecular: sólido, líquido y gas', order: 1 },
-      { id: 'fis-eso-02-sub-2', title: 'Densidad, masa y volumen', order: 2 },
-      { id: 'fis-eso-02-sub-3', title: 'Mezclas homogéneas, heterogéneas y sustancias puras', order: 3 },
-      { id: 'fis-eso-02-sub-4', title: 'Introducción al átomo', order: 4 },
+      { id: 'fis-eso-02-sub-1', title: 'Modelo cinético-molecular: sólido, líquido y gas', order: 1, widgetFile: null },
+      { id: 'fis-eso-02-sub-2', title: 'Densidad, masa y volumen', order: 2, widgetFile: null },
+      { id: 'fis-eso-02-sub-3', title: 'Mezclas homogéneas, heterogéneas y sustancias puras', order: 3, widgetFile: null },
+      { id: 'fis-eso-02-sub-4', title: 'Introducción al átomo', order: 4, widgetFile: null },
     ],
   },
   {
@@ -64,10 +65,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-03-sub-1', title: 'Posición, trayectoria, distancia y desplazamiento', order: 1 },
-      { id: 'fis-eso-03-sub-2', title: 'Velocidad media, rapidez y movimiento rectilíneo uniforme', order: 2 },
-      { id: 'fis-eso-03-sub-3', title: 'Aceleración y movimiento uniformemente acelerado', order: 3 },
-      { id: 'fis-eso-03-sub-4', title: 'Interpretación de gráficas de movimiento', order: 4 },
+      { id: 'fis-eso-03-sub-1', title: 'Posición, trayectoria, distancia y desplazamiento', order: 1, widgetFile: null },
+      { id: 'fis-eso-03-sub-2', title: 'Velocidad media, rapidez y movimiento rectilíneo uniforme', order: 2, widgetFile: null },
+      { id: 'fis-eso-03-sub-3', title: 'Aceleración y movimiento uniformemente acelerado', order: 3, widgetFile: null },
+      { id: 'fis-eso-03-sub-4', title: 'Interpretación de gráficas de movimiento', order: 4, widgetFile: null },
     ],
   },
   {
@@ -81,10 +82,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-04-sub-1', title: 'Concepto de fuerza y efectos', order: 1 },
-      { id: 'fis-eso-04-sub-2', title: 'Tipos de fuerzas: peso, normal, rozamiento y tensión', order: 2 },
-      { id: 'fis-eso-04-sub-3', title: 'Leyes de Newton', order: 3 },
-      { id: 'fis-eso-04-sub-4', title: 'Presión en sólidos, líquidos y gases', order: 4 },
+      { id: 'fis-eso-04-sub-1', title: 'Concepto de fuerza y efectos', order: 1, widgetFile: null },
+      { id: 'fis-eso-04-sub-2', title: 'Tipos de fuerzas: peso, normal, rozamiento y tensión', order: 2, widgetFile: null },
+      { id: 'fis-eso-04-sub-3', title: 'Leyes de Newton', order: 3, widgetFile: null },
+      { id: 'fis-eso-04-sub-4', title: 'Presión en sólidos, líquidos y gases', order: 4, widgetFile: null },
     ],
   },
   {
@@ -98,10 +99,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-05-sub-1', title: 'Formas de energía', order: 1 },
-      { id: 'fis-eso-05-sub-2', title: 'Transformaciones y conservación de la energía', order: 2 },
-      { id: 'fis-eso-05-sub-3', title: 'Trabajo mecánico y potencia', order: 3 },
-      { id: 'fis-eso-05-sub-4', title: 'Fuentes de energía y eficiencia energética', order: 4 },
+      { id: 'fis-eso-05-sub-1', title: 'Formas de energía', order: 1, widgetFile: null },
+      { id: 'fis-eso-05-sub-2', title: 'Transformaciones y conservación de la energía', order: 2, widgetFile: null },
+      { id: 'fis-eso-05-sub-3', title: 'Trabajo mecánico y potencia', order: 3, widgetFile: null },
+      { id: 'fis-eso-05-sub-4', title: 'Fuentes de energía y eficiencia energética', order: 4, widgetFile: null },
     ],
   },
   {
@@ -115,10 +116,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-06-sub-1', title: 'Diferencia entre calor y temperatura', order: 1 },
-      { id: 'fis-eso-06-sub-2', title: 'Propagación del calor: conducción, convección, radiación', order: 2 },
-      { id: 'fis-eso-06-sub-3', title: 'Dilatación térmica y cambios de estado', order: 3 },
-      { id: 'fis-eso-06-sub-4', title: 'Calor latente y equilibrio térmico', order: 4 },
+      { id: 'fis-eso-06-sub-1', title: 'Diferencia entre calor y temperatura', order: 1, widgetFile: null },
+      { id: 'fis-eso-06-sub-2', title: 'Propagación del calor: conducción, convección, radiación', order: 2, widgetFile: null },
+      { id: 'fis-eso-06-sub-3', title: 'Dilatación térmica y cambios de estado', order: 3, widgetFile: null },
+      { id: 'fis-eso-06-sub-4', title: 'Calor latente y equilibrio térmico', order: 4, widgetFile: null },
     ],
   },
   {
@@ -132,10 +133,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-07-sub-1', title: 'Carga eléctrica, corriente y diferencia de potencial', order: 1 },
-      { id: 'fis-eso-07-sub-2', title: 'Resistencia y Ley de Ohm', order: 2 },
-      { id: 'fis-eso-07-sub-3', title: 'Circuitos en serie y paralelo', order: 3 },
-      { id: 'fis-eso-07-sub-4', title: 'Campo magnético e imanes', order: 4 },
+      { id: 'fis-eso-07-sub-1', title: 'Carga eléctrica, corriente y diferencia de potencial', order: 1, widgetFile: null },
+      { id: 'fis-eso-07-sub-2', title: 'Resistencia y Ley de Ohm', order: 2, widgetFile: null },
+      { id: 'fis-eso-07-sub-3', title: 'Circuitos en serie y paralelo', order: 3, widgetFile: null },
+      { id: 'fis-eso-07-sub-4', title: 'Campo magnético e imanes', order: 4, widgetFile: null },
     ],
   },
   {
@@ -149,10 +150,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-eso-08-sub-1', title: 'Naturaleza ondulatoria: longitud de onda y frecuencia', order: 1 },
-      { id: 'fis-eso-08-sub-2', title: 'Sonido: propagación, velocidad y eco', order: 2 },
-      { id: 'fis-eso-08-sub-3', title: 'Luz: reflexión y refracción básica', order: 3 },
-      { id: 'fis-eso-08-sub-4', title: 'Espejos y lentes sencillas', order: 4 },
+      { id: 'fis-eso-08-sub-1', title: 'Naturaleza ondulatoria: longitud de onda y frecuencia', order: 1, widgetFile: null },
+      { id: 'fis-eso-08-sub-2', title: 'Sonido: propagación, velocidad y eco', order: 2, widgetFile: null },
+      { id: 'fis-eso-08-sub-3', title: 'Luz: reflexión y refracción básica', order: 3, widgetFile: null },
+      { id: 'fis-eso-08-sub-4', title: 'Espejos y lentes sencillas', order: 4, widgetFile: null },
     ],
   },
 
@@ -168,10 +169,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-01-sub-1', title: 'Vectores y componentes', order: 1 },
-      { id: 'fis-bach-01-sub-2', title: 'Movimiento rectilíneo uniforme y uniformemente acelerado', order: 2 },
-      { id: 'fis-bach-01-sub-3', title: 'Movimiento circular uniforme', order: 3 },
-      { id: 'fis-bach-01-sub-4', title: 'Tiro parabólico y composición de movimientos', order: 4 },
+      { id: 'fis-bach-01-sub-1', title: 'Vectores y componentes', order: 1, widgetFile: null },
+      { id: 'fis-bach-01-sub-2', title: 'Movimiento rectilíneo uniforme y uniformemente acelerado', order: 2, widgetFile: null },
+      { id: 'fis-bach-01-sub-3', title: 'Movimiento circular uniforme', order: 3, widgetFile: null },
+      { id: 'fis-bach-01-sub-4', title: 'Tiro parabólico y composición de movimientos', order: 4, widgetFile: null },
     ],
   },
   {
@@ -185,10 +186,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-02-sub-1', title: 'Leyes de Newton en formulación vectorial', order: 1 },
-      { id: 'fis-bach-02-sub-2', title: 'Fuerzas de rozamiento, elástica y tensión', order: 2 },
-      { id: 'fis-bach-02-sub-3', title: 'Dinámica del movimiento circular', order: 3 },
-      { id: 'fis-bach-02-sub-4', title: 'Momento lineal, impulso y choques', order: 4 },
+      { id: 'fis-bach-02-sub-1', title: 'Leyes de Newton en formulación vectorial', order: 1, widgetFile: null },
+      { id: 'fis-bach-02-sub-2', title: 'Fuerzas de rozamiento, elástica y tensión', order: 2, widgetFile: null },
+      { id: 'fis-bach-02-sub-3', title: 'Dinámica del movimiento circular', order: 3, widgetFile: null },
+      { id: 'fis-bach-02-sub-4', title: 'Momento lineal, impulso y choques', order: 4, widgetFile: null },
     ],
   },
   {
@@ -202,10 +203,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-03-sub-1', title: 'Ley de gravitación universal de Newton', order: 1 },
-      { id: 'fis-bach-03-sub-2', title: 'Campo gravitatorio y potencial', order: 2 },
-      { id: 'fis-bach-03-sub-3', title: 'Leyes de Kepler y movimiento orbital', order: 3 },
-      { id: 'fis-bach-03-sub-4', title: 'Velocidad de escape', order: 4 },
+      { id: 'fis-bach-03-sub-1', title: 'Ley de gravitación universal de Newton', order: 1, widgetFile: null },
+      { id: 'fis-bach-03-sub-2', title: 'Campo gravitatorio y potencial', order: 2, widgetFile: null },
+      { id: 'fis-bach-03-sub-3', title: 'Leyes de Kepler y movimiento orbital', order: 3, widgetFile: null },
+      { id: 'fis-bach-03-sub-4', title: 'Velocidad de escape', order: 4, widgetFile: null },
     ],
   },
   {
@@ -219,10 +220,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-04-sub-1', title: 'Trabajo de una fuerza y teorema de las fuerzas vivas', order: 1 },
-      { id: 'fis-bach-04-sub-2', title: 'Energía cinética, potencial y conservación', order: 2 },
-      { id: 'fis-bach-04-sub-3', title: 'Momento de una fuerza y momento angular', order: 3 },
-      { id: 'fis-bach-04-sub-4', title: 'Equilibrio de sólidos rígidos', order: 4 },
+      { id: 'fis-bach-04-sub-1', title: 'Trabajo de una fuerza y teorema de las fuerzas vivas', order: 1, widgetFile: null },
+      { id: 'fis-bach-04-sub-2', title: 'Energía cinética, potencial y conservación', order: 2, widgetFile: null },
+      { id: 'fis-bach-04-sub-3', title: 'Momento de una fuerza y momento angular', order: 3, widgetFile: null },
+      { id: 'fis-bach-04-sub-4', title: 'Equilibrio de sólidos rígidos', order: 4, widgetFile: null },
     ],
   },
   {
@@ -236,10 +237,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-05-sub-1', title: 'Ley de Coulomb y campo eléctrico', order: 1 },
-      { id: 'fis-bach-05-sub-2', title: 'Potencial eléctrico y energía potencial', order: 2 },
-      { id: 'fis-bach-05-sub-3', title: 'Líneas de campo eléctrico', order: 3 },
-      { id: 'fis-bach-05-sub-4', title: 'Condensadores y capacidad', order: 4 },
+      { id: 'fis-bach-05-sub-1', title: 'Ley de Coulomb y campo eléctrico', order: 1, widgetFile: null },
+      { id: 'fis-bach-05-sub-2', title: 'Potencial eléctrico y energía potencial', order: 2, widgetFile: null },
+      { id: 'fis-bach-05-sub-3', title: 'Líneas de campo eléctrico', order: 3, widgetFile: null },
+      { id: 'fis-bach-05-sub-4', title: 'Condensadores y capacidad', order: 4, widgetFile: null },
     ],
   },
   {
@@ -253,10 +254,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-06-sub-1', title: 'Campo magnético creado por corrientes', order: 1 },
-      { id: 'fis-bach-06-sub-2', title: 'Fuerza de Lorentz y fuerza sobre conductores', order: 2 },
-      { id: 'fis-bach-06-sub-3', title: 'Inducción electromagnética: Faraday y Lenz', order: 3 },
-      { id: 'fis-bach-06-sub-4', title: 'Aplicaciones: generadores, transformadores y motores', order: 4 },
+      { id: 'fis-bach-06-sub-1', title: 'Campo magnético creado por corrientes', order: 1, widgetFile: null },
+      { id: 'fis-bach-06-sub-2', title: 'Fuerza de Lorentz y fuerza sobre conductores', order: 2, widgetFile: null },
+      { id: 'fis-bach-06-sub-3', title: 'Inducción electromagnética: Faraday y Lenz', order: 3, widgetFile: null },
+      { id: 'fis-bach-06-sub-4', title: 'Aplicaciones: generadores, transformadores y motores', order: 4, widgetFile: null },
     ],
   },
   {
@@ -270,10 +271,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-07-sub-1', title: 'Movimiento armónico simple', order: 1 },
-      { id: 'fis-bach-07-sub-2', title: 'Ondas mecánicas y ecuación de onda', order: 2 },
-      { id: 'fis-bach-07-sub-3', title: 'Fenómenos ondulatorios', order: 3 },
-      { id: 'fis-bach-07-sub-4', title: 'Efecto Doppler', order: 4 },
+      { id: 'fis-bach-07-sub-1', title: 'Movimiento armónico simple', order: 1, widgetFile: null },
+      { id: 'fis-bach-07-sub-2', title: 'Ondas mecánicas y ecuación de onda', order: 2, widgetFile: null },
+      { id: 'fis-bach-07-sub-3', title: 'Fenómenos ondulatorios', order: 3, widgetFile: null },
+      { id: 'fis-bach-07-sub-4', title: 'Efecto Doppler', order: 4, widgetFile: null },
     ],
   },
   {
@@ -287,10 +288,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-08-sub-1', title: 'Naturaleza de la luz y dualidad onda-partícula', order: 1 },
-      { id: 'fis-bach-08-sub-2', title: 'Reflexión y refracción', order: 2 },
-      { id: 'fis-bach-08-sub-3', title: 'Lentes y espejos', order: 3 },
-      { id: 'fis-bach-08-sub-4', title: 'Espectro electromagnético y dispersión', order: 4 },
+      { id: 'fis-bach-08-sub-1', title: 'Naturaleza de la luz y dualidad onda-partícula', order: 1, widgetFile: null },
+      { id: 'fis-bach-08-sub-2', title: 'Reflexión y refracción', order: 2, widgetFile: null },
+      { id: 'fis-bach-08-sub-3', title: 'Lentes y espejos', order: 3, widgetFile: null },
+      { id: 'fis-bach-08-sub-4', title: 'Espectro electromagnético y dispersión', order: 4, widgetFile: null },
     ],
   },
   {
@@ -304,10 +305,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-bach-09-sub-1', title: 'Postulados de la relatividad especial', order: 1 },
-      { id: 'fis-bach-09-sub-2', title: 'Efecto fotoeléctrico y cuantización', order: 2 },
-      { id: 'fis-bach-09-sub-3', title: 'Modelo atómico de Bohr', order: 3 },
-      { id: 'fis-bach-09-sub-4', title: 'Física nuclear: radiactividad y fisión/fusión', order: 4 },
+      { id: 'fis-bach-09-sub-1', title: 'Postulados de la relatividad especial', order: 1, widgetFile: null },
+      { id: 'fis-bach-09-sub-2', title: 'Efecto fotoeléctrico y cuantización', order: 2, widgetFile: null },
+      { id: 'fis-bach-09-sub-3', title: 'Modelo atómico de Bohr', order: 3, widgetFile: null },
+      { id: 'fis-bach-09-sub-4', title: 'Física nuclear: radiactividad y fisión/fusión', order: 4, widgetFile: null },
     ],
   },
 
@@ -323,10 +324,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-01-sub-1', title: 'Vectores posición, velocidad y aceleración', order: 1 },
-      { id: 'fis-uni-01-sub-2', title: 'Leyes de Newton en formulación vectorial', order: 2 },
-      { id: 'fis-uni-01-sub-3', title: 'Fuerzas conservativas y potencial', order: 3 },
-      { id: 'fis-uni-01-sub-4', title: 'Trabajo-energía y potencia', order: 4 },
+      { id: 'fis-uni-01-sub-1', title: 'Vectores posición, velocidad y aceleración', order: 1, widgetFile: null },
+      { id: 'fis-uni-01-sub-2', title: 'Leyes de Newton en formulación vectorial', order: 2, widgetFile: null },
+      { id: 'fis-uni-01-sub-3', title: 'Fuerzas conservativas y potencial', order: 3, widgetFile: null },
+      { id: 'fis-uni-01-sub-4', title: 'Trabajo-energía y potencia', order: 4, widgetFile: null },
     ],
   },
   {
@@ -340,10 +341,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-02-sub-1', title: 'Centro de masas y momento lineal', order: 1 },
-      { id: 'fis-uni-02-sub-2', title: 'Colisiones elásticas e inelásticas', order: 2 },
-      { id: 'fis-uni-02-sub-3', title: 'Momento angular y momento de inercia', order: 3 },
-      { id: 'fis-uni-02-sub-4', title: 'Dinámica de rotación y giróscopos', order: 4 },
+      { id: 'fis-uni-02-sub-1', title: 'Centro de masas y momento lineal', order: 1, widgetFile: null },
+      { id: 'fis-uni-02-sub-2', title: 'Colisiones elásticas e inelásticas', order: 2, widgetFile: null },
+      { id: 'fis-uni-02-sub-3', title: 'Momento angular y momento de inercia', order: 3, widgetFile: null },
+      { id: 'fis-uni-02-sub-4', title: 'Dinámica de rotación y giróscopos', order: 4, widgetFile: null },
     ],
   },
   {
@@ -357,10 +358,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-03-sub-1', title: 'Oscilador armónico simple, amortiguado y forzado', order: 1 },
-      { id: 'fis-uni-03-sub-2', title: 'Ecuación de onda y ondas estacionarias', order: 2 },
-      { id: 'fis-uni-03-sub-3', title: 'Ondas sonoras y efecto Doppler avanzado', order: 3 },
-      { id: 'fis-uni-03-sub-4', title: 'Análisis de Fourier básico', order: 4 },
+      { id: 'fis-uni-03-sub-1', title: 'Oscilador armónico simple, amortiguado y forzado', order: 1, widgetFile: null },
+      { id: 'fis-uni-03-sub-2', title: 'Ecuación de onda y ondas estacionarias', order: 2, widgetFile: null },
+      { id: 'fis-uni-03-sub-3', title: 'Ondas sonoras y efecto Doppler avanzado', order: 3, widgetFile: null },
+      { id: 'fis-uni-03-sub-4', title: 'Análisis de Fourier básico', order: 4, widgetFile: null },
     ],
   },
   {
@@ -374,10 +375,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-04-sub-1', title: 'Ley de Coulomb y campo eléctrico', order: 1 },
-      { id: 'fis-uni-04-sub-2', title: 'Ley de Gauss', order: 2 },
-      { id: 'fis-uni-04-sub-3', title: 'Potencial eléctrico y conductores', order: 3 },
-      { id: 'fis-uni-04-sub-4', title: 'Dieléctricos y condensadores', order: 4 },
+      { id: 'fis-uni-04-sub-1', title: 'Ley de Coulomb y campo eléctrico', order: 1, widgetFile: null },
+      { id: 'fis-uni-04-sub-2', title: 'Ley de Gauss', order: 2, widgetFile: null },
+      { id: 'fis-uni-04-sub-3', title: 'Potencial eléctrico y conductores', order: 3, widgetFile: null },
+      { id: 'fis-uni-04-sub-4', title: 'Dieléctricos y condensadores', order: 4, widgetFile: null },
     ],
   },
   {
@@ -391,10 +392,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-05-sub-1', title: 'Corriente eléctrica y densidad de corriente', order: 1 },
-      { id: 'fis-uni-05-sub-2', title: 'Ley de Ohm y resistencia', order: 2 },
-      { id: 'fis-uni-05-sub-3', title: 'Fuerza electromotriz y leyes de Kirchhoff', order: 3 },
-      { id: 'fis-uni-05-sub-4', title: 'Circuitos RC: carga y descarga', order: 4 },
+      { id: 'fis-uni-05-sub-1', title: 'Corriente eléctrica y densidad de corriente', order: 1, widgetFile: null },
+      { id: 'fis-uni-05-sub-2', title: 'Ley de Ohm y resistencia', order: 2, widgetFile: null },
+      { id: 'fis-uni-05-sub-3', title: 'Fuerza electromotriz y leyes de Kirchhoff', order: 3, widgetFile: null },
+      { id: 'fis-uni-05-sub-4', title: 'Circuitos RC: carga y descarga', order: 4, widgetFile: null },
     ],
   },
   {
@@ -408,10 +409,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-06-sub-1', title: 'Leyes de Biot-Savart y Ampère', order: 1 },
-      { id: 'fis-uni-06-sub-2', title: 'Campo magnético de hilos, espiras y solenoides', order: 2 },
-      { id: 'fis-uni-06-sub-3', title: 'Fuerza de Lorentz y materiales magnéticos', order: 3 },
-      { id: 'fis-uni-06-sub-4', title: 'Inducción electromagnética y circuitos RL', order: 4 },
+      { id: 'fis-uni-06-sub-1', title: 'Leyes de Biot-Savart y Ampère', order: 1, widgetFile: null },
+      { id: 'fis-uni-06-sub-2', title: 'Campo magnético de hilos, espiras y solenoides', order: 2, widgetFile: null },
+      { id: 'fis-uni-06-sub-3', title: 'Fuerza de Lorentz y materiales magnéticos', order: 3, widgetFile: null },
+      { id: 'fis-uni-06-sub-4', title: 'Inducción electromagnética y circuitos RL', order: 4, widgetFile: null },
     ],
   },
   {
@@ -425,10 +426,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-07-sub-1', title: 'Ecuaciones de Maxwell', order: 1 },
-      { id: 'fis-uni-07-sub-2', title: 'Ecuación de onda electromagnética', order: 2 },
-      { id: 'fis-uni-07-sub-3', title: 'Espectro electromagnético y vector de Poynting', order: 3 },
-      { id: 'fis-uni-07-sub-4', title: 'Polarización de ondas electromagnéticas', order: 4 },
+      { id: 'fis-uni-07-sub-1', title: 'Ecuaciones de Maxwell', order: 1, widgetFile: null },
+      { id: 'fis-uni-07-sub-2', title: 'Ecuación de onda electromagnética', order: 2, widgetFile: null },
+      { id: 'fis-uni-07-sub-3', title: 'Espectro electromagnético y vector de Poynting', order: 3, widgetFile: null },
+      { id: 'fis-uni-07-sub-4', title: 'Polarización de ondas electromagnéticas', order: 4, widgetFile: null },
     ],
   },
   {
@@ -442,10 +443,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-08-sub-1', title: 'Leyes de Snell y reflexión total interna', order: 1 },
-      { id: 'fis-uni-08-sub-2', title: 'Ángulo de Brewster y polarización por reflexión', order: 2 },
-      { id: 'fis-uni-08-sub-3', title: 'Dispersión cromática y prismas', order: 3 },
-      { id: 'fis-uni-08-sub-4', title: 'Formación de imágenes en espejos y lentes', order: 4 },
+      { id: 'fis-uni-08-sub-1', title: 'Leyes de Snell y reflexión total interna', order: 1, widgetFile: null },
+      { id: 'fis-uni-08-sub-2', title: 'Ángulo de Brewster y polarización por reflexión', order: 2, widgetFile: null },
+      { id: 'fis-uni-08-sub-3', title: 'Dispersión cromática y prismas', order: 3, widgetFile: null },
+      { id: 'fis-uni-08-sub-4', title: 'Formación de imágenes en espejos y lentes', order: 4, widgetFile: null },
     ],
   },
   {
@@ -459,10 +460,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-09-sub-1', title: 'Principio de Huygens-Fresnel', order: 1 },
-      { id: 'fis-uni-09-sub-2', title: 'Interferencia de dos fuentes coherentes', order: 2 },
-      { id: 'fis-uni-09-sub-3', title: 'Láminas delgadas y anillos de Newton', order: 3 },
-      { id: 'fis-uni-09-sub-4', title: 'Difracción de Fraunhofer y redes de difracción', order: 4 },
+      { id: 'fis-uni-09-sub-1', title: 'Principio de Huygens-Fresnel', order: 1, widgetFile: null },
+      { id: 'fis-uni-09-sub-2', title: 'Interferencia de dos fuentes coherentes', order: 2, widgetFile: null },
+      { id: 'fis-uni-09-sub-3', title: 'Láminas delgadas y anillos de Newton', order: 3, widgetFile: null },
+      { id: 'fis-uni-09-sub-4', title: 'Difracción de Fraunhofer y redes de difracción', order: 4, widgetFile: null },
     ],
   },
   {
@@ -476,10 +477,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'fis-uni-10-sub-1', title: 'Principios de la termodinámica', order: 1 },
-      { id: 'fis-uni-10-sub-2', title: 'Gases ideales y procesos termodinámicos', order: 2 },
-      { id: 'fis-uni-10-sub-3', title: 'Entropía y máquinas térmicas', order: 3 },
-      { id: 'fis-uni-10-sub-4', title: 'Ciclo de Carnot y refrigeradores', order: 4 },
+      { id: 'fis-uni-10-sub-1', title: 'Principios de la termodinámica', order: 1, widgetFile: null },
+      { id: 'fis-uni-10-sub-2', title: 'Gases ideales y procesos termodinámicos', order: 2, widgetFile: null },
+      { id: 'fis-uni-10-sub-3', title: 'Entropía y máquinas térmicas', order: 3, widgetFile: null },
+      { id: 'fis-uni-10-sub-4', title: 'Ciclo de Carnot y refrigeradores', order: 4, widgetFile: null },
     ],
   },
 
@@ -495,10 +496,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: '/lessons/matematicas/eso/conjuntos-numericos.html',
     subLessons: [
-      { id: 'mat-eso-01-sub-1', title: 'Conjuntos numéricos: naturales, enteros, racionales y reales', order: 1 },
-      { id: 'mat-eso-01-sub-2', title: 'Operaciones con enteros, fracciones y decimales', order: 2 },
-      { id: 'mat-eso-01-sub-3', title: 'Potencias y raíces', order: 3 },
-      { id: 'mat-eso-01-sub-4', title: 'Introducción a expresiones algebraicas: monomios, polinomios, valor numérico', order: 4 },
+      { id: 'mat-eso-01-sub-1', title: 'Conjuntos numéricos: naturales, enteros, racionales y reales', order: 1, widgetFile: '/lessons/matematicas/eso/conjuntos-numericos.html' },
+      { id: 'mat-eso-01-sub-2', title: 'Operaciones con enteros, fracciones y decimales', order: 2, widgetFile: '/lessons/matematicas/eso/operaciones-numericas.html' },
+      { id: 'mat-eso-01-sub-3', title: 'Potencias y raíces', order: 3, widgetFile: null },
+      { id: 'mat-eso-01-sub-4', title: 'Introducción a expresiones algebraicas: monomios, polinomios, valor numérico', order: 4, widgetFile: null },
     ],
   },
   {
@@ -512,10 +513,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-eso-02-sub-1', title: 'Ecuaciones lineales sencillas', order: 1 },
-      { id: 'mat-eso-02-sub-2', title: 'Ecuaciones con paréntesis y fracciones', order: 2 },
-      { id: 'mat-eso-02-sub-3', title: 'Sistemas de ecuaciones lineales 2x2', order: 3 },
-      { id: 'mat-eso-02-sub-4', title: 'Desigualdades lineales en una variable', order: 4 },
+      { id: 'mat-eso-02-sub-1', title: 'Ecuaciones lineales sencillas', order: 1, widgetFile: null },
+      { id: 'mat-eso-02-sub-2', title: 'Ecuaciones con paréntesis y fracciones', order: 2, widgetFile: null },
+      { id: 'mat-eso-02-sub-3', title: 'Sistemas de ecuaciones lineales 2x2', order: 3, widgetFile: null },
+      { id: 'mat-eso-02-sub-4', title: 'Desigualdades lineales en una variable', order: 4, widgetFile: null },
     ],
   },
   {
@@ -529,10 +530,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-eso-03-sub-1', title: 'Patrones numéricos y sucesiones aritméticas y geométricas', order: 1 },
-      { id: 'mat-eso-03-sub-2', title: 'Concepto de función: variable dependiente e independiente', order: 2 },
-      { id: 'mat-eso-03-sub-3', title: 'Función lineal y afín: pendiente y ordenada en el origen', order: 3 },
-      { id: 'mat-eso-03-sub-4', title: 'Introducción a funciones cuadráticas', order: 4 },
+      { id: 'mat-eso-03-sub-1', title: 'Patrones numéricos y sucesiones aritméticas y geométricas', order: 1, widgetFile: null },
+      { id: 'mat-eso-03-sub-2', title: 'Concepto de función: variable dependiente e independiente', order: 2, widgetFile: null },
+      { id: 'mat-eso-03-sub-3', title: 'Función lineal y afín: pendiente y ordenada en el origen', order: 3, widgetFile: null },
+      { id: 'mat-eso-03-sub-4', title: 'Introducción a funciones cuadráticas', order: 4, widgetFile: null },
     ],
   },
   {
@@ -546,10 +547,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-eso-04-sub-1', title: 'Puntos, rectas, segmentos y ángulos', order: 1 },
-      { id: 'mat-eso-04-sub-2', title: 'Polígonos: triángulos y cuadriláteros', order: 2 },
-      { id: 'mat-eso-04-sub-3', title: 'Perímetros y áreas de figuras planas', order: 3 },
-      { id: 'mat-eso-04-sub-4', title: 'Transformaciones: traslaciones, giros y simetrías', order: 4 },
+      { id: 'mat-eso-04-sub-1', title: 'Puntos, rectas, segmentos y ángulos', order: 1, widgetFile: null },
+      { id: 'mat-eso-04-sub-2', title: 'Polígonos: triángulos y cuadriláteros', order: 2, widgetFile: null },
+      { id: 'mat-eso-04-sub-3', title: 'Perímetros y áreas de figuras planas', order: 3, widgetFile: null },
+      { id: 'mat-eso-04-sub-4', title: 'Transformaciones: traslaciones, giros y simetrías', order: 4, widgetFile: null },
     ],
   },
   {
@@ -563,10 +564,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-eso-05-sub-1', title: 'Cuerpos geométricos: prismas, pirámides, cilindros, conos y esferas', order: 1 },
-      { id: 'mat-eso-05-sub-2', title: 'Áreas laterales, totales y volúmenes', order: 2 },
-      { id: 'mat-eso-05-sub-3', title: 'Sistema de coordenadas cartesianas', order: 3 },
-      { id: 'mat-eso-05-sub-4', title: 'Visualización y modelización geométrica', order: 4 },
+      { id: 'mat-eso-05-sub-1', title: 'Cuerpos geométricos: prismas, pirámides, cilindros, conos y esferas', order: 1, widgetFile: null },
+      { id: 'mat-eso-05-sub-2', title: 'Áreas laterales, totales y volúmenes', order: 2, widgetFile: null },
+      { id: 'mat-eso-05-sub-3', title: 'Sistema de coordenadas cartesianas', order: 3, widgetFile: null },
+      { id: 'mat-eso-05-sub-4', title: 'Visualización y modelización geométrica', order: 4, widgetFile: null },
     ],
   },
   {
@@ -580,10 +581,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-eso-06-sub-1', title: 'Variables estadísticas y tablas de frecuencias', order: 1 },
-      { id: 'mat-eso-06-sub-2', title: 'Representaciones gráficas: barras, sectores, histograma', order: 2 },
-      { id: 'mat-eso-06-sub-3', title: 'Medidas de centralización: media, mediana y moda', order: 3 },
-      { id: 'mat-eso-06-sub-4', title: 'Medidas de dispersión: rango y variabilidad', order: 4 },
+      { id: 'mat-eso-06-sub-1', title: 'Variables estadísticas y tablas de frecuencias', order: 1, widgetFile: null },
+      { id: 'mat-eso-06-sub-2', title: 'Representaciones gráficas: barras, sectores, histograma', order: 2, widgetFile: null },
+      { id: 'mat-eso-06-sub-3', title: 'Medidas de centralización: media, mediana y moda', order: 3, widgetFile: null },
+      { id: 'mat-eso-06-sub-4', title: 'Medidas de dispersión: rango y variabilidad', order: 4, widgetFile: null },
     ],
   },
   {
@@ -597,9 +598,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-eso-07-sub-1', title: 'Experimento aleatorio, suceso y espacio muestral', order: 1 },
-      { id: 'mat-eso-07-sub-2', title: 'Cálculo de probabilidades simples', order: 2 },
-      { id: 'mat-eso-07-sub-3', title: 'Frecuencia relativa y ley de los grandes números', order: 3 },
+      { id: 'mat-eso-07-sub-1', title: 'Experimento aleatorio, suceso y espacio muestral', order: 1, widgetFile: null },
+      { id: 'mat-eso-07-sub-2', title: 'Cálculo de probabilidades simples', order: 2, widgetFile: null },
+      { id: 'mat-eso-07-sub-3', title: 'Frecuencia relativa y ley de los grandes números', order: 3, widgetFile: null },
     ],
   },
   {
@@ -613,10 +614,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-eso-08-sub-1', title: 'Teorema de Pitágoras', order: 1 },
-      { id: 'mat-eso-08-sub-2', title: 'Seno, coseno y tangente en triángulo rectángulo', order: 2 },
-      { id: 'mat-eso-08-sub-3', title: 'Cálculo de lados y ángulos', order: 3 },
-      { id: 'mat-eso-08-sub-4', title: 'Aplicaciones: alturas y distancias inaccesibles', order: 4 },
+      { id: 'mat-eso-08-sub-1', title: 'Teorema de Pitágoras', order: 1, widgetFile: null },
+      { id: 'mat-eso-08-sub-2', title: 'Seno, coseno y tangente en triángulo rectángulo', order: 2, widgetFile: null },
+      { id: 'mat-eso-08-sub-3', title: 'Cálculo de lados y ángulos', order: 3, widgetFile: null },
+      { id: 'mat-eso-08-sub-4', title: 'Aplicaciones: alturas y distancias inaccesibles', order: 4, widgetFile: null },
     ],
   },
 
@@ -632,10 +633,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-01-sub-1', title: 'Conjuntos numéricos extendidos y números complejos', order: 1 },
-      { id: 'mat-bach-01-sub-2', title: 'Polinomios: operaciones, factorización, teorema del factor', order: 2 },
-      { id: 'mat-bach-01-sub-3', title: 'Ecuaciones polinómicas, cuadráticas, racionales, exponenciales y logarítmicas', order: 3 },
-      { id: 'mat-bach-01-sub-4', title: 'Inecuaciones', order: 4 },
+      { id: 'mat-bach-01-sub-1', title: 'Conjuntos numéricos extendidos y números complejos', order: 1, widgetFile: null },
+      { id: 'mat-bach-01-sub-2', title: 'Polinomios: operaciones, factorización, teorema del factor', order: 2, widgetFile: null },
+      { id: 'mat-bach-01-sub-3', title: 'Ecuaciones polinómicas, cuadráticas, racionales, exponenciales y logarítmicas', order: 3, widgetFile: null },
+      { id: 'mat-bach-01-sub-4', title: 'Inecuaciones', order: 4, widgetFile: null },
     ],
   },
   {
@@ -649,9 +650,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-02-sub-1', title: 'Sistemas lineales 2x2 y 3x3: métodos matriciales, Cramer, Gauss', order: 1 },
-      { id: 'mat-bach-02-sub-2', title: 'Matrices: operaciones, determinante, inversa', order: 2 },
-      { id: 'mat-bach-02-sub-3', title: 'Vectores en plano y espacio: producto escalar, ecuación de rectas', order: 3 },
+      { id: 'mat-bach-02-sub-1', title: 'Sistemas lineales 2x2 y 3x3: métodos matriciales, Cramer, Gauss', order: 1, widgetFile: null },
+      { id: 'mat-bach-02-sub-2', title: 'Matrices: operaciones, determinante, inversa', order: 2, widgetFile: null },
+      { id: 'mat-bach-02-sub-3', title: 'Vectores en plano y espacio: producto escalar, ecuación de rectas', order: 3, widgetFile: null },
     ],
   },
   {
@@ -665,9 +666,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-03-sub-1', title: 'Dominio, imagen, monotonía y simetría', order: 1 },
-      { id: 'mat-bach-03-sub-2', title: 'Funciones lineales, cuadráticas, exponenciales y logarítmicas', order: 2 },
-      { id: 'mat-bach-03-sub-3', title: 'Composición e inversa de funciones', order: 3 },
+      { id: 'mat-bach-03-sub-1', title: 'Dominio, imagen, monotonía y simetría', order: 1, widgetFile: null },
+      { id: 'mat-bach-03-sub-2', title: 'Funciones lineales, cuadráticas, exponenciales y logarítmicas', order: 2, widgetFile: null },
+      { id: 'mat-bach-03-sub-3', title: 'Composición e inversa de funciones', order: 3, widgetFile: null },
     ],
   },
   {
@@ -681,9 +682,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-04-sub-1', title: 'Funciones trigonométricas: seno, coseno, tangente y periodicidad', order: 1 },
-      { id: 'mat-bach-04-sub-2', title: 'Ecuaciones trigonométricas', order: 2 },
-      { id: 'mat-bach-04-sub-3', title: 'Polinómicas de grado superior y racionales', order: 3 },
+      { id: 'mat-bach-04-sub-1', title: 'Funciones trigonométricas: seno, coseno, tangente y periodicidad', order: 1, widgetFile: null },
+      { id: 'mat-bach-04-sub-2', title: 'Ecuaciones trigonométricas', order: 2, widgetFile: null },
+      { id: 'mat-bach-04-sub-3', title: 'Polinómicas de grado superior y racionales', order: 3, widgetFile: null },
     ],
   },
   {
@@ -697,9 +698,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-05-sub-1', title: 'Concepto de límite: cálculo por factorización y racionalización', order: 1 },
-      { id: 'mat-bach-05-sub-2', title: 'Límites laterales, en infinito y teorema del sándwich', order: 2 },
-      { id: 'mat-bach-05-sub-3', title: 'Continuidad y asíntotas', order: 3 },
+      { id: 'mat-bach-05-sub-1', title: 'Concepto de límite: cálculo por factorización y racionalización', order: 1, widgetFile: null },
+      { id: 'mat-bach-05-sub-2', title: 'Límites laterales, en infinito y teorema del sándwich', order: 2, widgetFile: null },
+      { id: 'mat-bach-05-sub-3', title: 'Continuidad y asíntotas', order: 3, widgetFile: null },
     ],
   },
   {
@@ -713,10 +714,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-06-sub-1', title: 'Derivada como tasa de variación: reglas básicas', order: 1 },
-      { id: 'mat-bach-06-sub-2', title: 'Reglas: suma, producto, cociente y cadena', order: 2 },
-      { id: 'mat-bach-06-sub-3', title: 'Aplicaciones: máximos, mínimos y crecimiento', order: 3 },
-      { id: 'mat-bach-06-sub-4', title: 'Integrales introductorias: antiderivadas y área bajo la curva', order: 4 },
+      { id: 'mat-bach-06-sub-1', title: 'Derivada como tasa de variación: reglas básicas', order: 1, widgetFile: null },
+      { id: 'mat-bach-06-sub-2', title: 'Reglas: suma, producto, cociente y cadena', order: 2, widgetFile: null },
+      { id: 'mat-bach-06-sub-3', title: 'Aplicaciones: máximos, mínimos y crecimiento', order: 3, widgetFile: null },
+      { id: 'mat-bach-06-sub-4', title: 'Integrales introductorias: antiderivadas y área bajo la curva', order: 4, widgetFile: null },
     ],
   },
   {
@@ -730,10 +731,10 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-07-sub-1', title: 'Espacio muestral y axiomas de probabilidad (Laplace)', order: 1 },
-      { id: 'mat-bach-07-sub-2', title: 'Probabilidad clásica, frecuentista e independencia', order: 2 },
-      { id: 'mat-bach-07-sub-3', title: 'Combinatoria: permutaciones, variaciones y combinaciones', order: 3 },
-      { id: 'mat-bach-07-sub-4', title: 'Estadística unidimensional y bidimensional', order: 4 },
+      { id: 'mat-bach-07-sub-1', title: 'Espacio muestral y axiomas de probabilidad (Laplace)', order: 1, widgetFile: null },
+      { id: 'mat-bach-07-sub-2', title: 'Probabilidad clásica, frecuentista e independencia', order: 2, widgetFile: null },
+      { id: 'mat-bach-07-sub-3', title: 'Combinatoria: permutaciones, variaciones y combinaciones', order: 3, widgetFile: null },
+      { id: 'mat-bach-07-sub-4', title: 'Estadística unidimensional y bidimensional', order: 4, widgetFile: null },
     ],
   },
   {
@@ -747,9 +748,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-08-sub-1', title: 'Probabilidad condicional y teorema de Bayes', order: 1 },
-      { id: 'mat-bach-08-sub-2', title: 'Variables aleatorias discretas: binomial', order: 2 },
-      { id: 'mat-bach-08-sub-3', title: 'Distribuciones: geométrica e hipergeométrica', order: 3 },
+      { id: 'mat-bach-08-sub-1', title: 'Probabilidad condicional y teorema de Bayes', order: 1, widgetFile: null },
+      { id: 'mat-bach-08-sub-2', title: 'Variables aleatorias discretas: binomial', order: 2, widgetFile: null },
+      { id: 'mat-bach-08-sub-3', title: 'Distribuciones: geométrica e hipergeométrica', order: 3, widgetFile: null },
     ],
   },
   {
@@ -763,8 +764,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-bach-09-sub-1', title: 'Geometría analítica en el plano', order: 1 },
-      { id: 'mat-bach-09-sub-2', title: 'Lugares geométricos y cónicas', order: 2 },
+      { id: 'mat-bach-09-sub-1', title: 'Geometría analítica en el plano', order: 1, widgetFile: null },
+      { id: 'mat-bach-09-sub-2', title: 'Lugares geométricos y cónicas', order: 2, widgetFile: null },
     ],
   },
 
@@ -780,9 +781,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-01-sub-1', title: 'Números reales: completitud, supremo e ínfimo', order: 1 },
-      { id: 'mat-uni-01-sub-2', title: 'Sucesiones: convergencia, límites, Bolzano-Weierstrass', order: 2 },
-      { id: 'mat-uni-01-sub-3', title: 'Series numéricas: convergencia, series de potencias', order: 3 },
+      { id: 'mat-uni-01-sub-1', title: 'Números reales: completitud, supremo e ínfimo', order: 1, widgetFile: null },
+      { id: 'mat-uni-01-sub-2', title: 'Sucesiones: convergencia, límites, Bolzano-Weierstrass', order: 2, widgetFile: null },
+      { id: 'mat-uni-01-sub-3', title: 'Series numéricas: convergencia, series de potencias', order: 3, widgetFile: null },
     ],
   },
   {
@@ -796,9 +797,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-02-sub-1', title: 'Límites, continuidad y teorema de valores intermedios', order: 1 },
-      { id: 'mat-uni-02-sub-2', title: "Derivabilidad: teoremas de Rolle, Lagrange, Cauchy y regla de L'Hôpital", order: 2 },
-      { id: 'mat-uni-02-sub-3', title: 'Optimización: máximos, mínimos y convexidad', order: 3 },
+      { id: 'mat-uni-02-sub-1', title: 'Límites, continuidad y teorema de valores intermedios', order: 1, widgetFile: null },
+      { id: 'mat-uni-02-sub-2', title: "Derivabilidad: teoremas de Rolle, Lagrange, Cauchy y regla de L'Hôpital", order: 2, widgetFile: null },
+      { id: 'mat-uni-02-sub-3', title: 'Optimización: máximos, mínimos y convexidad', order: 3, widgetFile: null },
     ],
   },
   {
@@ -812,9 +813,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-03-sub-1', title: 'Integral de Riemann y teorema fundamental del cálculo', order: 1 },
-      { id: 'mat-uni-03-sub-2', title: 'Técnicas: sustitución, por partes y fracciones parciales', order: 2 },
-      { id: 'mat-uni-03-sub-3', title: 'Aplicaciones: áreas, volúmenes y longitudes de arco', order: 3 },
+      { id: 'mat-uni-03-sub-1', title: 'Integral de Riemann y teorema fundamental del cálculo', order: 1, widgetFile: null },
+      { id: 'mat-uni-03-sub-2', title: 'Técnicas: sustitución, por partes y fracciones parciales', order: 2, widgetFile: null },
+      { id: 'mat-uni-03-sub-3', title: 'Aplicaciones: áreas, volúmenes y longitudes de arco', order: 3, widgetFile: null },
     ],
   },
   {
@@ -828,9 +829,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-04-sub-1', title: 'Límites y continuidad en Rn', order: 1 },
-      { id: 'mat-uni-04-sub-2', title: 'Derivadas parciales, jacobiana y regla de la cadena', order: 2 },
-      { id: 'mat-uni-04-sub-3', title: 'Extremos: gradiente, Hessiana y multiplicadores de Lagrange', order: 3 },
+      { id: 'mat-uni-04-sub-1', title: 'Límites y continuidad en Rn', order: 1, widgetFile: null },
+      { id: 'mat-uni-04-sub-2', title: 'Derivadas parciales, jacobiana y regla de la cadena', order: 2, widgetFile: null },
+      { id: 'mat-uni-04-sub-3', title: 'Extremos: gradiente, Hessiana y multiplicadores de Lagrange', order: 3, widgetFile: null },
     ],
   },
   {
@@ -844,9 +845,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-05-sub-1', title: 'Integrales dobles y triples: cambio de variables', order: 1 },
-      { id: 'mat-uni-05-sub-2', title: 'Integrales de línea y superficie', order: 2 },
-      { id: 'mat-uni-05-sub-3', title: 'Teoremas de Green, Stokes y Divergencia', order: 3 },
+      { id: 'mat-uni-05-sub-1', title: 'Integrales dobles y triples: cambio de variables', order: 1, widgetFile: null },
+      { id: 'mat-uni-05-sub-2', title: 'Integrales de línea y superficie', order: 2, widgetFile: null },
+      { id: 'mat-uni-05-sub-3', title: 'Teoremas de Green, Stokes y Divergencia', order: 3, widgetFile: null },
     ],
   },
   {
@@ -860,8 +861,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-06-sub-1', title: 'Operaciones matriciales: determinante, rango e inversa', order: 1 },
-      { id: 'mat-uni-06-sub-2', title: 'Resolución de sistemas: Gauss-Jordan y Cramer', order: 2 },
+      { id: 'mat-uni-06-sub-1', title: 'Operaciones matriciales: determinante, rango e inversa', order: 1, widgetFile: null },
+      { id: 'mat-uni-06-sub-2', title: 'Resolución de sistemas: Gauss-Jordan y Cramer', order: 2, widgetFile: null },
     ],
   },
   {
@@ -875,8 +876,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-07-sub-1', title: 'Definición, subespacios, base, dimensión e independencia lineal', order: 1 },
-      { id: 'mat-uni-07-sub-2', title: 'Espacios fila, columna, nulo y teorema de la dimensión', order: 2 },
+      { id: 'mat-uni-07-sub-1', title: 'Definición, subespacios, base, dimensión e independencia lineal', order: 1, widgetFile: null },
+      { id: 'mat-uni-07-sub-2', title: 'Espacios fila, columna, nulo y teorema de la dimensión', order: 2, widgetFile: null },
     ],
   },
   {
@@ -890,8 +891,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-08-sub-1', title: 'Núcleo, imagen e isomorfismos', order: 1 },
-      { id: 'mat-uni-08-sub-2', title: 'Valores propios, vectores propios y diagonalización', order: 2 },
+      { id: 'mat-uni-08-sub-1', title: 'Núcleo, imagen e isomorfismos', order: 1, widgetFile: null },
+      { id: 'mat-uni-08-sub-2', title: 'Valores propios, vectores propios y diagonalización', order: 2, widgetFile: null },
     ],
   },
   {
@@ -905,8 +906,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-09-sub-1', title: 'Producto escalar, ortogonalidad y Gram-Schmidt', order: 1 },
-      { id: 'mat-uni-09-sub-2', title: 'Aplicaciones: PCA básica y sistemas dinámicos', order: 2 },
+      { id: 'mat-uni-09-sub-1', title: 'Producto escalar, ortogonalidad y Gram-Schmidt', order: 1, widgetFile: null },
+      { id: 'mat-uni-09-sub-2', title: 'Aplicaciones: PCA básica y sistemas dinámicos', order: 2, widgetFile: null },
     ],
   },
   {
@@ -920,8 +921,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-10-sub-1', title: 'Muestreo aleatorio y estimadores insesgados', order: 1 },
-      { id: 'mat-uni-10-sub-2', title: 'Intervalos de confianza: media, varianza, normal, t-Student y chi-cuadrado', order: 2 },
+      { id: 'mat-uni-10-sub-1', title: 'Muestreo aleatorio y estimadores insesgados', order: 1, widgetFile: null },
+      { id: 'mat-uni-10-sub-2', title: 'Intervalos de confianza: media, varianza, normal, t-Student y chi-cuadrado', order: 2, widgetFile: null },
     ],
   },
   {
@@ -935,8 +936,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-11-sub-1', title: 'Hipótesis nula/alternativa, p-valor y errores tipo I/II', order: 1 },
-      { id: 'mat-uni-11-sub-2', title: 'Pruebas para medias, proporciones y varianzas', order: 2 },
+      { id: 'mat-uni-11-sub-1', title: 'Hipótesis nula/alternativa, p-valor y errores tipo I/II', order: 1, widgetFile: null },
+      { id: 'mat-uni-11-sub-2', title: 'Pruebas para medias, proporciones y varianzas', order: 2, widgetFile: null },
     ],
   },
   {
@@ -950,8 +951,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-12-sub-1', title: 'Regresión lineal simple/múltiple, ANOVA y residuos', order: 1 },
-      { id: 'mat-uni-12-sub-2', title: 'Distribuciones: normal, ji-cuadrado, t, F y contrastes no paramétricos', order: 2 },
+      { id: 'mat-uni-12-sub-1', title: 'Regresión lineal simple/múltiple, ANOVA y residuos', order: 1, widgetFile: null },
+      { id: 'mat-uni-12-sub-2', title: 'Distribuciones: normal, ji-cuadrado, t, F y contrastes no paramétricos', order: 2, widgetFile: null },
     ],
   },
   {
@@ -965,8 +966,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-13-sub-1', title: 'Variables separables, homogéneas, lineales y factor integrante', order: 1 },
-      { id: 'mat-uni-13-sub-2', title: 'ED exactas y Bernoulli', order: 2 },
+      { id: 'mat-uni-13-sub-1', title: 'Variables separables, homogéneas, lineales y factor integrante', order: 1, widgetFile: null },
+      { id: 'mat-uni-13-sub-2', title: 'ED exactas y Bernoulli', order: 2, widgetFile: null },
     ],
   },
   {
@@ -980,8 +981,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-14-sub-1', title: 'Homogéneas con coeficientes constantes: ecuación característica', order: 1 },
-      { id: 'mat-uni-14-sub-2', title: 'No homogéneas: coeficientes indeterminados y variación de parámetros', order: 2 },
+      { id: 'mat-uni-14-sub-1', title: 'Homogéneas con coeficientes constantes: ecuación característica', order: 1, widgetFile: null },
+      { id: 'mat-uni-14-sub-2', title: 'No homogéneas: coeficientes indeterminados y variación de parámetros', order: 2, widgetFile: null },
     ],
   },
   {
@@ -995,8 +996,8 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-15-sub-1', title: 'Sistemas lineales constantes y matriz fundamental', order: 1 },
-      { id: 'mat-uni-15-sub-2', title: 'Transformada de Laplace y series de potencias', order: 2 },
+      { id: 'mat-uni-15-sub-1', title: 'Sistemas lineales constantes y matriz fundamental', order: 1, widgetFile: null },
+      { id: 'mat-uni-15-sub-2', title: 'Transformada de Laplace y series de potencias', order: 2, widgetFile: null },
     ],
   },
   {
@@ -1010,9 +1011,9 @@ export const lessons: Lesson[] = [
     theory: '',
     widgetFile: null,
     subLessons: [
-      { id: 'mat-uni-16-sub-1', title: 'Oscilaciones amortiguadas y forzadas', order: 1 },
-      { id: 'mat-uni-16-sub-2', title: 'Circuitos RLC', order: 2 },
-      { id: 'mat-uni-16-sub-3', title: 'Modelos poblacionales: Lotka-Volterra', order: 3 },
+      { id: 'mat-uni-16-sub-1', title: 'Oscilaciones amortiguadas y forzadas', order: 1, widgetFile: null },
+      { id: 'mat-uni-16-sub-2', title: 'Circuitos RLC', order: 2, widgetFile: null },
+      { id: 'mat-uni-16-sub-3', title: 'Modelos poblacionales: Lotka-Volterra', order: 3, widgetFile: null },
     ],
   },
 

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getLesson, getLessonsBySubBranch } from '@/data/lessons'
@@ -17,6 +17,20 @@ export default function LessonPage() {
     () => lesson ? getLessonsBySubBranch(lesson.branchId, lesson.subBranchId) : [],
     [lesson]
   )
+
+  const sortedSubLessons = useMemo(
+    () => lesson ? lesson.subLessons.slice().sort((a, b) => a.order - b.order) : [],
+    [lesson]
+  )
+
+  const [activeSubLessonId, setActiveSubLessonId] = useState<string | null>(null)
+
+  useEffect(() => {
+    setActiveSubLessonId(sortedSubLessons[0]?.id ?? null)
+  }, [id, sortedSubLessons])
+
+  const activeSubLesson = sortedSubLessons.find(sub => sub.id === activeSubLessonId)
+  const activeWidgetFile = activeSubLesson?.widgetFile ?? lesson?.widgetFile ?? null
 
   const currentIndex = siblingLessons.findIndex(l => l.id === id)
   const prevLesson = currentIndex > 0 ? siblingLessons[currentIndex - 1] : null
@@ -157,19 +171,28 @@ export default function LessonPage() {
                   {t('lesson.contents')}
                 </h2>
                 <div className="bg-[#161B22] border border-[#30363D] rounded-xl divide-y divide-[#30363D]">
-                  {lesson.subLessons
-                    .slice()
-                    .sort((a, b) => a.order - b.order)
-                    .map(sub => (
-                      <div key={sub.id} className="flex items-center gap-3 p-4">
+                  {sortedSubLessons.map(sub => (
+                      <button
+                        key={sub.id}
+                        type="button"
+                        onClick={() => setActiveSubLessonId(sub.id)}
+                        className={`w-full flex items-center gap-3 p-4 text-left transition-colors ${
+                          sub.id === activeSubLessonId ? 'bg-[#1C2128]' : 'hover:bg-[#1C2128]/50'
+                        }`}
+                      >
                         <span
                           className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold flex-shrink-0"
-                          style={{ background: `${branch.color}18`, color: branch.color }}
+                          style={sub.id === activeSubLessonId
+                            ? { background: `${branch.color}30`, color: branch.color }
+                            : { background: `${branch.color}18`, color: branch.color }
+                          }
                         >
                           {sub.order}
                         </span>
-                        <span className="text-[#C9D1D9] text-sm">{sub.title}</span>
-                      </div>
+                        <span className={`text-sm ${sub.id === activeSubLessonId ? 'text-[#F0F6FC] font-medium' : 'text-[#C9D1D9]'}`}>
+                          {sub.title}
+                        </span>
+                      </button>
                     ))}
                 </div>
               </section>
@@ -197,11 +220,12 @@ export default function LessonPage() {
           </div>
 
             {/* Interactive widget */}
-            {lesson.widgetFile ? (
+            {activeWidgetFile ? (
               <section className="mb-10">
                 <iframe
-                  src={lesson.widgetFile}
-                  title={lesson.title}
+                  key={activeWidgetFile}
+                  src={activeWidgetFile}
+                  title={activeSubLesson?.title ?? lesson.title}
                   className="w-full h-[70vh] sm:h-[calc(100vh-120px)] border-0"
                   sandbox="allow-scripts allow-same-origin"
                 />
